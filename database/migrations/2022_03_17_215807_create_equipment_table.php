@@ -15,6 +15,11 @@ return new class extends Migration
     {
         Schema::create('equipment', function (Blueprint $table) {
             $table->id();
+            $table->string('name');
+            $table->string('workstation_category');
+            $table->integer('quantity');
+            $table->string('serial_number');
+            $table->date('date_purchased');
             $table->timestamps();
         });
     }

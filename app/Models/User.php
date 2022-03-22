@@ -51,4 +51,12 @@ class User extends Authenticatable
     const ROLE_SUPERVISOR = 2;
     const ROLE_TEAM_MEMBER = 3;
 
+    public function duties(){
+        return $this->hasMany(Duty::class);
+    }
+
+    public function contributions(){
+        return $this->hasMany(Contribution::class);
+    }
+
 }

@@ -8,4 +8,13 @@ use Illuminate\Database\Eloquent\Model;
 class Equipment extends Model
 {
     use HasFactory;
+
+    protected $fillable=[];
+
+
+    public function duty(){
+        return $this->belongsTo(Duty::class);
+    }
+
+    
 }
