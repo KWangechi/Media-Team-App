@@ -21,19 +21,18 @@
                 <a class="btn-close" data-bs-dismiss="alert" aria-label="Close"></a>
             </div>
             @endif
-            <br>
-            <a class="btn btn-primary btn-sm float-right" data-bs-toggle="modal" data-bs-target="#exampleModal">CREATE NEW USER</a>
+            <a class="btn btn-primary btn-sm float-right" data-bs-toggle="modal" data-bs-target="#createModal" id="createModalButton">CREATE NEW USER</a>
 
-            <!-- Modal -->
-            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <!-- Create Modal -->
+            <div class="modal fade" id="createModal" tabindex="-1" aria-labelledby="createModalLabel" aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header ">
-                            <h5 class="modal-title" id="exampleModalLabel">Create a New User</h5>
+                            <h5 class="modal-title" id="createModalLabel">Create a New User</h5>
                             <a class="btn-close" data-bs-dismiss="modal" aria-label="Close"></a>
                         </div>
                         <div class="modal-body">
-                            <form action="{{route('users.index')}}" method="POST">
+                            <form action="{{route('users')}}" method="POST" name="myForm" id="myForm">
                                 @csrf
 
                                 <!-- Name -->
@@ -88,6 +87,9 @@
                                     </select>
                                 </div>
 
+                                <!-- Account Status -->
+                                <!-- <input id="account_status" type="hidden" name="account_status" value="approved"/> -->
+
                                 <!-- Password -->
                                 <div class="mt-4">
                                     <x-label for="password" :value="__('Password')" />
@@ -102,15 +104,13 @@
                                     <x-input id="password_confirmation" class="block mt-1 w-full" type="password" name="password_confirmation" required />
                                 </div>
                                 <br>
-                                <x-button class="ml-4">
-                    {{ __('Create') }}
-                </x-button>
+                                <x-button class="ml-4" id="create">
+                                    {{ __('Create') }}
+                                </x-button>
                             </form>
                         </div>
                         <div class="modal-footer">
                             <a class="btn btn-secondary" data-bs-dismiss="modal">Close</a>
-                            <!-- <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" >Close</button> -->
-                            <!-- <a href="{{route('users')}}" class="btn btn-primary">Save changes</a> -->
                         </div>
                     </div>
                 </div>
@@ -119,7 +119,7 @@
             <!-- Table -->
             <br>
             <br>
-            <table class="table table-responsive table-bordered table-striped">
+            <table class="table table-responsive table-bordered table-striped text-center">
                 <thead>
                     <tr>
                         <th scope="col">ID</th>
@@ -129,6 +129,7 @@
                         <th scope="col">Date Joined</th>
                         <th scope="col">Department</th>
                         <th scope="col">Login Time(Sunday)</th>
+                        <th scope="col">Account Status</th>
                         <th scope="col">EDIT</th>
                         <th scope="col">DELETE</th>
 
@@ -145,17 +146,22 @@
                         <td>{{$user->department}}</td>
                         <td>{{$user->login_time}}</td>
                         <td>
-                            <a href="/#" class="btn btn-primary btn-sm">
-                                EDIT
-                            </a>
+                            @if ($user->account_status == 'pending')
+                            <a href="{{ route('users.approve', $user->id) }}" class="btn btn-primary btn-sm">Approve</a>
+                            @else
+                            {{$user->account_status}}
+                            @endif
                         </td>
                         <td>
-                        <form action="{{ route('users.destroy', $user->id ) }}" method="POST">
-     @csrf
-    @method('DELETE')
-    <button class="btn btn-danger btn-sm">DELETE </button>
-</form>
-                        @endforeach
+                            <a href="{{route('users.edit', $user->id)}}"class="btn btn-primary btn-sm">EDIT</a>
+                        </td>
+                        <td>
+                            <form action="{{ route('users.destroy', $user->id ) }}" method="POST">
+                                @csrf
+                                @method('DELETE')
+                                <button class="btn btn-danger btn-sm">DELETE </button>
+                            </form>
+                            @endforeach
                     </tr>
                 </tbody>
             </table>
@@ -163,8 +169,4 @@
 
 
     </x-slot>
-    <!-- Modal -->
-
-
-
 </x-app-layout>

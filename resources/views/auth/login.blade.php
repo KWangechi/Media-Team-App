@@ -9,8 +9,16 @@
         <!-- Session Status -->
         <x-auth-session-status class="mb-4" :status="session('status')" />
 
+        @if (session('message'))
+        <div class="alert alert-primary alert-dismissible fade show">
+                {{ session('message') }}
+                <a class="btn-close" data-bs-dismiss="alert" aria-label="Close"></a>
+            </div>
+        @endif
         <!-- Validation Errors -->
         <x-auth-validation-errors class="mb-4" :errors="$errors" />
+
+        <!-- message for account approval -->
 
         <form method="POST" action="{{ route('login') }}">
             @csrf

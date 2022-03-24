@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('workstation');
             $table->text('duty_assigned');
             $table->string('type_of_service');
-            $table->foreignId('equipment_id')->constrained('equipment');
+            // $table->foreignId('equipment_id')->constrained('equipment');
             $table->boolean('supervisor_signature')->default(0);
             $table->time('setup_time');
             $table->date('date_assigned');

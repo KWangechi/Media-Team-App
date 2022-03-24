@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Role;
 use App\Models\User;
 use App\Notifications\ConfirmRegistration;
+use App\Notifications\RegistrationApproval;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
@@ -61,17 +62,21 @@ class RegisteredUserController extends Controller
         // event(new Registered($user));
 
         $message = [
-            'title' => 'Welcome to the Media Team Application!!!',
-            'body' => 'Registration of your details was successful.',
-            'action' => 'Change Password',
-            'url' => 'http://127.0.0.1:8000/reset-password/{token}'
+            'title' => 'New User Registration',
+            'body' => 'A new user has registered',
+            'action' => 'Login to approve their account',
         ];
 
-        Notification::send($user, new ConfirmRegistration($message));
+        $admin = User::where('role_id', User::ROLE_ADMIN)->get();
+
+        // Notification::send($user, new ConfirmRegistration($message));
         Auth::login($user);
 
-        return redirect(RouteServiceProvider::HOME);
+        //send message to admin for account approval
+        Notification::send($admin, new RegistrationApproval($user, $message));
 
-        
+
+        return redirect('login');
+
     }
 }

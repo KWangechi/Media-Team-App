@@ -23,6 +23,7 @@ return new class extends Migration
             $table->string('department');
             $table->timestamp('email_verified_at')->nullable();
             $table->timestamp('login_time')->nullable();
+            $table->string('account_status')->default('pending')->nullable();
             $table->string('password');
             $table->rememberToken();
             $table->timestamps();

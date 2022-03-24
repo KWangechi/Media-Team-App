@@ -29,7 +29,9 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/users', [Admin\UserController::class, 'index'])->name('users.index');
         Route::post('/users', [Admin\UserController::class, 'store'])->name('users');
         Route::delete('/users/{id}', [Admin\UserController::class, 'destroy'])->name('users.destroy');
-
+        Route::get('users/{id}', [Admin\UserController::class, 'approve'])->name('users.approve');
+        Route::get('users/{id}', [Admin\UserController::class, 'edit'])->name('users.edit');
+        Route::post('/users/{id}', [Admin\UserController::class, 'update'])->name('users.update');
         // Route::resource('users', UserController::class);
 
     });

@@ -25,6 +25,7 @@ class UserSeeder extends Seeder
             'phone_number' => 224242424,
             'date_joined' => '2016-04-09',
             'department' => 'VMix',
+            'account_status' => 'approved',
             'password' => Hash::make('josekkamash'),
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now()

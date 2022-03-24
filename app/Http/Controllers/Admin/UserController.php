@@ -9,9 +9,9 @@ use App\Providers\RouteServiceProvider;
 use Illuminate\Contracts\Session\Session;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
-
 
 class UserController extends Controller
 {
@@ -56,8 +56,9 @@ class UserController extends Controller
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
 
+
         $user = User::create([
-            'role_id'=> $request->role_id,
+            'role_id' => $request->role_id,
             'name' => $request->name,
             'email' => $request->email,
             'phone_number' => $request->phone_number,
@@ -66,12 +67,17 @@ class UserController extends Controller
             'password' => Hash::make($request->password),
         ]);
 
-        if(!$user){
-            // Session::flash('message', 'Something went wrong! Please try again');
-            return redirect()->route('users.index')->with('error_message','Error!! Please try again');
+        User::where('id', $user->id)->update([
+            'account_status' => 'approved'
+        ]);
+
+        if (!$user) {
+            return redirect()->route('users.index')->with('error_message', 'Error!! Please try again');
         }
 
-        return redirect()->route('users.index')->with('success_message','User successfully created!!');
+        return redirect()->route('users.index')->with('success_message', 'User successfully created!!');
+
+        // dd($user);
     }
 
     /**
@@ -93,7 +99,10 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        //
+        $roles = Role::all();
+        $user = User::findOrFail($id);
+
+        return view('admin.edit', compact(['user', 'roles']));
     }
 
     /**
@@ -105,7 +114,15 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $user = User::findOrFail($id);
+
+        $user->update($request->all());
+
+        if (!$user) {
+            return redirect()->route('users.update')->with('error_message', 'Error occurred! Please try again');
+        }
+
+        return redirect()->route('users.index')->with('success_message', 'User updated successfully!');
     }
 
     /**
@@ -118,13 +135,17 @@ class UserController extends Controller
     {
         $user = User::findOrFail($id);
 
-        // dd($user);
-        // if(!$user){
-        //     return redirect('admin.users')->with('message', 'User does not exist!!!!');
-        // }
-
         $user->delete();
 
-        return redirect()->route('users.index')->with('success_message', 'Deletion successful!!');
+        return redirect()->route('users.index')->with('success_message', 'User deleted successfully!!');
+    }
+
+    public function approve($id)
+    {
+
+        User::where('id', $id)->update(['account_status' => 'approved']);
+        // dd($account_status);
+
+        return redirect()->route('users.index')->with('success_message', 'User approved successfully');
     }
 }
