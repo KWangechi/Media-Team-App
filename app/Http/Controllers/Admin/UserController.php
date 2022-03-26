@@ -5,12 +5,14 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Role;
 use App\Models\User;
+use App\Notifications\UserRegistrationApproved;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Contracts\Session\Session;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Notification;
 use Illuminate\Validation\Rules;
 
 class UserController extends Controller
@@ -20,7 +22,7 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         $users = User::all();
         $roles = Role::all();
@@ -28,6 +30,23 @@ class UserController extends Controller
         return view('admin.users', compact(['users', 'roles']));
     }
 
+    public function search(Request $request)
+    {
+        $search = $request->input('search');
+        $search_users = User::query()
+            ->where('name', 'LIKE', '%' . $search . '%')
+            ->orWhere('email', 'LIKE', '%' . $search . '%')
+            ->orWhere('phone_number', 'LIKE', '%' . $search . '%')
+            ->get();
+
+        // dd('This is a search module');
+        // dd($search_users->count());
+        // if ($search_users->isEmpty()) {
+        //     return view('admin.search')->with('error_message', 'No users found');
+        // }
+
+        return view('admin.search', compact('search_users'));
+    }
     /**
      * Show the form for creating a new resource.
      *
@@ -55,7 +74,6 @@ class UserController extends Controller
             'department' => 'required',
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
-
 
         $user = User::create([
             'role_id' => $request->role_id,
@@ -142,10 +160,22 @@ class UserController extends Controller
 
     public function approve($id)
     {
-
         User::where('id', $id)->update(['account_status' => 'approved']);
-        // dd($account_status);
 
-        return redirect()->route('users.index')->with('success_message', 'User approved successfully');
+        $user = User::where('id', $id)->get();
+        Notification::send($user, new UserRegistrationApproved());
+
+        return redirect()->route('users.index')->with('success_message', 'User account has been approved successfully');
+    }
+
+    public function filterResults()
+    {
+        $collection = collect([1, 2, 3, 4]);
+
+        $filtered = $collection->filter(function ($value, $key) {
+            return $value > 2;
+        });
+
+        $filtered->all();
     }
 }

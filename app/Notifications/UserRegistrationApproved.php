@@ -7,19 +7,17 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class ConfirmRegistration extends Notification
+class UserRegistrationApproved extends Notification
 {
     use Queueable;
-
-    public $message;
     /**
      * Create a new notification instance.
      *
      * @return void
      */
-    public function __construct($message)
+    public function __construct()
     {
-        $this->message = $message;
+        //
     }
 
     /**
@@ -42,9 +40,8 @@ class ConfirmRegistration extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
-                    ->line($this->message['title'])
-                    ->line($this->message['body'])
-                    ->action($this->message['action'], $this->message['url']);
+                    ->line('Your account has been approved')
+                    ->action('Click here to login', route('login'));
     }
 
     /**

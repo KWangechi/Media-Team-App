@@ -7,6 +7,7 @@
 
     <x-slot name="slot">
         <div class="container text-centre">
+
             <br>
             <!-- Display error or success message -->
             @if (session('success_message'))
@@ -21,7 +22,31 @@
                 <a class="btn-close" data-bs-dismiss="alert" aria-label="Close"></a>
             </div>
             @endif
-            <a class="btn btn-primary btn-sm float-right" data-bs-toggle="modal" data-bs-target="#createModal" id="createModalButton">CREATE NEW USER</a>
+
+            <!-- search bar -->
+            <form action="{{ route('users.search') }}" method="get">
+
+            <div>
+            <x-input id="filter" type="text" name="filter" placeholder="Filter" />
+
+            </div>
+            <div class="row float-right">
+                <div class="col">
+                    <x-input id="search" type="text" name="search" placeholder="Search" />
+                </div>
+                <div class="col">
+                    <button class="btn btn-primary">
+                        <i class="bi bi-search"></i>
+</button>
+                </div>
+            </div>
+            </form>
+            <br>
+            <br>
+            <br>
+            <div class="row float-right">
+                <a class="btn btn-primary btn-sm float-right" data-bs-toggle="modal" data-bs-target="#createModal" id="createModalButton">CREATE NEW USER</a>
+                </div>
 
             <!-- Create Modal -->
             <div class="modal fade" id="createModal" tabindex="-1" aria-labelledby="createModalLabel" aria-hidden="true">
@@ -32,7 +57,7 @@
                             <a class="btn-close" data-bs-dismiss="modal" aria-label="Close"></a>
                         </div>
                         <div class="modal-body">
-                            <form action="{{route('users')}}" method="POST" name="myForm" id="myForm">
+                            <form action="{{route('users.index')}}" method="POST" name="myForm" id="myForm">
                                 @csrf
 
                                 <!-- Name -->
@@ -86,9 +111,6 @@
                                         @endforeach
                                     </select>
                                 </div>
-
-                                <!-- Account Status -->
-                                <!-- <input id="account_status" type="hidden" name="account_status" value="approved"/> -->
 
                                 <!-- Password -->
                                 <div class="mt-4">
@@ -153,7 +175,7 @@
                             @endif
                         </td>
                         <td>
-                            <a href="{{route('users.edit', $user->id)}}"class="btn btn-primary btn-sm">EDIT</a>
+                            <a href="{{route('users.edit', $user->id)}}" class="btn btn-primary btn-sm">EDIT</a>
                         </td>
                         <td>
                             <form action="{{ route('users.destroy', $user->id ) }}" method="POST">
@@ -166,7 +188,5 @@
                 </tbody>
             </table>
         </div>
-
-
     </x-slot>
 </x-app-layout>

@@ -5,7 +5,7 @@
         </h2>
     </x-slot> -->
     <x-slot name="slot">
-        <div class="container text-center">
+        <div class="container text-centre">
             <br>
             <!-- Display error or success message -->
             @if (session('success_message'))
@@ -20,8 +20,12 @@
                 <a class="btn-close" data-bs-dismiss="alert" aria-label="Close"></a>
             </div>
             @endif
-            <h3 class="text-center">EDIT USER</h3>
-            <form method="POST" action="{{ route('users.update', $user->id) }}">
+
+            @if ()
+                
+            @endif
+            <h3 class="text-center">EDIT PROFILE</h3>
+            <form method="POST" action="{{ route('user.profile.update', $profile->user_id) }}">
             @csrf
 
             <!-- Name -->
