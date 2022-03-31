@@ -1,13 +1,6 @@
 <x-app-layout>
-    <!-- <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Users') }}
-        </h2>
-    </x-slot> -->
-
     <x-slot name="slot">
-        <div class="container text-centre">
-
+        <div class="container">
             <br>
             <!-- Display error or success message -->
             @if (session('success_message'))
@@ -26,27 +19,27 @@
             <!-- search bar -->
             <form action="{{ route('users.search') }}" method="get">
 
-            <div>
-            <x-input id="filter" type="text" name="filter" placeholder="Filter" />
+                <div>
+                    <x-input id="filter" type="text" name="filter" placeholder="Filter" />
 
-            </div>
-            <div class="row float-right">
-                <div class="col">
-                    <x-input id="search" type="text" name="search" placeholder="Search" />
                 </div>
-                <div class="col">
-                    <button class="btn btn-primary">
-                        <i class="bi bi-search"></i>
-</button>
+                <div class="row float-right">
+                    <div class="col">
+                        <x-input id="search" type="text" name="search" placeholder="Search" />
+                    </div>
+                    <div class="col">
+                        <button class="btn btn-primary">
+                            <i class="bi bi-search"></i>
+                        </button>
+                    </div>
                 </div>
-            </div>
             </form>
             <br>
             <br>
             <br>
             <div class="row float-right">
                 <a class="btn btn-primary btn-sm float-right" data-bs-toggle="modal" data-bs-target="#createModal" id="createModalButton">CREATE NEW USER</a>
-                </div>
+            </div>
 
             <!-- Create Modal -->
             <div class="modal fade" id="createModal" tabindex="-1" aria-labelledby="createModalLabel" aria-hidden="true">
@@ -187,6 +180,13 @@
                     </tr>
                 </tbody>
             </table>
+
+            <!-- Pagination -->
+            <div class="row">
+                <div class="col offset-md-6">
+                    {{$users->links()}}
+                </div>
+            </div>
         </div>
     </x-slot>
 </x-app-layout>

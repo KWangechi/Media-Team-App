@@ -17,7 +17,6 @@ class AuthenticatedSessionController extends Controller
     public $current_time;
     public $day;
     
-
     public function __construct(){
         $this->now = Carbon::now();
         $this->current_time = $this->now->setTimezone('Africa/Nairobi');
@@ -55,7 +54,13 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
 
-        return redirect()->intended(RouteServiceProvider::HOME);
+        //redirect when user is a normal user
+        if(auth()->user()->role_id !== User::ROLE_ADMIN){
+
+            return redirect()->route('user.profile', [auth()->user()->id]);
+        }
+        
+        return redirect()->route('users.index');
     }
 
     /**

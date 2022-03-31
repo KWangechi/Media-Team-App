@@ -5,7 +5,7 @@
         </h2>
     </x-slot> -->
     <x-slot name="slot">
-        <div class="container text-center">
+        <div class="container">
             <br>
             <!-- Display error or success message -->
             @if (session('success_message'))

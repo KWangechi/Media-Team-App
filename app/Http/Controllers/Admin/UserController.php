@@ -24,7 +24,7 @@ class UserController extends Controller
      */
     public function index(Request $request)
     {
-        $users = User::all();
+        $users = User::paginate(15);
         $roles = Role::all();
 
         return view('admin.users', compact(['users', 'roles']));
@@ -153,6 +153,14 @@ class UserController extends Controller
     {
         $user = User::findOrFail($id);
 
+        $user->delete();
+
+        return redirect()->route('users.index')->with('success_message', 'User deleted successfully!!');
+
+    }
+
+    public function deleteSelectedUsers(User $user){
+        $user = User::findOrFail($user);
         $user->delete();
 
         return redirect()->route('users.index')->with('success_message', 'User deleted successfully!!');

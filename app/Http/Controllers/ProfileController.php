@@ -93,9 +93,9 @@ class ProfileController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $user_id, $profile_id)
     {
-        $profile = Profile::where('user_id', auth()->user()->id)->find($id);
+        $profile = Profile::where('user_id', $user_id)->find($profile_id);
 
         // dd($profile);
 
@@ -120,9 +120,9 @@ class ProfileController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($user_id, $profile_id)
     {
-        $profile = Profile::where('user_id', auth()->user()->id)->find($id);
+        $profile = Profile::where('user_id', $user_id)->find($profile_id);
 
         if (!$profile->delete()) {
             return redirect()->route('user.profile', [auth()->user()->id] )->with('error_message', 'Error! Please try again');
