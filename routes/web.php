@@ -63,6 +63,9 @@ Route::middleware(['auth'])->group(function () {
         //Leaves
         Route::get('/{id}/leaves', [LeaveController::class, 'index'])->name('user.leaves.index');
         Route::post('/{id}/leave', [LeaveController::class, 'store'])->name('user.leave.create');
+        Route::post('/{user_id}/leave/{id}', [LeaveController::class, 'update'])->name('user.leave.update');
+        Route::delete('/{user_id}leave/{id}', [LeaveController::class, 'destroy'])->name('user.leave.destroy');
+
 
 
         //Duty Log

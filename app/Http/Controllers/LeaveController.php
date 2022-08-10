@@ -6,6 +6,7 @@ use App\Models\Leave;
 use App\Models\User;
 use App\Notifications\RequestLeave;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Notification;
 
 // use Illuminate\Notifications\Notification;
@@ -27,7 +28,7 @@ class LeaveController extends Controller
 
         return view('user.leave.index', compact('leaves'));
     }
-    
+
     /**
      * Show the form for creating a new resource.
      *
@@ -35,7 +36,7 @@ class LeaveController extends Controller
      */
     public function create()
     {
-        //
+        return view('user.leave.create');
     }
 
     /**
@@ -48,33 +49,29 @@ class LeaveController extends Controller
     {
 
         // dd($request->input('reason'));
-        // dd($request->validate([
-        //     'user_id' => 'required',
-        //     'reason' => 'required',
-        //     'start_date' => 'required',
-        //     'end_date' =>'required',
-        // ]));
-        
-        $leave = Leave::create([
-            'user_id' => auth()->user()->id,
-            'reason' => $request->reason,
-            'start_date' => $request->start_date,
-            'end_date' => $request->end_date
+        $request->validate([
+            'user_id',
+            'reason',
+            'start_date',
+            'end_date',
         ]);
 
-        $admin = User::where('role_id', User::ROLE_ADMIN)->get();
 
-        // $user = User::where('id', auth()->user()->id)->get();
+        //error when start date is more than the end date and vice versa
+        if ($request->start_date > $request->end_date) {
+            return redirect()->route('user.leaves.index', auth()->user()->id)->with('leave_error_message', 'Start Date should not be later than the End Date');
+        } else {
+            Leave::create([
+                'user_id' => auth()->user()->id,
+                'reason' => $request->reason,
+                'start_date' => $request->start_date,
+                'end_date' => $request->end_date,
+            ]);
 
-        if(!$leave){
-            return redirect()->route('user.leave.index')->with('error_message', 'Error! Please try again');
+            // dd($leave);
+
+            return redirect()->route('user.leaves.index', auth()->user()->id)->with('success_message', 'Leave request created successfully!!!');
         }
-
-        // Notification::send($admin, new RequestLeave($leave->user));
-
-        return redirect()->route('user.leaves.index', [auth()->user()->id])->with('success_message', 'Leave requested successfully');
-
-        // dd($leave);
     }
 
     /**
@@ -110,11 +107,11 @@ class LeaveController extends Controller
     {
         $leave = Leave::where('user_id', $user_id)->find($leave_id);
 
-        if(!$leave->update($request->all())){
-            return redirect()->route('user.leave', [auth()->user()->id])->with('error_message', 'Error!!Please try again');
+        if (!$leave->update($request->all())) {
+            return redirect()->route('user.leaves.index', [auth()->user()->id])->with('error_message', 'Error!!Please try again');
         }
-        return redirect()->route('user.leave', [auth()->user()->id])->with('success_message', 'Leave updated successfully');
 
+        return redirect()->route('user.leaves.index', [auth()->user()->id])->with('success_message', 'Leave request updated successfully!!');
     }
 
     /**
@@ -123,7 +120,7 @@ class LeaveController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request, $user_id, $leave_id)
     {
         //
     }

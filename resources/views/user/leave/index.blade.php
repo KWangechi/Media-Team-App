@@ -32,7 +32,7 @@
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header ">
-                            <h5 class="modal-title" id="createLeaveModal">Create a New Leave Request</h5>
+                            <h5 class="modal-title" id="createLeaveModalTitle">Create a New Leave Request</h5>
                             <a class="btn-close" id="closeModalButton"></a>
                         </div>
                         <div class="modal-body">
@@ -56,6 +56,18 @@
                                     <x-label for="start_date" :value="__('Start Date')" />
 
                                     <x-input id="start_date" class="block mt-1 w-full" type="date" name="start_date" required />
+                                </div>
+
+                                <!-- error message for start date and end date -->
+                                <!-- @if (session('leave_error_message'))
+                                <div class="input">
+                                    {{ session('leave_error_message') }}
+                                </div>
+                                @else
+                                @endif -->
+
+                                <!-- error leave message -->
+                                <div class="input" id="input">
                                 </div>
 
                                 <!-- End Date -->
@@ -89,6 +101,9 @@
                         <th scope="col">Start Date</th>
                         <th scope="col">End Date</th>
                         <th scope="col">Status</th>
+                        <th scope="col">EDIT</th>
+                        <th scope="col">DELETE</th>
+
                     </tr>
                 </thead>
                 <tbody>
@@ -102,6 +117,15 @@
                         <td>
                             {{$leave->status}}
                         </td>
+                        <td><a class="btn btn-secondary btn-sm" id="editLeaveModalButton">
+                                EDIT
+                            </a>
+                        </td>
+                        <td><a id="deleteLeaveModalButton" class="btn btn-danger btn-sm">
+                                DELETE
+                            </a>
+                        </td>
+
                         </form>
                         @endforeach
                     </tr>
@@ -121,13 +145,31 @@
 </x-app-layout>
 
 <script>
+    let error_input = document.getElementById("#input");
+    let start_date = document.getElementById("#start_date")
+    let end_date = document.getElementById("#end_date")
+    let createLeaveModal = document.querySelector("#createLeaveModalButton")
+    let editLeaveModalTitle = document.querySelector("#createLeaveModalTitle")
+    let editLeaveModalButton = document.querySelector("#createLeaveButton")
+
+
     $(document).ready(function() {
         $("#createLeaveModalButton").click(function() {
             $("#createLeaveModal").fadeToggle();
-            // console.log('Display the modal')
         })
-        $("#closeModalButton").click(function(){
+        $("#closeModalButton").click(function() {
             $(".modal").toggle()
         })
+
+        //edit button
+        $("#editLeaveModalButton").click(function() {
+            $("#createLeaveModal").fadeIn();
+
+            editLeaveModalTitle.innerHTML = "Edit Your Leave Request";
+            editLeaveModalButton.innerHTML = "Update";
+        })
+
     })
+
+    editLeaveModalTitle.innerHTML = "Create A New Leave Request";
 </script>
