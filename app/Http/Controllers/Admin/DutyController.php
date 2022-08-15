@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Duty;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class DutyController extends Controller
@@ -14,7 +16,16 @@ class DutyController extends Controller
      */
     public function index()
     {
-        //
+        $duties = Duty::all();
+
+        if(auth()->user()->id == User::ROLE_ADMIN){
+
+            return view('admin.duty.index', compact('duties'));
+        }
+        else{
+            return view('user.duty.index', compact('duties'));
+
+        }
     }
 
     /**
@@ -35,7 +46,37 @@ class DutyController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'member_name',
+            'supervisor_name',
+            'workstation',
+            'duty_assigned',
+            'type_of_service',
+            'supervisor_signature',
+            'setup_time',
+            'date_assigned'
+        ]);
+
+        $duty = Duty::create([
+            'member_name' => $request->member_name,
+            'supervisor_name' => $request->supervisor_name,
+            'workstation' => $request->workstation,
+            'duty_assigned' => $request->duty_assigned,
+            'type_of_service' => $request->type_of_service,
+            'supervisor_signature' => $request->supervisor_signature,
+            'setup_time' => $request->setup_time,
+            'date_assigned' => $request->date_assigned
+        ]);
+
+
+        // dd($duty);
+
+        if(!$duty){
+            return redirect()->route('admin.duty.create', auth()->user()->id)->with('error_message', 'Error occurred! Please try again');
+        }
+
+        return redirect()->route('admin.duty.index', auth()->user()->id)->with('success_message', 'Duty Roster created successfully!!');
+
     }
 
     /**
@@ -57,7 +98,9 @@ class DutyController extends Controller
      */
     public function edit($id)
     {
-        //
+        $duty = Duty::findOrFail($id);
+
+        return view('admin.duty.edit', compact('duty'));
     }
 
     /**
@@ -78,8 +121,23 @@ class DutyController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($duty_id)
     {
-        //
+        $duty = Duty::findOrFail($duty_id);
+
+        if(!$duty){
+            dd("This ID does not exist!!");
+
+        }
+
+        else{
+            if(!$duty->delete()){
+                dd("Error!! Deletion encountered an error");
+            }
+
+            else{
+                return redirect()->route('admin.duty.index', auth()->user()->id)->with('success_message', 'Duty Roster Deleted successfully!!');
+            }
+        }
     }
 }

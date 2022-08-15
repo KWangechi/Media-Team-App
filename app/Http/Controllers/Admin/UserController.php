@@ -24,7 +24,7 @@ class UserController extends Controller
      */
     public function index(Request $request)
     {
-        $users = User::paginate(15);
+        $users = User::paginate(6);
         $roles = Role::all();
 
         return view('admin.users', compact(['users', 'roles']));
@@ -39,11 +39,6 @@ class UserController extends Controller
             ->orWhere('phone_number', 'LIKE', '%' . $search . '%')
             ->get();
 
-        // dd('This is a search module');
-        // dd($search_users->count());
-        // if ($search_users->isEmpty()) {
-        //     return view('admin.search')->with('error_message', 'No users found');
-        // }
 
         return view('admin.search', compact('search_users'));
     }
@@ -90,10 +85,10 @@ class UserController extends Controller
         ]);
 
         if (!$user) {
-            return redirect()->route('users.index')->with('error_message', 'Error!! Please try again');
+            return redirect()->route('admin.users.index')->with('error_message', 'Error!! Please try again');
         }
 
-        return redirect()->route('users.index')->with('success_message', 'User successfully created!!');
+        return redirect()->route('admin.users.index')->with('success_message', 'User successfully created!!');
 
         // dd($user);
     }
@@ -137,10 +132,10 @@ class UserController extends Controller
         $user->update($request->all());
 
         if (!$user) {
-            return redirect()->route('users.update')->with('error_message', 'Error occurred! Please try again');
+            return redirect()->route('admin.users.edit')->with('error_message', 'Error occurred! Please try again');
         }
 
-        return redirect()->route('users.index')->with('success_message', 'User updated successfully!');
+        return redirect()->route('admin.users.index')->with('success_message', 'User updated successfully!');
     }
 
     /**
@@ -155,7 +150,7 @@ class UserController extends Controller
 
         $user->delete();
 
-        return redirect()->route('users.index')->with('success_message', 'User deleted successfully!!');
+        return redirect()->route('admin.users.index')->with('success_message', 'User deleted successfully!!');
 
     }
 
@@ -163,7 +158,7 @@ class UserController extends Controller
         $user = User::findOrFail($user);
         $user->delete();
 
-        return redirect()->route('users.index')->with('success_message', 'User deleted successfully!!');
+        return redirect()->route('admin.users.index')->with('success_message', 'User(s) deleted successfully!!');
     }
 
     public function approve($id)
@@ -173,7 +168,7 @@ class UserController extends Controller
         $user = User::where('id', $id)->get();
         Notification::send($user, new UserRegistrationApproved());
 
-        return redirect()->route('users.index')->with('success_message', 'User account has been approved successfully');
+        return redirect()->route('admin.users.index')->with('success_message', 'User account has been approved successfully');
     }
 
     public function filterResults()

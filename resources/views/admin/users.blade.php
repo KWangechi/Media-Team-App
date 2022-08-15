@@ -17,7 +17,7 @@
             @endif
 
             <!-- search bar -->
-            <form action="{{ route('users.search') }}" method="get">
+            <form action="{{ route('admin.users.search') }}" method="get">
 
                 <div>
                     <x-input id="filter" type="text" name="filter" placeholder="Filter" />
@@ -50,7 +50,7 @@
                             <a class="btn-close" data-bs-dismiss="modal" aria-label="Close"></a>
                         </div>
                         <div class="modal-body">
-                            <form action="{{route('users.index')}}" method="POST" name="myForm" id="myForm">
+                            <form action="{{route('admin.users.create')}}" method="POST" name="myForm" id="myForm">
                                 @csrf
 
                                 <!-- Name -->
@@ -162,16 +162,16 @@
                         <td>{{$user->login_time}}</td>
                         <td>
                             @if ($user->account_status == 'pending')
-                            <a href="{{ route('users.approve', $user->id) }}" class="btn btn-primary btn-sm">Approve</a>
+                            <a href="{{ route('admin.users.approve', $user->id) }}" class="btn btn-primary btn-sm">Approve</a>
                             @else
                             {{$user->account_status}}
                             @endif
                         </td>
                         <td>
-                            <a href="{{route('users.edit', $user->id)}}" class="btn btn-primary btn-sm">EDIT</a>
+                            <a href="{{route('admin.users.edit', $user->id)}}" class="btn btn-primary btn-sm">EDIT</a>
                         </td>
                         <td>
-                            <form action="{{ route('users.destroy', $user->id ) }}" method="POST">
+                            <form action="{{ route('admin.users.destroy', $user->id ) }}" method="POST">
                                 @csrf
                                 @method('DELETE')
                                 <button class="btn btn-danger btn-sm">DELETE </button>

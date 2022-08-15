@@ -45,7 +45,7 @@
             <div>
                 <x-label for="login_time" :value="__('Login Time')" />
 
-                <x-input id="login_time" class="block mt-1 w-full" type="text" name="login_time" value="{{$current_time}}" required />
+                <x-input id="login_time" class="block mt-1 w-full" type="text" name="login_time" value="{{$current_time}}" disabled required />
             </div>
             @endif
             <!-- Remember Me -->
@@ -70,7 +70,7 @@
             </div>
 
             <div class="block mt-4">
-                <p>Don't have an account? 
+                <p>Don't have an account?
                     <a href="/register">Register Here</a>
                 </p>
                 </label>

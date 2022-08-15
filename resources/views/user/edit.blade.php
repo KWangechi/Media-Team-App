@@ -22,7 +22,7 @@
             @endif
 
             @if ()
-                
+
             @endif
             <h3 class="text-center">EDIT PROFILE</h3>
             <form method="POST" action="{{ route('user.profile.update', $profile->user_id) }}">
@@ -71,7 +71,7 @@
             <!-- Role -->
             <div class="mt-4">
             <x-label for="role" :value="__('Usertype')" />
-                
+
                 <select name="role_id">
                     <option value="">Select the usertype</option>
                     @foreach($roles as $role)
@@ -99,7 +99,7 @@
                     {{ __('Update') }}
                 </x-button>
 
-                <a class="btn btn-secondary" href="{{ route('users.index') }}">Cancel</a>
+                <a class="btn btn-secondary" href="{{ route('admin.users.index') }}">Cancel</a>
             </div>
         </form>
     </x-slot>

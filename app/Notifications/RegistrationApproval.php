@@ -48,7 +48,7 @@ class RegistrationApproval extends Notification
         return (new MailMessage)
                     ->line($this->message['title'])
                     ->line($this->user->name . '   '. '('. $this->user->email .')')
-                    ->action($this->message['action'], route('users.index'));
+                    ->action($this->message['action'], route('admin.users.index'));
     }
 
     /**

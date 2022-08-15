@@ -91,9 +91,13 @@ class LeaveController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($user_id, $leave_id)
+
     {
-        //
+        // dd([$leave_id, $user_id]);
+        $leave = Leave::where('user_id', $user_id)->findOrFail($leave_id);
+
+        return view('user.leave.edit', [auth()->user()->id], compact('leave'));
     }
 
     /**
@@ -120,8 +124,19 @@ class LeaveController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Request $request, $user_id, $leave_id)
+    public function destroy($user_id, $leave_id)
     {
-        //
+        $leave = Leave::where('user_id', $user_id)->findOrFail($leave_id);
+
+        if(!$leave){
+            dd('Error! ID not found');
+        }
+
+        else{
+            $leave->delete();
+
+            return redirect()->route('user.leaves.index', [auth()->user()->id])->with('success_message', 'Leave request deleted successfully!!');
+        }
+
     }
 }

@@ -16,15 +16,15 @@ class AuthenticatedSessionController extends Controller
     public $now;
     public $current_time;
     public $day;
-    
+
     public function __construct(){
         $this->now = Carbon::now();
         $this->current_time = $this->now->setTimezone('Africa/Nairobi');
         $this->day = $this->now->dayName;
 
     }
-   
-    
+
+
     /**
      * Display the login view.
      *
@@ -59,8 +59,8 @@ class AuthenticatedSessionController extends Controller
 
             return redirect()->route('user.profile', [auth()->user()->id]);
         }
-        
-        return redirect()->route('users.index');
+
+        return redirect()->route('admin.users.index');
     }
 
     /**

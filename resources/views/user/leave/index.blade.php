@@ -25,15 +25,15 @@
 
 
             @else
-            <a class="btn btn-primary btn-sm text-center float-right" id="createLeaveModalButton">CREATE NEW LEAVE REQUEST</a>
+            <a class="btn btn-primary btn-sm text-center float-right" data-bs-toggle="modal" data-bs-target="#createLeaveModal" id="createLeaveModalButton">CREATE NEW LEAVE REQUEST</a>
 
-            <!-- Leave Request Modal -->
-            <div class="modal" id="createLeaveModal">
+            <!-- Create Leave Request Modal -->
+            <div class="modal fade" id="createLeaveModal" tabindex="-1" aria-labelledby="createLeaveModalLabel" aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header ">
                             <h5 class="modal-title" id="createLeaveModalTitle">Create a New Leave Request</h5>
-                            <a class="btn-close" id="closeModalButton"></a>
+                            <a class="btn-close" id="closeModalButton" data-bs-dismiss="modal" aria-label="Close"></a>
                         </div>
                         <div class="modal-body">
                             <form action="{{ route('user.leave.create', auth()->user()->id) }}" method="POST" id="createLeaveForm">
@@ -117,16 +117,87 @@
                         <td>
                             {{$leave->status}}
                         </td>
-                        <td><a class="btn btn-secondary btn-sm" id="editLeaveModalButton">
-                                EDIT
-                            </a>
+                        <td>
+                        <div>
+                        <a class="btn btn-secondary btn-sm" data-bs-toggle="modal" data-bs-target="#updateProfileModal" id="updateProfileButton" data-id="{{$leave->id}}">EDIT</a>
+                    </div>
+
+                    <!-- Update Leave Request -->
+                    <div class="modal fade" id="updateProfileModal" tabindex="-1" aria-labelledby="updateProfileModalLabel" aria-hidden="true" data-id="{{$leave->id}}">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="updateModalLabel">Update Leave Request</h5>
+                                    <a class="btn-close" data-bs-dismiss="modal" aria-label="Close"></a>
+                                </div>
+                                <div class="modal-body">
+                                    <form action="{{ route('user.leave.update', [auth()->user()->id, $leave->id]) }}" method="POST" enctype="multipart/form-data">
+                                        @csrf
+                                        @method('PATCH')
+
+                                        <!-- Reason -->
+                                <div class="mt-4">
+                                    <x-label for="reason" :value="__('Reason')" />
+                                    <select name="reason">
+                                        <option value="{{$leave->reason}}">{{$leave->reason}}</option>
+                                        <option value="Sickness">Sickness</option>
+                                        <option value="Bereavement">Bereavement</option>
+                                        <option value="Travelling">Travelling</option>
+                                        <option value="Personal Reasons">Personal Reasons(Prefer not to say)</option>
+                                    </select>
+                                </div>
+
+                                <!-- Start Date -->
+                                <div class="mt-4">
+                                    <x-label for="start_date" :value="__('Start Date')" />
+
+                                    <x-input id="start_date" class="block mt-1 w-full" type="date" name="start_date" value="{{ $leave->start_date }}" required />
+                                </div>
+
+                                <!-- error message for start date and end date -->
+                                <!-- @if (session('leave_error_message'))
+                                <div class="input">
+                                    {{ session('leave_error_message') }}
+                                </div>
+                                @else
+                                @endif -->
+
+                                <!-- error leave message -->
+                                <div class="input" id="input">
+                                </div>
+
+                                <!-- End Date -->
+                                <div class="mt-4">
+                                    <x-label for="end_date" :value="__('End Date')" />
+
+                                    <x-input id="end_date" class="block mt-1 w-full" type="date" name="end_date" value="{{$leave->end_date}}"  required />
+                                </div>
+                                <br>
+                                <x-button class="ml-4" id="createLeaveButton">
+                                    {{ __('Update') }}
+                                </x-button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+
+
                         </td>
-                        <td><a id="deleteLeaveModalButton" class="btn btn-danger btn-sm">
-                                DELETE
-                            </a>
+                        <td>
+                            <form action="{{ route('user.leave.delete', [auth()->user()->id, $leave->id]) }}" method="POST">
+                            @csrf
+                            @method('DELETE')
+                            <button id="deleteLeaveButton" class="btn btn-danger btn-sm">
+                                    DELETE
+                                </button>
+                            </form>
                         </td>
 
-                        </form>
+                        <!-- Update Modal -->
+
+                    </div>
+
                         @endforeach
                     </tr>
                 </tbody>
@@ -154,22 +225,9 @@
 
 
     $(document).ready(function() {
-        $("#createLeaveModalButton").click(function() {
-            $("#createLeaveModal").fadeToggle();
+        $("#updateProfileButton").click(function(){
+            $("#updateProfileModal").fadeToggle();
         })
-        $("#closeModalButton").click(function() {
-            $(".modal").toggle()
-        })
-
-        //edit button
-        $("#editLeaveModalButton").click(function() {
-            $("#createLeaveModal").fadeIn();
-
-            editLeaveModalTitle.innerHTML = "Edit Your Leave Request";
-            editLeaveModalButton.innerHTML = "Update";
-        })
-
     })
 
-    editLeaveModalTitle.innerHTML = "Create A New Leave Request";
 </script>

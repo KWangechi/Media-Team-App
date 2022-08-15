@@ -6,7 +6,8 @@
                 <!-- Logo -->
                 <div class="shrink-0 flex items-center">
                     <a href="{{ route('dashboard') }}">
-                        <x-application-logo class="block h-10 w-auto fill-current text-gray-600" />
+                    <img src="{{ asset('storage/images/PCEA-church-logo-a-2.png') }}" class="card-img-top" alt="PCEA LOGO" style="width: 40px; height: 65px;">
+
                     </a>
                 </div>
 
@@ -14,12 +15,17 @@
                 <!-- if the user is an admin -->
                 @if(auth()->user()->role_id == 1)
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                    <x-nav-link :href="route('users.index')" :active="request()->routeIs('users.index') || request()->routeIs('users.edit', Auth::user()->id)">
+                    <x-nav-link :href="route('admin.users.index')" :active="request()->routeIs('admin.users.index') || request()->routeIs('admin.users.edit', Auth::user()->id) || request()->routeIs('admin.users.search', Auth::user()->id)">
                         {{ __('Users') }}
                     </x-nav-link>
                     <x-nav-link :href="route('admin.users.leaves.index', auth()->user()->id)" :active="request()->routeIs('admin.users.leaves.index')">
                         {{ __('Leaves') }}
                     </x-nav-link>
+
+                    <x-nav-link :href="route('admin.duty.index', auth()->user()->id)" :active="request()->routeIs('admin.duty.index') || request()->routeIs('admin.duty.edit')">
+                        {{ __('Duty Roster') }}
+                    </x-nav-link>
+
                 </div>
                 @else
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
@@ -28,6 +34,10 @@
                     </x-nav-link>
                     <x-nav-link :href="route('user.leaves.index', auth()->user()->id)" :active="request()->routeIs('user.leaves.index')">
                         {{ __('Leaves') }}
+                    </x-nav-link>
+
+                    <x-nav-link :href="route('user.duty.index', auth()->user()->id)" :active="request()->routeIs('user.duty.index')">
+                        {{ __('Duty Roster') }}
                     </x-nav-link>
                 </div>
                 @endif
@@ -88,7 +98,7 @@
             <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                 {{ __('Dashboard') }}
             </x-responsive-nav-link>
-            <x-responsive-nav-link :href="route('users.index')" :active="request()->routeIs('users.index')">
+            <x-responsive-nav-link :href="route('admin.users.index')" :active="request()->routeIs('admin.users.index')">
                 {{ __('Users') }}
             </x-responsive-nav-link>
         </div>

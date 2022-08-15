@@ -44,16 +44,16 @@
                         <td>{{$search_user->login_time}}</td>
                         <td>
                             @if ($search_user->account_status == 'pending')
-                            <a href="{{ route('users.approve', $search_user->id) }}" class="btn btn-primary btn-sm">Approve</a>
+                            <a href="{{ route('admin.users.approve', $search_user->id) }}" class="btn btn-primary btn-sm">Approve</a>
                             @else
                             {{$search_user->account_status}}
                             @endif
                         </td>
                         <td>
-                            <a href="{{route('users.edit', $search_user->id)}}" class="btn btn-primary btn-sm">EDIT</a>
+                            <a href="{{route('admin.users.edit', $search_user->id)}}" class="btn btn-primary btn-sm">EDIT</a>
                         </td>
                         <td>
-                            <form action="{{ route('users.destroy', $search_user->id ) }}" method="POST">
+                            <form action="{{ route('admin.users.destroy', $search_user->id ) }}" method="POST">
                                 @csrf
                                 @method('DELETE')
                                 <button class="btn btn-danger btn-sm">DELETE </button>
