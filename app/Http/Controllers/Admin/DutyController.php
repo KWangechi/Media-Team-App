@@ -140,4 +140,6 @@ class DutyController extends Controller
             }
         }
     }
+
+    
 }

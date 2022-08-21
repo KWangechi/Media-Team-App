@@ -58,7 +58,7 @@ class LeaveController extends Controller
         }
 
         return redirect()->route('admin.leave.show', [auth()->user()->id])->with('success_message', 'Leave requested successfully');
-        
+
     }
 
     /**
@@ -83,7 +83,7 @@ class LeaveController extends Controller
      */
     public function update(Request $request, $id)
     {
-        
+
     }
 
     /**
@@ -97,37 +97,43 @@ class LeaveController extends Controller
         //
     }
 
-    public function approveLeave($id){
+    public function approveLeaveRequest($user_id, $leave_id){
 
-        User::where(['user_id',$id])->update([
+        Leave::where(['user_id' => $user_id, 'id' => $leave_id])->update([
             'status' => 'approved'
         ]);
 
-        $user = User::where('user_id', $id)->get();
-
-        $message = [
-            'title' => 'Leave Request Approval Status'
-        ];
-
-        Notification::send($user, new LeaveApproved($message));
-        
-        // return redirect()->route('admin.users.index');
-    }
-
-    public function rejectLeave($id){
-
-        User::where(['user_id',$id])->update([
-            'status' => 'rejected'
-        ]);
-
-        $user = User::where('user_id', $id)->get();
+        $user = User::where('id', $user_id)->get();
 
         $message = [
             'title' => 'Leave Request Approval Status',
-            'body' => 'Your request has been rejected. Please contact the admin'
+            'body' => 'Your Leave requested has been approved. Please contact the admin incase of any changes
+            that may occur during your leave days! We hope to see you soon'
         ];
 
         Notification::send($user, new LeaveApproved($message));
+
+        return redirect()->route('admin.leaves.index', auth()->user()->id)->with('success_message', 'Leave request has been approved!!');
+
+    }
+
+    public function rejectLeaveRequest($user_id, $leave_id){
+
+        Leave::where(['user_id' => $user_id, 'id' => $leave_id])->update([
+            'status' => 'rejected'
+        ]);
+
+        $user = User::where('id', $user_id)->get();
+
+        $message = [
+            'title' => 'Leave Request Approval Status',
+            'body' => 'Your Leave requested has been rejected. Please contact your supervisor for more information'
+        ];
+
+        Notification::send($user, new LeaveApproved($message));
+
+        return redirect()->route('admin.leaves.index', auth()->user()->id)->with('error_message', 'Leave request has been rejected!');
+
     }
 
 }

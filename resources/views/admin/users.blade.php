@@ -38,7 +38,10 @@
             <br>
             <br>
             <div class="row float-right">
-                <a class="btn btn-primary btn-sm float-right" data-bs-toggle="modal" data-bs-target="#createModal" id="createModalButton">CREATE NEW USER</a>
+                <a class="btn btn-primary btn-sm float-right" data-bs-toggle="modal" data-bs-target="#createModal" id="createModalButton">
+                    <i class="bi bi-plus-circle"></i>
+                    CREATE NEW USER
+                </a>
             </div>
 
             <!-- Create Modal -->
@@ -143,11 +146,9 @@
                         <th scope="col">Phone Number</th>
                         <th scope="col">Date Joined</th>
                         <th scope="col">Department</th>
-                        <th scope="col">Login Time(Sunday)</th>
+                        <th scope="col">Last Login Time(Sunday)</th>
                         <th scope="col">Account Status</th>
-                        <th scope="col">EDIT</th>
-                        <th scope="col">DELETE</th>
-
+                        <th scope="colgroup">Actions</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -160,22 +161,34 @@
                         <td>{{$user->date_joined}}</td>
                         <td>{{$user->department}}</td>
                         <td>{{$user->login_time}}</td>
+
+                        @if ($user->account_status == 'pending')
                         <td>
-                            @if ($user->account_status == 'pending')
                             <a href="{{ route('admin.users.approve', $user->id) }}" class="btn btn-primary btn-sm">Approve</a>
-                            @else
-                            {{$user->account_status}}
-                            @endif
                         </td>
+                        @else
+                        <td style="color: green">
+                            {{$user->account_status}}
+                            <i class="bi bi-check-circle"></i>
+                        </td>
+                        @endif
+
                         <td>
-                            <a href="{{route('admin.users.edit', $user->id)}}" class="btn btn-primary btn-sm">EDIT</a>
+                            <a href="{{route('admin.users.edit', $user->id)}}">
+                                <i class="bi bi-pencil btn btn-secondary btn-sm"></i>
+                            </a>
                         </td>
                         <td>
                             <form action="{{ route('admin.users.destroy', $user->id ) }}" method="POST">
                                 @csrf
                                 @method('DELETE')
-                                <button class="btn btn-danger btn-sm">DELETE </button>
+
+                                <!-- <i class="bi bi-trash3 btn btn-danger btn-sm">
+
+                                </i> -->
+                                <button class="bi bi-trash3 btn btn-danger btn-sm"></button>
                             </form>
+                        </td>
                             @endforeach
                     </tr>
                 </tbody>

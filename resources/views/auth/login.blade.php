@@ -41,13 +41,13 @@
             </div>
 
             <!-- Login time -->
-            @if($day == 'Sunday')
+
             <div>
                 <x-label for="login_time" :value="__('Login Time')" />
 
                 <x-input id="login_time" class="block mt-1 w-full" type="text" name="login_time" value="{{$current_time}}" disabled required />
             </div>
-            @endif
+            
             <!-- Remember Me -->
             <div class="block mt-4">
                 <label for="remember_me" class="inline-flex items-center">

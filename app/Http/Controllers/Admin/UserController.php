@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Leave;
 use App\Models\Role;
 use App\Models\User;
 use App\Notifications\UserRegistrationApproved;
@@ -151,10 +152,10 @@ class UserController extends Controller
         $user->delete();
 
         return redirect()->route('admin.users.index')->with('success_message', 'User deleted successfully!!');
-
     }
 
-    public function deleteSelectedUsers(User $user){
+    public function deleteSelectedUsers(User $user)
+    {
         $user = User::findOrFail($user);
         $user->delete();
 
@@ -181,4 +182,6 @@ class UserController extends Controller
 
         $filtered->all();
     }
+
+
 }

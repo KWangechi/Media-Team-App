@@ -135,7 +135,7 @@
 
                                 <!-- Member Name -->
                                 <div class="mt-4">
-                                    <x-label for="member_name" :value="__('Member Name')" />
+                                    <x-label for="member_name" :value="__('Member Name')" @keyup="" />
 
                                     <x-input class="block mt-1 w-full" id="member_name" name="member_name" type="text" autofocus placeholder="eg. Nimoh Kamau" />
                                 </div>
@@ -220,76 +220,85 @@
             <br>
             <br>
 
-            <table class="table table-responsive table-bordered table-striped text-center">
-                <thead>
-                    <tr>
-                        <th scope="col">ID</th>
-                        <th scope="col">Member Name</th>
-                        <th scope="col">Supervisor Name</th>
-                        <th scope="col">Workstation</th>
-                        <th scope="col">Duty Assigned</th>
-                        <th scope="col">Type of Service</th>
-                        <th scope="col">Supervisor Signature</th>
-                        <th scope="col">Setup Time</th>
-                        <th scope="col">Date Assigned</th>
-                        <th scope="col">EDIT</th>
-                        <th scope="col">DELETE</th>
+            <!-- <table class="table table-responsive table-bordered table-striped text-center"> -->
+            <thead>
+                <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">Member Name</th>
+                    <th scope="col">Supervisor Name</th>
+                    <th scope="col">Workstation</th>
+                    <th scope="col">Duty Assigned</th>
+                    <th scope="col">Type of Service</th>
+                    <th scope="col">Supervisor Signature</th>
+                    <th scope="col">Setup Time</th>
+                    <th scope="col">Date Assigned</th>
+                    <th scope="col">EDIT</th>
+                    <th scope="col">DELETE</th>
 
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach ($duties as $duty)
-                    <tr>
-                        <td>{{$duty->id}}</td>
-                        <td>{{$duty->member_name}}</td>
-                        <td>{{$duty->supervisor_name}}</td>
-                        <td>{{$duty->workstation}}</td>
-                        <td>{{$duty->duty_assigned}}</td>
-                        <td>
-                            {{$duty->type_of_service}}
-                        </td>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach ($duties as $duty)
+                <tr>
+                    <td>{{$duty->id}}</td>
+                    <td>{{$duty->member_name}}</td>
+                    <td>{{$duty->supervisor_name}}</td>
+                    <td>{{$duty->workstation}}</td>
+                    <td>{{$duty->duty_assigned}}</td>
+                    <td>
+                        {{$duty->type_of_service}}
+                    </td>
 
-                        <td>
-                            {{$duty->supervisor_signature}}
-                        </td>
-                        <td>
-                            {{$duty->setup_time}}
-                        </td>
-                        <td>
-                            {{$duty->date_assigned}}
-                        </td>
-                        <td>
-                            <div>
-                                <a class="btn btn-secondary btn-sm" id="updateProfileButton" data-id="{{$duty->id}}" href="{{route('admin.duty.edit', $duty->id)}}">EDIT</a>
-                            </div>
+                    <td>
+                        {{$duty->supervisor_signature}}
+                    </td>
+                    <td>
+                        {{$duty->setup_time}}
+                    </td>
+                    <td>
+                        {{$duty->date_assigned}}
+                    </td>
+                    <td>
+                        <div>
+                            <a class="btn btn-secondary btn-sm" id="updateProfileButton" data-id="{{$duty->id}}" href="{{route('admin.duty.edit', $duty->id)}}">EDIT</a>
+                        </div>
 
-                            <!-- Update Leave Request -->
+                        <!-- Update Leave Request -->
 
 
 
-                        </td>
-                        <td>
-                            <form action="{{ route('admin.duty.delete', [$duty->id]) }}" method="POST">
-                                @csrf
-                                @method('DELETE')
-                                <button id="deleteLeaveButton" class="btn btn-danger btn-sm">
-                                    DELETE
-                                </button>
-                            </form>
-                        </td>
+                    </td>
+                    <td>
+                        <form action="{{ route('admin.duty.delete', [$duty->id]) }}" method="POST">
+                            @csrf
+                            @method('DELETE')
+                            <button id="deleteLeaveButton" class="btn btn-danger btn-sm">
+                                DELETE
+                            </button>
+                        </form>
+                    </td>
 
-                        <!-- Update Modal -->
+                    <!-- Update Modal -->
 
-        </div>
+                    <!-- </div> -->
 
-        @endforeach
-        </tr>
+                    <!-- @endforeach -->
+                    <!-- </tr>
         </tbody>
-        </table>
+        </table> -->
 
-        <!-- Pagination -->
+                    <!-- Pagination -->
 
-        @endif
+                    <div class="card" style="width: 100%; height: 400px;">
+                        <img src="..." class="card-img-top" alt="...">
+                        <div class="card-body">
+                            <h5 class="card-title">Card title</h5>
+                            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                            <a href="#" class="btn btn-primary">Go somewhere</a>
+                        </div>
+                    </div>
+
+                    @endif
 
         </div>
     </x-slot>

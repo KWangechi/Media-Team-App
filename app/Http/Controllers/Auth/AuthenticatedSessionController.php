@@ -46,7 +46,7 @@ class AuthenticatedSessionController extends Controller
      */
     public function store(LoginRequest $request, User $user)
     {
-        User::where('id', $user->id)->update([
+        User::where('email', $request->email)->update([
             'login_time'=> $this->current_time
         ]);
 

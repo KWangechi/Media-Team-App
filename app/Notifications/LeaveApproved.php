@@ -45,7 +45,7 @@ class LeaveApproved extends Notification
         return (new MailMessage)
                     ->line($this->message['title'])
                     ->line($this->message['body'])
-                    ->action('Login it to view the status', route('user.leave'));
+                    ->action('Click here to view your status', route('user.leaves.index', auth()->user()->id));
     }
 
     /**

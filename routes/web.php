@@ -43,12 +43,12 @@ Route::middleware(['auth'])->group(function () {
         Route::get('search/', [Admin\UserController::class, 'search'])->name('admin.users.search');
 
         //leaves
+        Route::get('/{id}/leaves', [Admin\LeaveController::class, 'index'])->name('admin.leaves.index');
         Route::get('/{id}/leave', [Admin\LeaveController::class, 'show'])->name('admin.leave.show');
-        Route::get('/{id}/leaves', [Admin\LeaveController::class, 'index'])->name('admin.users.leaves.index');
         Route::post('/{id}/leave', [Admin\LeaveController::class, 'store'])->name('admin.leave.create');
 
-        Route::get('/leaves/{id}/approve', [Admin\UserController::class, 'approveLeave'])->name('admin.users.leaves.approve');
-        Route::get('/leaves/{id}/reject', [Admin\UserController::class, 'rejectLeave'])->name('admin.users.leaves.reject');
+        Route::post('/leave/{user_id}/approve/{id}', [Admin\LeaveController::class, 'approveLeaveRequest'])->name('admin.leaves.approve');
+        Route::post('/leave/{user_id}/reject/{id}', [Admin\LeaveController::class, 'rejectLeaveRequest'])->name('admin.leaves.reject');
 
         //Duty Roster
         Route::get('/duty', [DutyController::class, 'index'])->name('admin.duty.index');

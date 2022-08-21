@@ -12,7 +12,7 @@
             </div>
 
             @elseif (session('error_message'))
-            <div class="alert alert-danger alert-dismissible fade show">
+            <div class="alert alert-danger alert-dismissible fade show" >
                 {{ session('error_message') }}
                 <a class="btn-close" data-bs-dismiss="alert" aria-label="Close"></a>
             </div>
@@ -20,9 +20,9 @@
 
             <!-- check if leave is empty -->
             @if ($leaves->isEmpty())
-                <div class="alert alert-info alert-dismissible"> 
+                <div class="alert alert-info alert-dismissible">
                     No leave requests
-                </div> 
+                </div>
             @else
             <!-- Table -->
             <br>
@@ -46,14 +46,34 @@
                         <td>{{$leave->reason}}</td>
                         <td>{{$leave->start_date}}</td>
                         <td>{{$leave->end_date}}</td>
+
+                        @if ($leave->status == 'pending')
                         <td>
-                            @if ($leave->status == 'pending')
-                            <a href="{{ route('admin.users.leaves.approve', $leave->id) }}" class="btn btn-primary btn-sm">Approve Leave Request</a>
-                            <a href="{{ route('admin.users.leaves.reject', $leave->id) }}" class="btn btn-danger btn-sm">Reject Leave Request</a>
-                            @else
-                            {{$leave->status}}
-                            @endif
+                            <form action="{{ route('admin.leaves.approve', [$leave->user_id, $leave->id]) }}" method="POST">
+                                @csrf
+
+                                <button id="approveLeaveButton" class="btn btn-primary btn-sm">Approve Leave Request</button>
+
+                            </form>
+                            <br>
+                            
+                            <form action="{{ route('admin.leaves.reject', [$leave->user_id, $leave->id]) }}" method="POST">
+                                @csrf
+
+                                <button class="btn btn-danger btn-sm">Reject Leave Request</button>
+                            </form>
                         </td>
+                            @elseif($leave->status == 'approved')
+                            <td style="color: green;">
+                                {{$leave->status}}
+                                <i class="bi bi-check-circle"></i>
+                        </td>
+                        @else
+                        <td style="color: red;">
+                                {{$leave->status}}
+                                <i class="bi bi-x-circle"></i>
+                        </td>
+                            @endif
                             @endforeach
                     </tr>
                 </tbody>
