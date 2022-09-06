@@ -1,9 +1,12 @@
 <x-guest-layout>
     <x-auth-card>
         <x-slot name="logo">
-            <a href="/">
-                <x-application-logo class="w-20 h-20 fill-current text-gray-500" />
-            </a>
+        <div class="shrink-0 flex items-center">
+                    <a href="{{ route('dashboard') }}">
+                    <img src="{{ asset('storage/images/PCEA-church-logo-a-2.png') }}" class="card-img-top" alt="PCEA LOGO" style="width: 70px; height: 85px;">
+
+                    </a>
+                </div>
         </x-slot>
 
         <!-- Session Status -->
@@ -41,13 +44,15 @@
             </div>
 
             <!-- Login time -->
-
+            @if ($day == "Sunday")
             <div>
                 <x-label for="login_time" :value="__('Login Time')" />
 
                 <x-input id="login_time" class="block mt-1 w-full" type="text" name="login_time" value="{{$current_time}}" disabled required />
             </div>
-            
+
+            @endif
+
             <!-- Remember Me -->
             <div class="block mt-4">
                 <label for="remember_me" class="inline-flex items-center">

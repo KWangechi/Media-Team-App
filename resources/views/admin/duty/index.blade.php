@@ -286,17 +286,29 @@
                     <!-- </tr>
         </tbody>
         </table> -->
-
+                    <br>
                     <!-- Pagination -->
+                    @foreach ($duties as $duty)
 
-                    <div class="card" style="width: 100%; height: 400px;">
-                        <img src="..." class="card-img-top" alt="...">
+                    <div class="card border-primary mb-3" style="width: 50%; height: 280px;">
                         <div class="card-body">
-                            <h5 class="card-title">Card title</h5>
-                            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                            <a href="#" class="btn btn-primary">Go somewhere</a>
+                            <h5 class="card-title">Week 5</h5>
+                            <p class="card-text">Date assigned: {{$duty->date_assigned}}</p>
+                            <br>
+                            <p class="card-text">Setup Time: {{$duty->setup_time}}</p>
+                            <br>
+                            <p class="card-text">Supervisor Name: {{$duty->supervisor_name}}</p>
+                            <br>
+                            @if ($duty->supervisor_signature == 1)
+                            <p class="card-text">Supervisor Signature: Signed</p>
+                            @else
+                            <p class="card-text">Supervisor Signature: Pending</p>
+                            @endif
+
                         </div>
                     </div>
+                    <br>
+                    @endforeach
 
                     @endif
 
