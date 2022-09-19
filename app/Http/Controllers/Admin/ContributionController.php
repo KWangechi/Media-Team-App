@@ -3,7 +3,10 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Contribution;
 use Illuminate\Http\Request;
+
+use function GuzzleHttp\Promise\all;
 
 class ContributionController extends Controller
 {
@@ -14,7 +17,10 @@ class ContributionController extends Controller
      */
     public function index()
     {
-        //
+        $contributions = Contribution::paginate(10);
+
+        return view('admin.users.contributions.index', compact('contributions'));
+
     }
 
     /**
@@ -35,7 +41,12 @@ class ContributionController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'user_id' => $request->user_id,
+            'amount_contributed' => $request->amount_contributed,
+            'date_contributed' => $request->date_contributed,
+            'comment' => $request->comment
+        ]);
     }
 
     /**

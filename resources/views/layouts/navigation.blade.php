@@ -26,6 +26,10 @@
                         {{ __('Duty Roster') }}
                     </x-nav-link>
 
+                    <x-nav-link :href="route('admin.users.contributions', auth()->user()->id)" :active="request()->routeIs('admin.users.contributions')">
+                        {{ __('Contributions') }}
+                    </x-nav-link>
+
                 </div>
                 @else
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">

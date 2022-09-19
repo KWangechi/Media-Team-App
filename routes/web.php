@@ -3,11 +3,12 @@
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin;
+use App\Http\Controllers\Admin\ContributionController;
 use App\Http\Controllers\Admin\DutyController;
 use App\Http\Controllers\Auth;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\LeaveController;
-
+use App\Models\Contribution;
 
 /*
 |--------------------------------------------------------------------------
@@ -56,6 +57,14 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/duty/{id}', [DutyController::class, 'edit'])->name('admin.duty.edit');
         Route::patch('/duty/{id}', [DutyController::class, 'update'])->name('admin.duty.update');
         Route::delete('/duty/{id}', [DutyController::class, 'destroy'])->name('admin.duty.delete');
+
+        //Contributions
+        Route::get('/contributions', [ContributionController::class, 'index'])->name('admin.users.contributions');
+        Route::post('/contributions', [ContributionController::class, 'store'])->name('admin.users.contributions.store');
+        // Route::patch('/contributions/{id}', ContributionController::class, 'update')->name('admin.users.contributions.update');
+        // Route::delete('/contributions/{id}', ContributionController::class, 'destroy')->name('admin.users.contributions.delete');
+
+
 
     });
 
