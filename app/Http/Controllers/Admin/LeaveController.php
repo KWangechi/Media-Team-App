@@ -36,28 +36,49 @@ class LeaveController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'user_id' => 'required',
-            'reason' => 'required',
-            'start_date' => 'required|date',
-            'end_date' => 'required|date',
-        ]);
+            'user_id',
+            'reason',
+            'start_date',
+            'end_date'
+        ]
+    );
 
-        $leave = Leave::create([
-            'user_id' => auth()->user()->id,
-            'reason' => $request->reason,
-            'start_date' => $request->start_date,
-            'end_date' => $request->end_date
-        ]);
+    // dd($request->reason);
 
-        User::where('user_id', auth()->user()->id)->update([
-            'status' => 'approved'
-        ]);
+        // $leave = Leave::create([
+        //     'user_id' => auth()->user()->id,
+        //     'reason' => $request->reason,
+        //     'start_date' => $request->start_date,
+        //     'end_date' => $request->end_date
+        // ]);
 
-        if(!$leave){
-            return redirect()->route('admin.leave.show', [auth()->user()->id])->with('error_message', 'Error! Please try again');
+        // // User::where('id', auth()->user()->id)->update([
+        // //     'status' => 'approved'
+        // // ]);
+
+        // if($request->start_date > $request->end_date){
+        //     return redirect()->route('admin.leaves.index', [auth()->user()->id])->with('error_message', 'Start date should not be later than the end date!!');
+        // }
+        // else{
+        //     if(!$leave){
+        //         return redirect()->route('admin.leave.show', [auth()->user()->id])->with('error_message', 'Error! Please try again');
+        //     }
+
+        //     return redirect()->route('admin.leave.show', [auth()->user()->id])->with('success_message', 'Leave requested successfully');
+
+        // }
+
+        if($request->start_date > $request->end_date){
+            dd('Start date should not be later than the end date');
+
+        }
+        else{
+            dd('This is correct!!');
+
         }
 
-        return redirect()->route('admin.leave.show', [auth()->user()->id])->with('success_message', 'Leave requested successfully');
+        // dd($leave);
+
 
     }
 
