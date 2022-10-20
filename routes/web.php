@@ -47,6 +47,10 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/{id}/leaves', [Admin\LeaveController::class, 'index'])->name('admin.leaves.index');
         Route::get('/{id}/leave', [Admin\LeaveController::class, 'show'])->name('admin.leave.show');
         Route::post('/{id}/leave', [Admin\LeaveController::class, 'store'])->name('admin.leave.create');
+        Route::get('/{id}/my_leave', [Admin\LeaveController::class, 'edit'])->name('admin.leave.edit');
+        Route::patch('/{id}/leave', [Admin\LeaveController::class, 'update'])->name('admin.leave.update');
+        Route::delete('/{id}/delete_leave', [Admin\LeaveController::class, 'destroy'])->name('admin.leave.destroy');
+
 
         Route::post('/leave/{user_id}/approve/{id}', [Admin\LeaveController::class, 'approveLeaveRequest'])->name('admin.leaves.approve');
         Route::post('/leave/{user_id}/reject/{id}', [Admin\LeaveController::class, 'rejectLeaveRequest'])->name('admin.leaves.reject');

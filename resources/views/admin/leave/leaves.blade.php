@@ -2,10 +2,9 @@
     <x-slot name="slot">
         <div class="container">
             <br>
-            <a class="btn btn-primary float-right" href="{{ route('admin.leave.show', auth()->user()->id) }}">
+            <a class="btn btn-primary btn-sm float-right" href="{{ route('admin.leave.show', auth()->user()->id) }}">
                 VIEW MY LEAVES
             </a>
-            <br>
             <br>
             <br>
             @if (session('success_message'))
@@ -179,6 +178,8 @@
                         <th scope="col">Start Date</th>
                         <th scope="col">End Date</th>
                         <th scope="col">Status</th>
+                        <th scope="col">Actions</th>
+
                     </tr>
                 </thead>
                 <tbody>
@@ -191,29 +192,30 @@
                         <td>{{$leave->end_date}}</td>
 
                         @if ($leave->status == 'pending')
-                        <td style="color: green">
-                            <!-- <form action="{{ route('admin.leaves.approve', [$leave->user_id, $leave->id]) }}" method="POST">
-                                @csrf
+                        <td>
+                            <div class="row row-cols-auto">
+                                <div class="col">
+                                    <form action="{{ route('admin.leaves.approve', [$leave->user_id, $leave->id]) }}" method="POST">
+                                        @csrf
 
-                                <button id="approveLeaveButton" class="btn btn-primary btn-sm">Approve Leave Request</button>
+                                        <button id="approveLeaveButton" class="btn btn-success btn-sm">
+                                            <i class="bi bi-check2-circle"></i>
+                                        </button>
+                                    </form>
+                                </div>
 
+                                <div class="col">
+                                    <form action="{{ route('admin.leaves.reject', [$leave->user_id, $leave->id]) }}" method="POST">
+                                        @csrf
 
-                            </form> -->
+                                        <button id="rejectLeaveButton" class="btn btn-danger btn-sm">
+                                            <i class="bi bi-x-circle"></i>
+                                        </button>
+                                    </form>
+                                </div>
 
-                            approve
-                            <i class="bi bi-check-circle"></i>
+                            </div>
                         </td>
-                            <td style="color: red;">
-
-                                reject
-                                <i class="bi bi-check-circle"></i>
-                            </td>
-
-                            <!-- <form action="{{ route('admin.leaves.reject', [$leave->user_id, $leave->id]) }}" method="POST">
-                                @csrf
-
-                                <button class="btn btn-danger btn-sm">Reject Leave Request</button>
-                            </form> -->
 
                         @elseif($leave->status == 'approved')
                         <td style="color: green;">
@@ -226,6 +228,37 @@
                             <i class="bi bi-x-circle"></i>
                         </td>
                         @endif
+
+                        <td>
+                            <div class="row row-cols-auto">
+                                <div class="col-sm">
+                                    <button class="btn btn-secondary btn-sm">
+                                        <i class="bi bi-eye"></i>
+                                    </button>
+                                </div>
+                                <div class="col-sm">
+                                    <form action="{{ route('admin.leave.edit', [$leave->id]) }}" method="GET">
+
+                                        <button class="btn btn-primary btn-sm">
+                                            <i class="bi bi-pencil"></i>
+                                        </button>
+                                    </form>
+                                </div>
+
+                                <div class="col-sm">
+                                    <form action="{{route('admin.leave.destroy', $leave->id)}}" method="post">
+                                        @csrf
+                                        @method('DELETE')
+
+                                        <button class="btn btn-danger btn-sm">
+                                            <i class="bi bi-trash"></i>
+                                        </button>
+                                    </form>
+                                </div>
+                            </div>
+
+                        </td>
+
                         @endforeach
                     </tr>
                 </tbody>

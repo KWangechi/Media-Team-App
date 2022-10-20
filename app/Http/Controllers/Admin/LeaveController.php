@@ -18,7 +18,7 @@ class LeaveController extends Controller
      */
     public function index($id)
     {
-        $leaves = Leave::paginate(15);
+        $leaves = Leave::paginate(7);
 
         // $adminLeave = Leave::where('user_id', auth()->user()->id)->find($id);
 
@@ -31,55 +31,43 @@ class LeaveController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-    * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'user_id',
-            'reason',
-            'start_date',
-            'end_date'
-        ]
-    );
+        $request->validate(
+            [
+                'user_id',
+                'reason',
+                'start_date',
+                'end_date'
+            ]
+        );
 
-    // dd($request->reason);
+        // dd($request->reason);
 
-        // $leave = Leave::create([
-        //     'user_id' => auth()->user()->id,
-        //     'reason' => $request->reason,
-        //     'start_date' => $request->start_date,
-        //     'end_date' => $request->end_date
+
+
+        // User::where('id', auth()->user()->id)->update([
+        //     'status' => 'approved'
         // ]);
 
-        // // User::where('id', auth()->user()->id)->update([
-        // //     'status' => 'approved'
-        // // ]);
+        if ($request->start_date > $request->end_date) {
+            return redirect()->route('admin.leaves.index', [auth()->user()->id])->with('error_message', 'Start date should not be later than the end date!!');
+        } else {
+            $leave = Leave::create([
+                'user_id' => auth()->user()->id,
+                'reason' => $request->reason,
+                'start_date' => $request->start_date,
+                'end_date' => $request->end_date
+            ]);
 
-        // if($request->start_date > $request->end_date){
-        //     return redirect()->route('admin.leaves.index', [auth()->user()->id])->with('error_message', 'Start date should not be later than the end date!!');
-        // }
-        // else{
-        //     if(!$leave){
-        //         return redirect()->route('admin.leave.show', [auth()->user()->id])->with('error_message', 'Error! Please try again');
-        //     }
+            if (!$leave) {
+                return redirect()->route('admin.leaves.index', [auth()->user()->id])->with('error_message', 'Error! Please try again');
+            }
 
-        //     return redirect()->route('admin.leave.show', [auth()->user()->id])->with('success_message', 'Leave requested successfully');
-
-        // }
-
-        if($request->start_date > $request->end_date){
-            dd('Start date should not be later than the end date');
-
+            return redirect()->route('admin.leaves.index', [auth()->user()->id])->with('success_message', 'Leave request created successfully!!');
         }
-        else{
-            dd('This is correct!!');
-
-        }
-
-        // dd($leave);
-
-
     }
 
     /**
@@ -88,13 +76,20 @@ class LeaveController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($leave_id)
     {
-        $leave = Leave::where('user_id', auth()->user->id)->find($id);
+        $leave = Leave::where('user_id', auth()->user()->id)->find($leave_id);
 
-        return redirect()->route('admin.leave.show', [auth()->user()->id],compact($leave));
+        return redirect()->route('admin.leave.show', [auth()->user()->id])->with('leave', $leave);
+        // dd($leave->reason);
     }
 
+    public function edit($id)
+    {
+        $leave = Leave::where('user_id', auth()->user()->id)->findOrFail($id);
+
+        return view('admin.leave.edit', compact('leave'));
+    }
     /**
      * Update the specified resource in storage.
      *
@@ -102,9 +97,25 @@ class LeaveController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $leave_id)
     {
+        $leave = Leave::where('user_id', auth()->user()->id)->find($leave_id);
 
+        // dd($request->all());
+
+        if (!$leave) {
+            dd('ID does not exist');
+        } else {
+            if ($request->start_date > $request->end_date) {
+                return redirect()->route('admin.leave.edit', $leave_id)->with('error_message', 'Start date should not be after the end date!!');
+            } else {
+                if (!$leave->update($request->all())) {
+                    return redirect()->route('admin.leave.edit', $leave_id)->with('error_message', 'Error! Please try again');
+                } else {
+                    return redirect()->route('admin.leaves.index', auth()->user()->id)->with('success_message', 'Leave request updated successfully');
+                }
+            }
+        }
     }
 
     /**
@@ -115,10 +126,19 @@ class LeaveController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $leave = Leave::where('user_id', auth()->user()->id)->findOrFail($id);
+
+        if(!$leave->delete()){
+            return redirect()->route('admin.leaves.index', auth()->user()->id)->with('error_message', 'Error! Please try agaain');
+        }
+
+        else{
+            return redirect()->route('admin.leaves.index', auth()->user()->id)->with('success_message', 'Leave request deleted successfully!!');
+        }
     }
 
-    public function approveLeaveRequest($user_id, $leave_id){
+    public function approveLeaveRequest($user_id, $leave_id)
+    {
 
         Leave::where(['user_id' => $user_id, 'id' => $leave_id])->update([
             'status' => 'approved'
@@ -136,9 +156,14 @@ class LeaveController extends Controller
 
         return redirect()->route('admin.leaves.index', auth()->user()->id)->with('success_message', 'Leave request has been approved!!');
 
+        // dd([
+        //     'User ID' => $user_id,
+        //     'Leave ID' => $leave_id
+        // ]);
     }
 
-    public function rejectLeaveRequest($user_id, $leave_id){
+    public function rejectLeaveRequest($user_id, $leave_id)
+    {
 
         Leave::where(['user_id' => $user_id, 'id' => $leave_id])->update([
             'status' => 'rejected'
@@ -154,7 +179,5 @@ class LeaveController extends Controller
         Notification::send($user, new LeaveApproved($message));
 
         return redirect()->route('admin.leaves.index', auth()->user()->id)->with('error_message', 'Leave request has been rejected!');
-
     }
-
 }
