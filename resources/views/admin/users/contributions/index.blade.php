@@ -16,23 +16,170 @@
             </div>
             @endif
 
+            <a class="btn btn-primary btn-sm text-center float-right" data-bs-toggle="modal" data-bs-target="#createLeaveModal" id="createLeaveModalButton">
+                <i class="bi bi-plus-circle"></i>
+                CREATE NEW CONTRIBUTION
+            </a>
+
+            <!-- search bar -->
+            <form action="{{ route('admin.users.contributions.search') }}" method="get">
+
+                <div>
+                    <x-input id="filter" type="text" name="filter" placeholder="Filter" />
+
+                </div>
+                <div class="row float-right">
+                    <div class="col">
+                        <x-input id="search" type="text" name="search" placeholder="Search" />
+                    </div>
+                    <div class="col">
+                        <button class="btn btn-primary">
+                            <i class="bi bi-search"></i>
+                        </button>
+                    </div>
+                </div>
+            </form>
+
             <!-- check if contribution is empty -->
             @if ($contributions->isEmpty())
             <div class="alert alert-info alert-dismissible">
                 No contributions made yet
             </div>
 
+            <!-- Create Contributions Modal -->
+            <div class="modal fade" id="createLeaveModal" tabindex="-1" aria-labelledby="createLeaveModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header ">
+                            <h5 class="modal-title" id="createContributionTitle">Create a New Contribution</h5>
+                            <a class="btn-close" id="closeModalButton" data-bs-dismiss="modal" aria-label="Close"></a>
+                        </div>
+                        <div class="modal-body">
+                            <form action="{{ route('admin.users.contributions.create') }}" method="POST" id="createContributionForm">
+                                @csrf
+
+                                <!-- Name of Member who contributed -->
+                                <div class="mt-4">
+                                    <x-label for="member_name" :value="__('Member Name')" />
+                                    <select name="user_id">
+
+                                        @foreach ($users as $user)
+                                        <option value="{{ $user->id }}">{{$user->name}}</option>
+                                        @endforeach
+
+                                    </select>
+                                </div>
+
+                                <!-- Amount Contributed -->
+                                <div class="mt-4">
+                                    <x-label for="amount_contributed" :value="__('Contribution Amount')" />
+
+                                    <x-input id="amount_contributed" class="block mt-1 w-full" type="number" name="amount_contributed" required />
+                                </div>
+
+                                <!-- Contribution Date -->
+                                <div class="mt-4">
+                                    <x-label for="date_contributed" :value="__('Contribution Date')" />
+
+                                    <x-input id="date_contributed" class="block mt-1 w-full" type="date" name="date_contributed" required />
+                                </div>
+
+                                <!-- Comment -->
+                                <div class="mt-4">
+                                    <x-label for="comment" :value="__('Comment')" />
+
+                                    <x-input id="comment" class="block mt-1 w-full" type="text" name="comment" required />
+                                </div>
+
+
+                                <br>
+                                <x-button class="ml-4" id="createContributionButton">
+                                    {{ __('Save') }}
+                                </x-button>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <a class="btn btn-secondary" data-bs-dismiss="modal">Close</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
             @else
+            <!-- <a class="btn btn-primary btn-sm text-center float-right" data-bs-toggle="modal" data-bs-target="#createLeaveModal" id="createLeaveModalButton">
+                <i class="bi bi-plus-circle"></i>
+                CREATE NEW CONTRIBUTION
+            </a> -->
+
+            <!-- Create Contributions Modal -->
+            <div class="modal fade" id="createLeaveModal" tabindex="-1" aria-labelledby="createLeaveModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header ">
+                            <h5 class="modal-title" id="createContributionTitle">Create a New Contribution</h5>
+                            <a class="btn-close" id="closeModalButton" data-bs-dismiss="modal" aria-label="Close"></a>
+                        </div>
+                        <div class="modal-body">
+                            <form action="{{ route('admin.users.contributions.create') }}" method="POST" id="createContributionForm">
+                                @csrf
+
+                                <!-- Name of Member who contributed -->
+                                <div class="mt-4">
+                                    <x-label for="member_name" :value="__('Member Name')" />
+                                    <select name="user_id">
+
+                                        @foreach ($users as $user)
+                                        <option value="{{ $user->id }}">{{$user->name}}</option>
+                                        @endforeach
+
+                                    </select>
+                                </div>
+
+                                <!-- Amount Contributed -->
+                                <div class="mt-4">
+                                    <x-label for="amount_contributed" :value="__('Contribution Amount')" />
+
+                                    <x-input id="amount_contributed" class="block mt-1 w-full" type="number" name="amount_contributed" required />
+                                </div>
+
+                                <!-- Contribution Date -->
+                                <div class="mt-4">
+                                    <x-label for="date_contributed" :value="__('Contribution Date')" />
+
+                                    <x-input id="date_contributed" class="block mt-1 w-full" type="date" name="date_contributed" required />
+                                </div>
+
+                                <!-- Comment -->
+                                <div class="mt-4">
+                                    <x-label for="comment" :value="__('Comment')" />
+
+                                    <x-input id="comment" class="block mt-1 w-full" type="text" name="comment" required />
+                                </div>
+
+
+                                <br>
+                                <x-button class="ml-4" id="createContributionButton">
+                                    {{ __('Save') }}
+                                </x-button>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <a class="btn btn-secondary" data-bs-dismiss="modal">Close</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
             <!-- Table -->
             <br>
             <br>
-            <table class="table table-responsive table-bordered table-striped text-center">
+            <table class="table table-responsive table-bordered table-striped text-center table-sm">
                 <thead>
                     <tr>
                         <th scope="col">ID</th>
                         <th scope="col">User ID</th>
-                        <th scope="col">Amount Contributed</th>
+                        <th scope="col">Amount Contributed(Kshs.)</th>
                         <th scope="col">Date Contributed</th>
 
                     </tr>
@@ -44,12 +191,10 @@
                         <td>{{$contribution->user_id}}</td>
                         <td>{{$contribution->amount_contributed}}</td>
                         <td>{{$contribution->date_contributed}}</td>
-
-
+                    </tr>
         </div>
 
         @endforeach
-        </tr>
         </tbody>
         </table>
 

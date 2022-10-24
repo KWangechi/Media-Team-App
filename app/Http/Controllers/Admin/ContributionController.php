@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Contribution;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 use function GuzzleHttp\Promise\all;
@@ -18,9 +19,39 @@ class ContributionController extends Controller
     public function index()
     {
         $contributions = Contribution::paginate(10);
+        $users = User::all();
 
-        return view('admin.users.contributions.index', compact('contributions'));
 
+        return view('admin.users.contributions.index', compact(['contributions', 'users']));
+    }
+
+    /**
+     * Search for contributions in the table
+     * @param Request $request
+     */
+    public function search(Request $request){
+        $contribution = '';
+        $search = $request->search;
+
+        // $search_contributions = Contribution::query()
+        // ->where('member_name', 'LIKE', '%'. $search. '%')
+        // ->orWhere('contribution');
+        $contributions = Contribution::all();
+
+        dd($contributions->user->name);
+
+        // foreach ($contributions as $contribution) {
+        //     # code...
+        //     dd($contribution->user->name);
+        // }
+
+        // for ($i=0; $i < count($contributions); $i++) {
+        //     dd($i);
+        // }
+        // dd($search);
+
+
+        // dd($contributions->attributes());
     }
 
     /**
@@ -42,11 +73,28 @@ class ContributionController extends Controller
     public function store(Request $request)
     {
         $request->validate([
+            'user_id',
+            'amount_contributed',
+            'date_contributed',
+            'comment'
+        ]);
+
+        // dd($request->all());
+        $contribution = Contribution::create([
             'user_id' => $request->user_id,
             'amount_contributed' => $request->amount_contributed,
             'date_contributed' => $request->date_contributed,
             'comment' => $request->comment
         ]);
+
+        if(!$contribution){
+            return redirect()->route('admin.users.contributions')->with('error_message', 'Error! Something went wrong. Please try again');
+        }
+        else{
+            return redirect()->route('admin.users.contributions')->with('success_message', 'Contribution recorded successfully!!');
+
+        }
+        // dd($contribution);
     }
 
     /**

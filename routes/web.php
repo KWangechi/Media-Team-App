@@ -64,10 +64,10 @@ Route::middleware(['auth'])->group(function () {
 
         //Contributions
         Route::get('/contributions', [ContributionController::class, 'index'])->name('admin.users.contributions');
-        Route::post('/contributions', [ContributionController::class, 'store'])->name('admin.users.contributions.store');
+        Route::post('/contributions', [ContributionController::class, 'store'])->name('admin.users.contributions.create');
         // Route::patch('/contributions/{id}', ContributionController::class, 'update')->name('admin.users.contributions.update');
         // Route::delete('/contributions/{id}', ContributionController::class, 'destroy')->name('admin.users.contributions.delete');
-
+        Route::get('/contributions/search', [ContributionController::class, 'search'])->name('admin.users.contributions.search');
 
 
     });
