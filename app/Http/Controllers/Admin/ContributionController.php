@@ -30,28 +30,27 @@ class ContributionController extends Controller
      * @param Request $request
      */
     public function search(Request $request){
-        $contribution = '';
+
+        $contributions = Contribution::all();
+        $member_name = '';
+
         $search = $request->search;
 
-        // $search_contributions = Contribution::query()
-        // ->where('member_name', 'LIKE', '%'. $search. '%')
-        // ->orWhere('contribution');
-        $contributions = Contribution::all();
+        foreach ($contributions as $contribution) {
+            # code...
+            $member_name = $contribution->user->name;
+            // dd($contribution->user->name);
+        }
 
-        dd($contributions->user->name);
+        $search_contributions = Contribution::query()
+        ->where('user_id', 'LIKE', '%'. $search. '%')
+        ->orWhere('amount_contributed', 'LIKE', '%' . $search. '%')
+        ->orWhere('date_contributed', 'LIKE', '%' . $search. '%')
+        ->get();
 
-        // foreach ($contributions as $contribution) {
-        //     # code...
-        //     dd($contribution->user->name);
-        // }
-
-        // for ($i=0; $i < count($contributions); $i++) {
-        //     dd($i);
-        // }
-        // dd($search);
+        dd($search_contributions);
 
 
-        // dd($contributions->attributes());
     }
 
     /**

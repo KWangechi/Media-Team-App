@@ -15,6 +15,6 @@ class Contribution extends Model
      * Realtionship between Contributions and users
      */
     public function user(){
-        return $this->belongsToMany(User::class, 'user_id', 'id');
+        return $this->belongsTo(User::class, 'user_id', 'id');
     }
 }
