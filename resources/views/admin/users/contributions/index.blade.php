@@ -20,12 +20,15 @@
                 <i class="bi bi-plus-circle"></i>
                 CREATE NEW CONTRIBUTION
             </a>
+            <br>
 
             <!-- search bar -->
             <form action="{{ route('admin.users.contributions.search') }}" method="get">
 
                 <div>
+                    <i class="bi bi-filter"></i>
                     <x-input id="filter" type="text" name="filter" placeholder="Filter" />
+
 
                 </div>
                 <div class="row float-right">
@@ -181,6 +184,8 @@
                         <th scope="col">User ID</th>
                         <th scope="col">Amount Contributed(Kshs.)</th>
                         <th scope="col">Date Contributed</th>
+                        <th scope="col">Comment</th>
+                        <th scope="col-group">Actions</th>
 
                     </tr>
                 </thead>
@@ -191,6 +196,35 @@
                         <td>{{$contribution->user_id}}</td>
                         <td>{{$contribution->amount_contributed}}</td>
                         <td>{{$contribution->date_contributed}}</td>
+                        <td>{{$contribution->comment}}</td>
+                        <td>
+                            <div class="row row-cols-auto">
+                                <div class="col-sm">
+                                    <button class="btn btn-secondary btn-sm">
+                                        <i class="bi bi-eye"></i>
+                                    </button>
+                                </div>
+                                <div class="col-sm">
+                                    <form action="{{ route('admin.users.contributions.edit', $contribution->id) }}" method="GET">
+
+                                        <button class="btn btn-primary btn-sm">
+                                            <i class="bi bi-pencil"></i>
+                                        </button>
+                                    </form>
+                                </div>
+
+                                <div class="col-sm">
+                                    <form action="{{route('admin.users.contributions.delete', $contribution->id) }}" method="POST">
+                                        @csrf
+                                        @method('DELETE')
+
+                                        <button class="btn btn-danger btn-sm">
+                                            <i class="bi bi-trash"></i>
+                                        </button>
+                                    </form>
+                                </div>
+                            </div>
+                        </td>
                     </tr>
         </div>
 

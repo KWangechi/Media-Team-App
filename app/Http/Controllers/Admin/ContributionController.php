@@ -48,8 +48,11 @@ class ContributionController extends Controller
         ->orWhere('date_contributed', 'LIKE', '%' . $search. '%')
         ->get();
 
-        dd($search_contributions);
+        // dd($search_contributions);
 
+        // return view('admin.users.contributions.index', compact(['search_contributions', 'contributions']))->with('success_message', 'Contribution has been found!!');
+
+        return redirect()->route('admin.users.contributions', compact('search_contributions'));
 
     }
 
@@ -104,7 +107,15 @@ class ContributionController extends Controller
      */
     public function show($id)
     {
-        //
+        $contribution = Contribution::findOrFail($id);
+
+        if(!$contribution){
+            return redirect()->route('admin.users.contributions.index')->with('error_message', 'Contribution found!');
+        }
+
+        else{
+            return redirect()->route('admin.users.contributions.show', compact('contribution'))->with('success_message', 'Contribution record found!!!!');
+        }
     }
 
     /**
@@ -115,7 +126,18 @@ class ContributionController extends Controller
      */
     public function edit($id)
     {
-        //
+        $contribution = Contribution::findOrFail($id);
+        $users = User::all();
+
+        if(!$contribution){
+            return redirect()->route('admin.users.contributions')->with('error_message', 'ID does not exist!!');
+        }
+        else{
+            // return redirect()->route('admin.users.contributions.edit', compact(['users', 'contribution']));
+            // return view('admin.users.contributions.index', [$contribution->id])->with(['contribution' => $contribution]);
+            return view('admin.users.contributions.edit', compact(['users', 'contribution']));
+
+        }
     }
 
     /**
@@ -127,7 +149,15 @@ class ContributionController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $contribution = Contribution::findOrFail($id);
+
+        if(!($contribution->update($request->all()))){
+            return redirect()->route('admin.users.contributions')->with('error_message', 'Something went wrong!! Please try again');
+        }
+
+        else{
+            return redirect()->route('admin.users.contributions')->with('success_message', 'Contribution has been updated successfully!!');
+        }
     }
 
     /**
@@ -138,6 +168,17 @@ class ContributionController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $contribution = Contribution::findOrFail($id);
+
+
+        if(!($contribution->delete())){
+
+            return redirect()->route('admin.users.contributions')->with('error_message', 'Error!! Something is wrong');
+
+        }
+
+        else{
+            return redirect()->route('admin.users.conrtibutions')->with('success_message', 'Contribution deleted successfully!!!');
+        }
     }
 }

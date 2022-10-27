@@ -68,7 +68,9 @@ Route::middleware(['auth'])->group(function () {
         // Route::patch('/contributions/{id}', ContributionController::class, 'update')->name('admin.users.contributions.update');
         // Route::delete('/contributions/{id}', ContributionController::class, 'destroy')->name('admin.users.contributions.delete');
         Route::get('/contributions/search', [ContributionController::class, 'search'])->name('admin.users.contributions.search');
-
+        Route::get('/contributions/{id}', [ContributionController::class, 'edit'])->name('admin.users.contributions.edit');
+        Route::patch('/contributions/{id}', [ContributionController::class, 'update'])->name('admin.users.contributions.update');
+        Route::delete('/contributions/{id}', [ContributionController::class, 'destroy'])->name('admin.users.contributions.delete');
 
     });
 
