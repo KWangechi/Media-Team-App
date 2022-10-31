@@ -1,9 +1,9 @@
 <x-app-layout>
-    <!-- <x-slot name="header">
+    <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Users') }}
+            {{ __('Contributions') }}
         </h2>
-    </x-slot> -->
+    </x-slot>
     <x-slot name="slot">
         <div class="container">
             <br>

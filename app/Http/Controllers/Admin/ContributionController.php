@@ -29,8 +29,9 @@ class ContributionController extends Controller
      * Search for contributions in the table
      * @param Request $request
      */
-    public function search(Request $request){
+    public function search(Request $request) {
 
+        $users = User::all();
         $contributions = Contribution::all();
         $member_name = '';
 
@@ -46,13 +47,21 @@ class ContributionController extends Controller
         ->where('user_id', 'LIKE', '%'. $search. '%')
         ->orWhere('amount_contributed', 'LIKE', '%' . $search. '%')
         ->orWhere('date_contributed', 'LIKE', '%' . $search. '%')
-        ->get();
+        ->paginate(7);
 
         // dd($search_contributions);
 
         // return view('admin.users.contributions.index', compact(['search_contributions', 'contributions']))->with('success_message', 'Contribution has been found!!');
+        if(!$search_contributions){
+            return view('admin.users.contributions.search', compact(['search_contributions', 'users']));
+            // return redirect()->route('admin.users.contributions.search')->with('error_message', 'Sorry!!! Record not found');
+        }
 
-        return redirect()->route('admin.users.contributions', compact('search_contributions'));
+        else{
+            // return redirect()->route('admin.users.contributions.search')->with('success_message', 'Found {{ $search_contributions->count() }} results');
+
+            return view('admin.users.contributions.search', compact(['search_contributions', 'users']));
+        }
 
     }
 

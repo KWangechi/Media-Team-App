@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin;
+use App\Http\Controllers\Admin\AnnouncementController;
 use App\Http\Controllers\Admin\ContributionController;
 use App\Http\Controllers\Admin\DutyController;
 use App\Http\Controllers\Auth;
@@ -71,6 +72,10 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/contributions/{id}', [ContributionController::class, 'edit'])->name('admin.users.contributions.edit');
         Route::patch('/contributions/{id}', [ContributionController::class, 'update'])->name('admin.users.contributions.update');
         Route::delete('/contributions/{id}', [ContributionController::class, 'destroy'])->name('admin.users.contributions.delete');
+
+
+        //announcements
+        Route::get('/announcements', [AnnouncementController::class, 'index'])->name('admin.announcements');
 
     });
 

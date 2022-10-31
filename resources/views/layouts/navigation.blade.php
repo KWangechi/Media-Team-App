@@ -6,7 +6,7 @@
                 <!-- Logo -->
                 <div class="shrink-0 flex items-center">
                     <a href="{{ route('dashboard') }}">
-                    <img src="{{ asset('storage/images/PCEA-church-logo-a-2.png') }}" class="card-img-top" alt="PCEA LOGO" style="width: 40px; height: 65px;">
+                        <img src="{{ asset('storage/images/PCEA-church-logo-a-2.png') }}" class="card-img-top" alt="PCEA LOGO" style="width: 40px; height: 65px;">
 
                     </a>
                 </div>
@@ -26,7 +26,7 @@
                         {{ __('Duty Roster') }}
                     </x-nav-link>
 
-                    <x-nav-link :href="route('admin.users.contributions', auth()->user()->id)" :active="request()->routeIs('admin.users.contributions')">
+                    <x-nav-link :href="route('admin.users.contributions', auth()->user()->id)" :active="request()->routeIs('admin.users.contributions') || request()->routeIs('admin.users.contributions.search')">
                         {{ __('Contributions') }}
                     </x-nav-link>
 
@@ -65,14 +65,33 @@
 
                     <x-slot name="content">
                         <x-dropdown-link :href="route('user.profile', auth()->user()->id)">
+                            <i class="bi bi-person"></i>
                             {{ __('My Profile') }}
                         </x-dropdown-link>
+
+                        <x-dropdown-link :href="route('admin.announcements')">
+                            <i class="bi bi-bell"></i>
+                            {{ __('Announcements') }}
+
+                            @if (3 ==5 )
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-1-circle-fill" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0ZM9.283 4.002V12H7.971V5.338h-.065L6.072 6.656V5.385l1.899-1.383h1.312Z" />
+                            </svg>
+                            @else
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-5-circle-fill" viewBox="0 0 16 16">
+                                <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0Zm-8.006 4.158c1.74 0 2.924-1.119 2.924-2.806 0-1.641-1.178-2.584-2.56-2.584-.897 0-1.442.421-1.612.68h-.064l.193-2.344h3.621V4.002H5.791L5.445 8.63h1.149c.193-.358.668-.809 1.435-.809.85 0 1.582.604 1.582 1.57 0 1.085-.779 1.682-1.57 1.682-.697 0-1.389-.31-1.53-1.031H5.276c.065 1.213 1.149 2.115 2.72 2.115Z" />
+                            </svg>
+                            @endif
+
+                        </x-dropdown-link>
+
                         <!-- Authentication -->
                         <form method="POST" action="{{ route('logout') }}">
                             @csrf
 
                             <x-dropdown-link :href="route('logout')" onclick="event.preventDefault();
                                                 this.closest('form').submit();">
+                                <i class="bi bi-power"></i>
                                 {{ __('Log Out') }}
                             </x-dropdown-link>
                         </form>
