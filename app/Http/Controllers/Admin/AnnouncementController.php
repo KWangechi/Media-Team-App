@@ -4,7 +4,12 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Announcement;
+use App\Models\User;
+use App\Notifications\NewAnnouncement;
 use Illuminate\Http\Request;
+use Illuminate\Notifications\Events\NotificationSent;
+use Illuminate\Notifications\Notification;
+use Illuminate\Support\Facades\Notification as FacadesNotification;
 
 class AnnouncementController extends Controller
 {
@@ -38,6 +43,9 @@ class AnnouncementController extends Controller
      */
     public function store(Request $request)
     {
+
+        $user = User::all();
+
         $request->validate([
             'title',
             'content',
@@ -54,13 +62,19 @@ class AnnouncementController extends Controller
             'event_location' => $request->event_location
         ]);
 
-        if(!$announcement){
-            return redirect()->route('admin.announcements.index')->with('error_message', 'Error!! Please try again');
-        }
+        // if(!$announcement){
+        //     return redirect()->route('admin.announcements.index')->with('error_message', 'Error!! Please try again');
+        // }
 
-        else{
-            return redirect()->route('admin.announcements')->with('success_message', 'Announcement created successfully!!!');
-        }
+        // else{
+        //     return redirect()->route('admin.announcements')->with('success_message', 'Announcement created successfully!!!');
+        // }
+
+        //send a notification to all users once the announcement has been created
+        $notification = FacadesNotification::send(new NewAnnouncement($user, $announcement));
+
+        dd($notification);
+
     }
 
     /**
@@ -71,7 +85,9 @@ class AnnouncementController extends Controller
      */
     public function show($id)
     {
-        //
+        $annnoncement = Announcement::find($id);
+
+        return redirect()->route('admin.announcement.show', compact('announcement'));
     }
 
     /**
@@ -94,7 +110,15 @@ class AnnouncementController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $announcement = Announcement::findOrFail($id);
+
+        if(!$announcement->update($request->all())){
+            return redirect()->route('admin.announcements.edit', $request->id)->with('error_message', 'Error! Try updating again!!');
+        }
+
+        else{
+            return redirect()->route('admin.announcements')->with('success_message', 'Announcement updated successfully!!');
+        }
     }
 
     /**
@@ -105,6 +129,10 @@ class AnnouncementController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $announcement = Announcement::findOrFail($id);
+
+        if(!($announcement->destroy())){
+            return redirect()->route('admin.announcements')->with('success_message', 'Announcement deleted successfully!');
+        }
     }
 }

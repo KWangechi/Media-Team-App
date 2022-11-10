@@ -17,9 +17,9 @@ return new class extends Migration
             $table->id();
             $table->text('title')->nullable();
             $table->text('content')->nullable();
+            $table->text('event_location')->nullable();
             $table->date('event_date')->nullable();
             $table->date('event_time')->nullable();
-            $table->text('event_location')->nullable();
             $table->timestamps();
         });
     }

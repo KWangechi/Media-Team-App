@@ -7,18 +7,23 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
+use function Symfony\Component\String\b;
+
 class NewAnnouncement extends Notification
 {
     use Queueable;
+
+    private $title, $content, $event_location, $event_date, $event_time;
 
     /**
      * Create a new notification instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct($title, $content)
     {
-        //
+        $this->title = $title;
+        $this->content = $content;
     }
 
     /**
@@ -29,7 +34,7 @@ class NewAnnouncement extends Notification
      */
     public function via($notifiable)
     {
-        return ['mail'];
+        return ['mail', 'database'];
     }
 
     /**
@@ -41,9 +46,10 @@ class NewAnnouncement extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
-                    ->line('The introduction to the notification.')
-                    ->action('Notification Action', url('/'))
-                    ->line('Thank you for using our application!');
+                    ->subject('Alert: New Announcement',$this->title)
+                    ->line($this->content)
+                    ->action('Click here to read the rest of the notification in the App', url('/admin/announcements'))
+                    ->outroLines;
     }
 
     /**

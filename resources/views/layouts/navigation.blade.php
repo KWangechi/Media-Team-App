@@ -15,7 +15,7 @@
                 <!-- if the user is an admin -->
                 @if(auth()->user()->role_id == 1)
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                    <x-nav-link :href="route('admin.users.index')" :active="request()->routeIs('admin.users.index') || request()->routeIs('admin.users.edit', Auth::user()->id) || request()->routeIs('admin.users.search', Auth::user()->id)">
+                    <x-nav-link :href="route('admin.users.index')" :active="request()->routeIs('admin.users.index') || request()->routeIs('admin.users.edit', Auth::user()->id) || request()->routeIs('admin.users.search', Auth::user()->id) ">
                         {{ __('Users') }}
                     </x-nav-link>
                     <x-nav-link :href="route('admin.leaves.index', auth()->user()->id)" :active="request()->routeIs('admin.leaves.index')">
@@ -26,7 +26,7 @@
                         {{ __('Duty Roster') }}
                     </x-nav-link>
 
-                    <x-nav-link :href="route('admin.users.contributions', auth()->user()->id)" :active="request()->routeIs('admin.users.contributions') || request()->routeIs('admin.users.contributions.search')">
+                    <x-nav-link :href="route('admin.users.contributions', auth()->user()->id)" :active="request()->routeIs('admin.users.contributions') || request()->routeIs('admin.users.contributions.search') || request()->routeIs('admin.users.contributions.edit')">
                         {{ __('Contributions') }}
                     </x-nav-link>
 
