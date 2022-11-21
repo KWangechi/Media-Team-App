@@ -7,9 +7,7 @@ use App\Models\Announcement;
 use App\Models\User;
 use App\Notifications\NewAnnouncement;
 use Illuminate\Http\Request;
-use Illuminate\Notifications\Events\NotificationSent;
-use Illuminate\Notifications\Notification;
-use Illuminate\Support\Facades\Notification as FacadesNotification;
+use Illuminate\Support\Facades\Notification;
 
 class AnnouncementController extends Controller
 {
@@ -20,9 +18,9 @@ class AnnouncementController extends Controller
      */
     public function index()
     {
-        // $announcements = Announcement::all();
-
-        return view('admin.announcements');
+        $announcements = Announcement::paginate(6);
+        // dd($announcements);
+        return view('admin.announcements.index', compact('announcements'));
     }
 
     /**
@@ -44,7 +42,7 @@ class AnnouncementController extends Controller
     public function store(Request $request)
     {
 
-        $user = User::all();
+        $users = User::all();
 
         $request->validate([
             'title',
@@ -62,18 +60,22 @@ class AnnouncementController extends Controller
             'event_location' => $request->event_location
         ]);
 
-        // if(!$announcement){
-        //     return redirect()->route('admin.announcements.index')->with('error_message', 'Error!! Please try again');
-        // }
+        // $message = [
+        //     'title' => $announcement->title,
+        //     'content' => $announcement->content
+        // ];
 
-        // else{
-        //     return redirect()->route('admin.announcements')->with('success_message', 'Announcement created successfully!!!');
-        // }
+        if (!$announcement) {
+            return redirect()->route('admin.announcements.index')->with('error_message', 'Error!! Please try again');
+        } else {
 
-        //send a notification to all users once the announcement has been created
-        $notification = FacadesNotification::send(new NewAnnouncement($user, $announcement));
+            //send a notification to all users once the announcement has been created
+            $notification = Notification::send($users, new newAnnouncement($announcement->title, $announcement->content));
 
-        dd($notification);
+            // dd($notification);
+            return redirect()->route('admin.announcements')->with('success_message', 'Announcement created successfully!!!');
+        }
+
 
     }
 
@@ -112,11 +114,9 @@ class AnnouncementController extends Controller
     {
         $announcement = Announcement::findOrFail($id);
 
-        if(!$announcement->update($request->all())){
+        if (!$announcement->update($request->all())) {
             return redirect()->route('admin.announcements.edit', $request->id)->with('error_message', 'Error! Try updating again!!');
-        }
-
-        else{
+        } else {
             return redirect()->route('admin.announcements')->with('success_message', 'Announcement updated successfully!!');
         }
     }
@@ -131,8 +131,12 @@ class AnnouncementController extends Controller
     {
         $announcement = Announcement::findOrFail($id);
 
-        if(!($announcement->destroy())){
+        if (!($announcement->destroy())) {
             return redirect()->route('admin.announcements')->with('success_message', 'Announcement deleted successfully!');
         }
+    }
+
+    public function readAnnouncement(){
+
     }
 }

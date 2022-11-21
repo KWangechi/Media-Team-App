@@ -46,10 +46,10 @@ class NewAnnouncement extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
-                    ->subject('Alert: New Announcement',$this->title)
-                    ->line($this->content)
-                    ->action('Click here to read the rest of the notification in the App', url('/admin/announcements'))
-                    ->outroLines;
+            ->subject($this->title)
+            ->greeting('Hello Member. Trust that you are doing well')
+            ->line($this->content)
+            ->action('Click here to read the rest of the notification in the App', url('/admin/announcements'));
     }
 
     /**
@@ -61,7 +61,11 @@ class NewAnnouncement extends Notification
     public function toArray($notifiable)
     {
         return [
-            //
+            'title' => $this->title,
+            'content' => $this->content,
+            'event_location' => $this->event_location,
+            'event_date' => $this->event_date,
+            'event_time' => $this->event_time
         ];
     }
 }
