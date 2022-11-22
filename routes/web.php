@@ -9,6 +9,7 @@ use App\Http\Controllers\Admin\DutyController;
 use App\Http\Controllers\Auth;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\LeaveController;
+use App\Models\Announcement;
 use App\Models\Contribution;
 
 /*
@@ -78,7 +79,7 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/announcements', [AnnouncementController::class, 'index'])->name('admin.announcements');
         Route::post('/announcement', [AnnouncementController::class, 'store'])->name('admin.announcement.create');
         Route::get('/readAnnouncement', [AnnouncementController::class, 'readAnnouncement'])->name('admin.announcement.readAnnouncement');
-
+        Route::get('/filter', [AnnouncementController::class, 'filter'])->name('admin.announcements.filterByEventLocation');
     });
 
     //User Routes

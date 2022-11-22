@@ -75,8 +75,6 @@ class AnnouncementController extends Controller
             // dd($notification);
             return redirect()->route('admin.announcements')->with('success_message', 'Announcement created successfully!!!');
         }
-
-
     }
 
     /**
@@ -136,7 +134,29 @@ class AnnouncementController extends Controller
         }
     }
 
-    public function readAnnouncement(){
+    public function readAnnouncement()
+    {
+    }
 
+    //put filters
+    public function filter(Request $request)
+    {
+
+        // $announcements = Announcement::pluck('event_location');
+        // $event_location = $request->input('event_location');
+
+        if ($request->input('filter') == 'event_location') {
+            $eventLocationFilter = Announcement::pluck('event_location')->toArray();
+
+            return to_route('admin.announcements', compact($eventLocationFilter));
+        } else if ($request->input('filter') == 'event_date') {
+            $announcements = Announcement::pluck('event_date')->toArray();
+
+            // dd($announcements);
+
+            return redirect()->route('admin.announcements')->with('announcements');
+        } else {
+            return to_route('admin.announcements')->with('error_message', 'No results were found!!');
+        }
     }
 }

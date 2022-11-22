@@ -17,13 +17,19 @@
             @endif
 
             <!-- insert a filter for the announcements -->
-            <form action="" method="get">
+            <form action="{{ route('admin.announcements.filterByEventLocation')}}" method="get">
                 <div class="mt-4">
                     <select name="filter" id="filter">
-                        <option value="...">Filter by</option>
+                        <!-- <option value="...">Filter by</option> -->
                         <option value="event_date">Event Date</option>
-                        <option value="event">Event Location</option>
+                        <option value="event_location">Event Location</option>
                     </select>
+                </div>
+
+                <div class="mt-4">
+                    <button class="btn btn-primary">
+                        Filter
+                    </button>
                 </div>
             </form>
             <!-- check if announcement is empty -->
