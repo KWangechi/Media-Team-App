@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin;
 use App\Http\Controllers\Admin\AnnouncementController;
 use App\Http\Controllers\Admin\ContributionController;
 use App\Http\Controllers\Admin\DutyController;
+use App\Http\Controllers\Admin\FilterController;
 use App\Http\Controllers\Auth;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\LeaveController;
@@ -79,7 +80,11 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/announcements', [AnnouncementController::class, 'index'])->name('admin.announcements');
         Route::post('/announcement', [AnnouncementController::class, 'store'])->name('admin.announcement.create');
         Route::get('/readAnnouncement', [AnnouncementController::class, 'readAnnouncement'])->name('admin.announcement.readAnnouncement');
-        Route::get('/filter', [AnnouncementController::class, 'filter'])->name('admin.announcements.filterByEventLocation');
+
+        //filter functionalities
+        Route::get('/filterDate', [FilterController::class, 'filterDate'])->name('admin.announcement.filterDate');
+        Route::get('/filterLocation', [FilterController::class, 'filterLocation'])->name('admin.announcements.filterByEventLocation');
+        Route::get('/filter', [FilterController::class, 'filter'])->name('admin.announcements.filter');
     });
 
     //User Routes

@@ -138,25 +138,4 @@ class AnnouncementController extends Controller
     {
     }
 
-    //put filters
-    public function filter(Request $request)
-    {
-
-        // $announcements = Announcement::pluck('event_location');
-        // $event_location = $request->input('event_location');
-
-        if ($request->input('filter') == 'event_location') {
-            $eventLocationFilter = Announcement::pluck('event_location')->toArray();
-
-            return to_route('admin.announcements', compact($eventLocationFilter));
-        } else if ($request->input('filter') == 'event_date') {
-            $announcements = Announcement::pluck('event_date')->toArray();
-
-            // dd($announcements);
-
-            return redirect()->route('admin.announcements')->with('announcements');
-        } else {
-            return to_route('admin.announcements')->with('error_message', 'No results were found!!');
-        }
-    }
 }

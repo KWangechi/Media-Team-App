@@ -17,12 +17,30 @@
             @endif
 
             <!-- insert a filter for the announcements -->
-            <form action="{{ route('admin.announcements.filterByEventLocation')}}" method="get">
+            <form action="{{ route('admin.announcements.filter')}}" method="get">
+            @if (2==3)
+            <div class="mt-4">
+                    <select name="filter" id="filter">
+                        <!-- if statement to create a dynamic dropdown -->
+
+                        <option value="1">This is number 1</option>
+                        <option value="2">This is number 2</option>
+                        <option value="3">This is number 3</option>
+                    </select>
+                </div>
+                        @else
+                        <p>There is nothing to show here</p>
+                        @endif
+
                 <div class="mt-4">
                     <select name="filter" id="filter">
                         <!-- <option value="...">Filter by</option> -->
+
+                        <!-- if statement to create a dynamic dropdown -->
+
                         <option value="event_date">Event Date</option>
                         <option value="event_location">Event Location</option>
+                        <option value="created_at">Created At</option>
                     </select>
                 </div>
 
