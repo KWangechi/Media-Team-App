@@ -12,6 +12,8 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\LeaveController;
 use App\Models\Announcement;
 use App\Models\Contribution;
+use App\Models\Role;
+use RealRashid\SweetAlert\Facades\Alert;
 
 /*
 |--------------------------------------------------------------------------
@@ -77,9 +79,14 @@ Route::middleware(['auth'])->group(function () {
 
 
         //announcements
-        Route::get('/announcements', [AnnouncementController::class, 'index'])->name('admin.announcements');
+        // Route::get('/announcements', [AnnouncementController::class, 'index'])->name('admin.announcements');
+        Route::get('/announcements', function(){
+            Alert::success('Title','Hello', 'success');
+        });
         Route::post('/announcement', [AnnouncementController::class, 'store'])->name('admin.announcement.create');
         Route::get('/readAnnouncement', [AnnouncementController::class, 'readAnnouncement'])->name('admin.announcement.readAnnouncement');
+        Route::patch('/announcement/{id}', [AnnouncementController::class, 'update'])->name('admin.announcement.update');
+        Route::delete('/announcement/{id}', [AnnouncementController::class, 'delete'])->name('admin.announcement.delete');
 
         //filter functionalities
         Route::get('/filterDate', [FilterController::class, 'filterDate'])->name('admin.announcement.filterDate');

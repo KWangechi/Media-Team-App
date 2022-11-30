@@ -18,8 +18,8 @@
 
             <!-- insert a filter for the announcements -->
             <form action="{{ route('admin.announcements.filter')}}" method="get">
-            @if (2==3)
-            <div class="mt-4">
+                @if (2==3)
+                <div class="mt-4">
                     <select name="filter" id="filter">
                         <!-- if statement to create a dynamic dropdown -->
 
@@ -28,9 +28,9 @@
                         <option value="3">This is number 3</option>
                     </select>
                 </div>
-                        @else
-                        <p>There is nothing to show here</p>
-                        @endif
+                @else
+                <p>There is nothing to show here</p>
+                @endif
 
                 <div class="mt-4">
                     <select name="filter" id="filter">
@@ -200,51 +200,10 @@
             <!-- Table -->
             <br>
             <br>
-            <!-- <table class="table table-responsive table-bordered table-striped text-center">
-                <thead>
-                    <tr>
-                        <th scope="col">ID</th>
-                        <th scope="col">Title</th>
-                        <th scope="col">Content</th>
-                        <th scope="col">Event Location</th>
-                        <th scope="col">Event Date</th>
-                        <th scope="col">Event Time</th> -->
-            <!-- <th scope="col">EDIT</th>
-                        <th scope="col">DELETE</th> -->
-            <!--
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach ($announcements as $announcement)
-                    <tr>
-                        <td>{{$announcement->id}}</td>
-                        <td>{{$announcement->title}}</td>
-                        <td>{{$announcement->content}}</td>
-                        <td>{{$announcement->event_location}}</td>
-                        <td>{{$announcement->event_date}}</td>
-                        <td>{{$announcement->event_time}}</td>
-
-
-                        <td>
-                            <div>
-                                <a class="btn btn-secondary btn-sm" data-bs-toggle="modal" data-bs-target="#updateAnnouncementModal" id="updateAnnouncementButton" data-id="{{$announcement->id}}">EDIT</a>
-                            </div>
-
-                            @endforeach
-                    </tr>
-                </tbody>
-            </table> -->
-
-            <!-- Pagination -->
-            <!-- <div class="row">
-                <div class="col offset-md-6">
-                    {{$announcements->links()}}
-                </div>
-            </div> -->
 
             <!-- Card style -->
             @foreach ($announcements as $announcement)
-            <div class="card rounded-5" style="width: 60%; height: 250px; margin: auto; border: 1px solid black;">
+            <div class="card rounded-5" style="width: 60%; height: auto; margin: auto; border: 1px solid black;">
                 <h5 class="card-header">{{$announcement->title}}</h5>
                 <div class="card-body">
                     <h5 class="card-title">{{$announcement->updated_at}}</h5>
@@ -255,10 +214,30 @@
                         <p>{{$announcement->event_location}}</p>
                         <p>{{$announcement->event_date}}</p>
                         <p>{{$announcement->event_time}}</p>
+                        <!-- //create a button for deleting and editing the announcement -->
+                    </div>
+                    <div class="row">
+                        <div class="col-2">
+                            <form action="{{route('admin.announcement.update', $announcement->id)}}" method="post">
+                                @csrf
+                                @method('PATCH')
+
+                                <button class="ml-4 mt-4 btn btn-secondary">
+                                    Edit
+                                </button>
+                            </form>
+                        </div>
+
+                        <div class="col-2">
+                            <form action="{{route('admin.announcement.delete', $announcement->id)}}" method="post">
+                                <button class="ml-4 mt-4 btn btn-danger">
+                                    {{__('Delete')}}
+                                </button>
+                            </form>
+                        </div>
                     </div>
 
-                    <!-- <img src="..." class="rounded-5" alt="..."> -->
-
+                    <!-- delete the announcement -->
                 </div>
             </div>
             <br>

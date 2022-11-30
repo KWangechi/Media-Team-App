@@ -8,6 +8,8 @@ use App\Models\User;
 use App\Notifications\NewAnnouncement;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Notification;
+use RealRashid\SweetAlert\Facades\Alert;
+use RealRashid\SweetAlert\SweetAlertServiceProvider;
 
 class AnnouncementController extends Controller
 {
@@ -112,11 +114,16 @@ class AnnouncementController extends Controller
     {
         $announcement = Announcement::findOrFail($id);
 
-        if (!$announcement->update($request->all())) {
-            return redirect()->route('admin.announcements.edit', $request->id)->with('error_message', 'Error! Try updating again!!');
-        } else {
-            return redirect()->route('admin.announcements')->with('success_message', 'Announcement updated successfully!!');
-        }
+        // if (!$announcement->update($request->all())) {
+        //     return redirect()->route('admin.announcements')->with('error_message', 'Error! Try updating again!!');
+        // } else {
+        //     return redirect()->route('admin.announcements')->with('success_message', 'Announcement updated successfully!!');
+        // }
+
+        // Alert::success('Success Title', 'Success Message');
+        Alert::success('Title','Hello', 'success');
+
+        // dd($announcement);
     }
 
     /**
@@ -129,13 +136,22 @@ class AnnouncementController extends Controller
     {
         $announcement = Announcement::findOrFail($id);
 
-        if (!($announcement->destroy())) {
-            return redirect()->route('admin.announcements')->with('success_message', 'Announcement deleted successfully!');
-        }
+        // if (!($announcement->destroy())) {
+        //     return redirect()->route('admin.announcements')->with('error_message', 'Something went wrong? Please try again!!');
+        // }
+        // else{
+        //     return to_route('admin.announcements')->with('success_message', 'Announcement deleted successfully!');
+        // }
+
+
+        dd($announcement);
     }
 
     public function readAnnouncement()
     {
+        $announcement = Notification::where('read_at', '=', null);
+
+        dd($announcement);
     }
 
 }
