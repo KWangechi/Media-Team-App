@@ -130,12 +130,12 @@
                             <a class="btn-close" id="closeModalButton" data-bs-dismiss="modal" aria-label="Close"></a>
                         </div>
                         <div class="modal-body">
-                            <form method="POST" id="createLeaveForm">
+                            <form method="POST" id="createLeaveForm" action="{{ route('admin.duty.create', auth()->user()->id )}}">
                                 @csrf
 
                                 <!-- Member Name -->
                                 <div class="mt-4">
-                                    <x-label for="member_name" :value="__('Member Name')" @keyup="" />
+                                    <x-label for="member_name" :value="__('Member Name')" />
 
                                     <x-input class="block mt-1 w-full" id="member_name" name="member_name" type="text" autofocus placeholder="eg. Nimoh Kamau" />
                                 </div>
@@ -144,7 +144,7 @@
                                 <div class="mt-4">
                                     <x-label for="supervisor_name" :value="__('Supervisor Name')" />
 
-                                    <x-input class="block mt-1 w-full" id="supervisor_name" name="supervisor_name" type="text" autofocus placeholder="eg. RKay" />
+                                    <x-input class="block mt-1 w-full" id="supervisor_name" name="supervisor_name" type="text" autofocus placeholder="eg. Keshi K" />
                                 </div>
 
                                 <!-- Workstation -->

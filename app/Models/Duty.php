@@ -9,7 +9,9 @@ class Duty extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['member_name', 'supervisor_name',
+    protected $fillable = [
+    'member_name',
+    'supervisor_name',
     'workstation',
     'duty_assigned',
     'type_of_service',

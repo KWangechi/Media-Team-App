@@ -79,10 +79,11 @@ Route::middleware(['auth'])->group(function () {
 
 
         //announcements
-        // Route::get('/announcements', [AnnouncementController::class, 'index'])->name('admin.announcements');
-        Route::get('/announcements', function(){
-            Alert::success('Title','Hello', 'success');
-        });
+        Route::get('/announcements', [AnnouncementController::class, 'index'])->name('admin.announcements');
+        
+        // Route::get('/announcements', function(){
+        //     Alert::success('Title','Hello', 'success');
+        // });
         Route::post('/announcement', [AnnouncementController::class, 'store'])->name('admin.announcement.create');
         Route::get('/readAnnouncement', [AnnouncementController::class, 'readAnnouncement'])->name('admin.announcement.readAnnouncement');
         Route::patch('/announcement/{id}', [AnnouncementController::class, 'update'])->name('admin.announcement.update');

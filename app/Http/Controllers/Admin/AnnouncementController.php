@@ -120,8 +120,8 @@ class AnnouncementController extends Controller
         //     return redirect()->route('admin.announcements')->with('success_message', 'Announcement updated successfully!!');
         // }
 
-        // Alert::success('Success Title', 'Success Message');
-        Alert::success('Title','Hello', 'success');
+        Alert::success('Success Title', 'Success Message');
+        // Alert::success('Title','Hello', 'success');
 
         // dd($announcement);
     }
