@@ -47,6 +47,7 @@ class DutyController extends Controller
     public function store(Request $request)
     {
         $request->validate([
+            'week' => 'string',
             'member_name' => 'string',
             'supervisor_name' => 'string',
             'workstation' => 'string',
@@ -57,27 +58,24 @@ class DutyController extends Controller
             'date_assigned' => 'date'
         ]);
 
-        // $duty = Duty::create([
-        //     'member_name' => $request->member_name,
-        //     'supervisor_name' => $request->supervisor_name,
-        //     'workstation' => $request->workstation,
-        //     'duty_assigned' => $request->duty_assigned,
-        //     'type_of_service' => $request->type_of_service,
-        //     'supervisor_signature' => $request->supervisor_signature,
-        //     'setup_time' => $request->setup_time,
-        //     'date_assigned' => $request->date_assigned
-        // ]);
+        $duty = Duty::create([
+            'week' => $request->week,
+            'member_name' => $request->member_name,
+            'supervisor_name' => $request->supervisor_name,
+            'workstation' => $request->workstation,
+            'duty_assigned' => $request->duty_assigned,
+            'type_of_service' => $request->type_of_service,
+            'supervisor_signature' => $request->supervisor_signature,
+            'setup_time' => $request->setup_time,
+            'date_assigned' => $request->date_assigned
+        ]);
 
 
-        // dd($duty);
+        if(!$duty){
+            return redirect()->route('admin.duty.index', auth()->user()->id)->with('error_message', 'Error occurred! Please try again');
+        }
 
-        dd($request);
-
-        // if(!$duty){
-        //     return redirect()->route('admin.duty.create', auth()->user()->id)->with('error_message', 'Error occurred! Please try again');
-        // }
-
-        // return redirect()->route('admin.duty.index', auth()->user()->id)->with('success_message', 'Duty Roster created successfully!!');
+        return redirect()->route('admin.duty.index', auth()->user()->id)->with('success_message', 'Duty Roster created successfully!!');
 
     }
 

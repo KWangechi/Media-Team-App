@@ -2,6 +2,7 @@
     <x-slot name="slot">
         <div class="container">
             <br>
+
             <!-- Display error or success message -->
             @if (session('success_message'))
             <div class="alert alert-success alert-dismissible fade show">
@@ -35,6 +36,14 @@
                         <div class="modal-body">
                             <form method="POST" id="createLeaveForm" action="{{ route('admin.duty.create', auth()->user()->id )}}">
                                 @csrf
+
+                                <!-- Week of the year when the duty is assigned -->
+                                <div class="mt-4">
+                                    <x-label for="week" :value="__('Week')" />
+
+                                    <x-input class="block mt-1 w-full" id="week" name="week" type="text" autofocus placeholder="eg. Week 10" />
+                                </div>
+
 
                                 <!-- Member Name -->
                                 <div class="mt-4">
@@ -133,6 +142,13 @@
                             <form method="POST" id="createLeaveForm" action="{{ route('admin.duty.create', auth()->user()->id )}}">
                                 @csrf
 
+                                <!-- Week of the year when the duty is assigned -->
+                                <div class="mt-4">
+                                    <x-label for="week" :value="__('Week')" />
+
+                                    <x-input class="block mt-1 w-full" id="week" name="week" type="text" autofocus placeholder="eg. Week 10" />
+                                </div>
+
                                 <!-- Member Name -->
                                 <div class="mt-4">
                                     <x-label for="member_name" :value="__('Member Name')" />
@@ -215,102 +231,79 @@
                 </div>
             </div>
 
-
-            <!-- Table -->
             <br>
             <br>
 
-            <!-- <table class="table table-responsive table-bordered table-striped text-center"> -->
-            <thead>
-                <tr>
-                    <th scope="col">ID</th>
-                    <th scope="col">Member Name</th>
-                    <th scope="col">Supervisor Name</th>
-                    <th scope="col">Workstation</th>
-                    <th scope="col">Duty Assigned</th>
-                    <th scope="col">Type of Service</th>
-                    <th scope="col">Supervisor Signature</th>
-                    <th scope="col">Setup Time</th>
-                    <th scope="col">Date Assigned</th>
-                    <th scope="col">EDIT</th>
-                    <th scope="col">DELETE</th>
+            <!-- card for displaying the duty roster -->
+            @foreach ($duties as $duty)
+            <div class="card border-primary mb-3 mx-auto" style="width: max-content; height: max-content;">
+                <div class="card-body">
+                    <h1 class="card-title mb-4"><b>{{$duty->week}}</b></h1>
+                    <hr>
+                    <p class="card-text mb-4">Date assigned: {{$duty->date_assigned}}</p>
+                    <hr>
+                    <p class="card-text mb-4">Setup Time: {{$duty->setup_time}}</p>
+                    <hr>
+                    <!-- <p class="card-text mb-4">Supervisor Name: {{$duty->supervisor_name}}</p> -->
 
-                </tr>
-            </thead>
-            <tbody>
-                @foreach ($duties as $duty)
-                <tr>
-                    <td>{{$duty->id}}</td>
-                    <td>{{$duty->member_name}}</td>
-                    <td>{{$duty->supervisor_name}}</td>
-                    <td>{{$duty->workstation}}</td>
-                    <td>{{$duty->duty_assigned}}</td>
-                    <td>
-                        {{$duty->type_of_service}}
-                    </td>
 
-                    <td>
-                        {{$duty->supervisor_signature}}
-                    </td>
-                    <td>
-                        {{$duty->setup_time}}
-                    </td>
-                    <td>
-                        {{$duty->date_assigned}}
-                    </td>
-                    <td>
-                        <div>
-                            <a class="btn btn-secondary btn-sm" id="updateProfileButton" data-id="{{$duty->id}}" href="{{route('admin.duty.edit', $duty->id)}}">EDIT</a>
-                        </div>
+                    <!-- put a table view in a card body -->
+                    <div class="card mb-3 mt-4" style="width: max-content; height: max-content; align-items: center;">
+                        <!-- <table> -->
+                        <table class="table table-responsive table-striped text-center table-danger table-bordered">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Member Name</th>
+                                    <th scope="col">Supervisor Name</th>
+                                    <th scope="col">Workstation</th>
+                                    <th scope="col">Duty Assigned</th>
+                                    <th scope="col">Type of Service</th>
+                                    <th scope="col">EDIT</th>
+                                    <th scope="col">DELETE</th>
 
-                        <!-- Update Leave Request -->
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>{{$duty->member_name}}</td>
+                                    <td>{{$duty->supervisor_name}}</td>
+                                    <td>{{$duty->workstation}}</td>
+                                    <td>{{$duty->duty_assigned}}</td>
+                                    <td>{{$duty->type_of_service}}</td>
+                                    <td>
+                                        <div>
+                                            <a class="btn btn-secondary btn-sm" id="updateProfileButton" data-id="{{$duty->id}}" href="{{route('admin.duty.edit', $duty->id)}}">EDIT</a>
+                                        </div>
+
+                                        <!-- Update Leave Request -->
 
 
 
-                    </td>
-                    <td>
-                        <form action="{{ route('admin.duty.delete', [$duty->id]) }}" method="POST">
-                            @csrf
-                            @method('DELETE')
-                            <button id="deleteLeaveButton" class="btn btn-danger btn-sm">
-                                DELETE
-                            </button>
-                        </form>
-                    </td>
-
-                    <!-- Update Modal -->
-
-                    <!-- </div> -->
-
-                    <!-- @endforeach -->
-                    <!-- </tr>
-        </tbody>
-        </table> -->
-                    <br>
-                    <!-- Pagination -->
-                    @foreach ($duties as $duty)
-
-                    <div class="card border-primary mb-3" style="width: 50%; height: 280px;">
-                        <div class="card-body">
-                            <h5 class="card-title">Week 5</h5>
-                            <p class="card-text">Date assigned: {{$duty->date_assigned}}</p>
-                            <br>
-                            <p class="card-text">Setup Time: {{$duty->setup_time}}</p>
-                            <br>
-                            <p class="card-text">Supervisor Name: {{$duty->supervisor_name}}</p>
-                            <br>
-                            @if ($duty->supervisor_signature == 1)
-                            <p class="card-text">Supervisor Signature: Signed</p>
-                            @else
-                            <p class="card-text">Supervisor Signature: Pending</p>
-                            @endif
-
-                        </div>
+                                    </td>
+                                    <td>
+                                        <form action="{{ route('admin.duty.delete', [$duty->id]) }}" method="POST">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button id="deleteLeaveButton" class="btn btn-danger btn-sm">
+                                                DELETE
+                                            </button>
+                                        </form>
+                                    </td>
+                            </tbody>
+                        </table>
                     </div>
-                    <br>
-                    @endforeach
 
+                    @if ($duty->supervisor_signature == 1)
+                    <p class="card-text mb-4">Supervisor Signature: Signed</p>
+                    @else
+                    <p class="card-text mb-4">Supervisor Signature: Pending</p>
                     @endif
+
+
+                </div>
+            </div>
+            @endforeach
+            @endif
 
         </div>
     </x-slot>

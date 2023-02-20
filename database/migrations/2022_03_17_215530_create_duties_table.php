@@ -15,6 +15,8 @@ return new class extends Migration
     {
         Schema::create('duties', function (Blueprint $table) {
             $table->id();
+            $table->string('week');
+            $table->date('date_assigned');
             $table->string('member_name');
             $table->string('supervisor_name');
             $table->string('workstation');
@@ -22,7 +24,6 @@ return new class extends Migration
             $table->string('type_of_service');
             $table->boolean('supervisor_signature')->default(0);
             $table->time('setup_time');
-            $table->date('date_assigned');
             $table->timestamps();
 
             // $table->foreignId('equipment_id')->constrained('equipment');

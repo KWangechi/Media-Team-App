@@ -10,6 +10,7 @@ class Duty extends Model
     use HasFactory;
 
     protected $fillable = [
+    'week',
     'member_name',
     'supervisor_name',
     'workstation',
@@ -20,10 +21,6 @@ class Duty extends Model
     'date_assigned',
 ];
 
-//relatioships
-// public function users(){
-//     return $this->belongsToMany(User::class);
-// }
 
 public function equipment(){
     return $this->hasMany(Equipment::class);
