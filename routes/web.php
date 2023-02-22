@@ -67,6 +67,10 @@ Route::middleware(['auth'])->group(function () {
         Route::patch('/duty/{id}', [DutyController::class, 'update'])->name('admin.duty.update');
         Route::delete('/duty/{id}', [DutyController::class, 'destroy'])->name('admin.duty.delete');
 
+        //duty roster personel details
+        Route::post('updateDutyPersonelDetails/{id}', [DutyController::class, 'updateDutyPersonelDetails'])
+            ->name('admin.duty.updateDutyPersonelDetails');
+
         //Contributions
         Route::get('/contributions', [ContributionController::class, 'index'])->name('admin.users.contributions');
         Route::post('/contributions', [ContributionController::class, 'store'])->name('admin.users.contributions.create');
@@ -80,7 +84,7 @@ Route::middleware(['auth'])->group(function () {
 
         //announcements
         Route::get('/announcements', [AnnouncementController::class, 'index'])->name('admin.announcements');
-        
+
         // Route::get('/announcements', function(){
         //     Alert::success('Title','Hello', 'success');
         // });

@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Models\Duty;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Schema;
 
 class DutyController extends Controller
 {
@@ -48,11 +50,7 @@ class DutyController extends Controller
     {
         $request->validate([
             'week' => 'string',
-            'member_name' => 'string',
-            'supervisor_name' => 'string',
-            'workstation' => 'string',
-            'duty_assigned' => 'string',
-            'type_of_service' => 'string',
+            'duty_personel_details' => 'array',
             'supervisor_signature' => 'string',
             'setup_time' => 'required',
             'date_assigned' => 'date'
@@ -60,11 +58,13 @@ class DutyController extends Controller
 
         $duty = Duty::create([
             'week' => $request->week,
-            'member_name' => $request->member_name,
-            'supervisor_name' => $request->supervisor_name,
-            'workstation' => $request->workstation,
-            'duty_assigned' => $request->duty_assigned,
-            'type_of_service' => $request->type_of_service,
+            'duty_personel_details' => [
+                'member_name' => $request->duty_personel_details["member_name"],
+                'supervisor_name' => $request->duty_personel_details["supervisor_name"],
+                'workstation' => $request->duty_personel_details["workstation"],
+                'duty_assigned' => $request->duty_personel_details["duty_assigned"],
+                'type_of_service' => $request->duty_personel_details["type_of_service"],
+            ],
             'supervisor_signature' => $request->supervisor_signature,
             'setup_time' => $request->setup_time,
             'date_assigned' => $request->date_assigned
@@ -77,6 +77,8 @@ class DutyController extends Controller
 
         return redirect()->route('admin.duty.index', auth()->user()->id)->with('success_message', 'Duty Roster created successfully!!');
 
+        // $duty = Duty::create($request->all());
+        // dd($duty);
     }
 
     /**
@@ -139,6 +141,41 @@ class DutyController extends Controller
                 return redirect()->route('admin.duty.index', auth()->user()->id)->with('success_message', 'Duty Roster Deleted successfully!!');
             }
         }
+    }
+
+    /**
+     * Updates just the member_name, supervisor_name, worskstation and duty assigned
+
+     * @param int $id
+     * @param Request $request
+     * @return \Illuminate\Http\Response
+     */
+    public function updateDutyPersonelDetails(Request $request,$id){
+
+        //get the id of the already created duty roster and just update 'duty_personel_details' column
+        $duty = Duty::findOrFail($id);
+
+        // dd($duty->duty_personel_details);
+
+        //insert the new values in the column/ Use a query Builder
+        // $duty = DB::table('duties')->where('id', $id)->get();
+
+        //add new data to that column
+        $duty->update($request->all());
+
+        // $duty = Duty::create([
+        //     'duty_personel_details' => [
+        //         'member_name' => $request->duty_personel_details["member_name"],
+        //         'supervisor_name' => $request->duty_personel_details["supervisor_name"],
+        //         'workstation' => $request->duty_personel_details["workstation"],
+        //         'duty_assigned' => $request->duty_personel_details["duty_assigned"],
+        //         'type_of_service' => $request->duty_personel_details["type_of_service"],
+        //     ],
+        // ]);
+
+        // dd($duty);
+
+        dd($duty);
     }
 
 
