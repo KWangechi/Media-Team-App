@@ -151,80 +151,83 @@
                                     <x-input class="block mt-1 w-full" id="week" name="week" type="week" autofocus placeholder="eg. Week 10" />
                                 </div>
 
-                                <!-- Member Name -->
-                                <div class="mt-4">
-                                    <x-label for="member_name" :value="__('Member Name')" />
+                                @for ($i=0; $i<=4; $i++) <!-- Member Name -->
+                                    <div class="mt-4">
+                                        <x-label for="member_name" :value="__('Member Name')" />
 
-                                    <x-input class="block mt-1 w-full" id="member_name" name="duty_personel_details[member_name]" type="text" autofocus placeholder="eg. Nimoh Kamau" />
-                                </div>
+                                        <x-input class="block mt-1 w-full" id="member_name" name="duty_personel_details[{{$i}}][member_name]" type="text" autofocus placeholder="eg. Nimoh Kamau" />
+                                    </div>
 
-                                <!-- Supervisor Name -->
-                                <div class="mt-4">
-                                    <x-label for="supervisor_name" :value="__('Supervisor Name')" />
+                                    <!-- Supervisor Name -->
+                                    <div class="mt-4">
+                                        <x-label for="supervisor_name" :value="__('Supervisor Name')" />
 
-                                    <x-input class="block mt-1 w-full" id="supervisor_name" name="duty_personel_details[supervisor_name]" type="text" autofocus placeholder="eg. RKay" />
-                                </div>
+                                        <x-input class="block mt-1 w-full" id="supervisor_name" name="duty_personel_details[{{$i}}][supervisor_name]" type="text" autofocus placeholder="eg. RKay" />
+                                    </div>
 
-                                <!-- Workstation -->
-                                <div class="mt-4">
-                                    <x-label for="workstation" :value="__('Workstation')" />
+                                    <!-- Workstation -->
+                                    <div class="mt-4">
+                                        <x-label for="workstation" :value="__('Workstation')" />
 
-                                    <x-input id="workstation" class="block mt-1 w-full" type="text" name="duty_personel_details[workstation]" required placeholder="eg. Video, VMix" />
-                                </div>
-
-
-                                <!-- Duty Assigned -->
-                                <div class="mt-4">
-                                    <x-label for="duty_assigned" :value="__('Duty Assigned')" />
-
-                                    <x-input id="duty_assigned" class="block mt-1 w-full" type="text" name="duty_personel_details[duty_assigned]" required placeholder="eg. Check on Sound Quality" />
-                                </div>
-
-                                <!-- Type of Service or Event -->
-                                <div class="mt-4">
-                                    <x-label for="type_of_service" :value="__('Type of Service')" />
-
-                                    <select name="duty_personel_details[type_of_service]">
-                                        <option value="">-- Select Type of Service --</option>
-                                        <option value="1st Service">1st Service</option>
-                                        <option value="2nd Service">2nd Service</option>
-                                        <option value="Gwav Service">GWAV Service</option>
-                                        <option value="Wedding">Wedding</option>
-                                        <option value="Funeral">Funeral</option>
-                                        <option value="Graduation">Graduation</option>
-
-                                    </select>
-                                </div>
-
-                                <!-- Supervisor signature -->
-                                <div class="mt-4">
-                                    <x-label for="supervisor_signature" :value="__('Supervisor Signature')" />
-
-                                    <select name="supervisor_signature">
-                                        <option value="0">Pending</option>
-                                        <option value="1">Signed</option>
-                                    </select>
-                                </div>
-
-                                <!-- Setup Time -->
-                                <div class="mt-4">
-                                    <x-label for="setup_time" :value="__('Setup Time')" />
-
-                                    <x-input id="setup_time" class="block mt-1 w-full" type="time" name="setup time" required />
-                                </div>
-
-                                <!-- Date Assigned -->
-                                <div class="mt-4">
-                                    <x-label for="date_assigned" :value="__('Date Assigned')" />
-
-                                    <x-input id="date_assigned" class="block mt-1 w-full" type="date" name="date_assigned" required />
-                                </div>
+                                        <x-input id="workstation" class="block mt-1 w-full" type="text" name="duty_personel_details[{{$i}}][workstation]" required placeholder="eg. Video, VMix" />
+                                    </div>
 
 
-                                <br>
-                                <x-button class="ml-4">
-                                    {{ __('Save') }}
-                                </x-button>
+                                    <!-- Duty Assigned -->
+                                    <div class="mt-4">
+                                        <x-label for="duty_assigned" :value="__('Duty Assigned')" />
+
+                                        <x-input id="duty_assigned" class="block mt-1 w-full" type="text" name="duty_personel_details[{{$i}}][duty_assigned]" required placeholder="eg. Check on Sound Quality" />
+                                    </div>
+
+                                    <!-- Type of Service or Event -->
+                                    <div class="mt-4">
+                                        <x-label for="type_of_service" :value="__('Type of Service')" />
+
+                                        <select name="duty_personel_details[{{$i}}][type_of_service]">
+                                            <option value="">-- Select Type of Service --</option>
+                                            <option value="1st Service">1st Service</option>
+                                            <option value="2nd Service">2nd Service</option>
+                                            <option value="Gwav Service">GWAV Service</option>
+                                            <option value="Wedding">Wedding</option>
+                                            <option value="Funeral">Funeral</option>
+                                            <option value="Graduation">Graduation</option>
+
+                                        </select>
+                                    </div>
+
+                                    @endfor
+
+
+                                    <!-- Supervisor signature -->
+                                    <div class="mt-4">
+                                        <x-label for="supervisor_signature" :value="__('Supervisor Signature')" />
+
+                                        <select name="supervisor_signature">
+                                            <option value="0">Pending</option>
+                                            <option value="1">Signed</option>
+                                        </select>
+                                    </div>
+
+                                    <!-- Setup Time -->
+                                    <div class="mt-4">
+                                        <x-label for="setup_time" :value="__('Setup Time')" />
+
+                                        <x-input id="setup_time" class="block mt-1 w-full" type="time" name="setup time" required />
+                                    </div>
+
+                                    <!-- Date Assigned -->
+                                    <div class="mt-4">
+                                        <x-label for="date_assigned" :value="__('Date Assigned')" />
+
+                                        <x-input id="date_assigned" class="block mt-1 w-full" type="date" name="date_assigned" required />
+                                    </div>
+
+
+                                    <br>
+                                    <x-button class="ml-4">
+                                        {{ __('Save') }}
+                                    </x-button>
                             </form>
                         </div>
                         <div class="modal-footer">
@@ -241,7 +244,7 @@
             @foreach ($duties as $duty)
             <div class="card border-primary mb-3 mx-auto" style="width: max-content; height: max-content;">
                 <div class="card-body">
-                    <h1 class="card-title mb-4"><b>{{$duty->week}}</b></h1>
+                    <h1 class="card-title mb-4"><b>Week {{$duty->week}}</b></h1>
                     <hr>
                     <p class="card-text mb-4">Date assigned: {{$duty->date_assigned}}</p>
                     <hr>
@@ -347,34 +350,34 @@
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td>{{$duty->duty_personel_details['member_name']}}</td>
-                                    <td>{{$duty->duty_personel_details['supervisor_name']}}</td>
-                                    <td>{{$duty->duty_personel_details['workstation']}}</td>
-                                    <td>{{$duty->duty_personel_details['duty_assigned']}}</td>
-                                    <td>{{$duty->duty_personel_details['type_of_service']}}</td>
-                                    <td>
-                                        <div>
-                                            <a class="btn btn-secondary btn-sm" id="updateProfileButton" data-id="{{$duty->id}}" href="{{route('admin.duty.edit', $duty->id)}}">EDIT</a>
-                                        </div>
-                                    </td>
+                                    @for ($i=0; i<=10; $i++) <td>{{$duty->duty_personel_details[{{ $i }}]['member_name']}}</td>
+                                        <td>{{$duty->duty_personel_details[1]['supervisor_name']}}</td>
+                                        <td>{{$duty->duty_personel_details['workstation']}}</td>
+                                        <td>{{$duty->duty_personel_details['duty_assigned']}}</td>
+                                        <td>{{$duty->duty_personel_details['type_of_service']}}</td>
+                                        <td>
+                                            @endfor
+                                            <div>
+                                                <a class="btn btn-secondary btn-sm" id="updateProfileButton" data-id="{{$duty->id}}" href="{{route('admin.duty.edit', $duty->id)}}">EDIT</a>
+                                            </div>
+                                        </td>
 
-                                    <!-- <td>
+                                        <!-- <td>
                                         <div>
                                             <a class="btn btn-secondary btn-sm" id="getDutyRosterId" data-id="{{$duty->id}}" href="{{route('admin.duty.updateDutyPersonelDetails', $duty->id)}}">GET DUTY ROSTER ID</a>
                                         </div>
 
                                     </td> -->
 
-
-                                    <td>
-                                        <form action="{{ route('admin.duty.delete', [$duty->id]) }}" method="POST">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button id="deleteLeaveButton" class="btn btn-danger btn-sm">
-                                                DELETE
-                                            </button>
-                                        </form>
-                                    </td>
+                                        <td>
+                                            <form action="{{ route('admin.duty.delete', [$duty->id]) }}" method="POST">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button id="deleteLeaveButton" class="btn btn-danger btn-sm">
+                                                    DELETE
+                                                </button>
+                                            </form>
+                                        </td>
                             </tbody>
                         </table>
                     </div>

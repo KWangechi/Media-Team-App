@@ -56,26 +56,31 @@ class DutyController extends Controller
             'date_assigned' => 'date'
         ]);
 
-        $duty = Duty::create([
-            'week' => $request->week,
-            'duty_personel_details' => [
-                'member_name' => $request->duty_personel_details["member_name"],
-                'supervisor_name' => $request->duty_personel_details["supervisor_name"],
-                'workstation' => $request->duty_personel_details["workstation"],
-                'duty_assigned' => $request->duty_personel_details["duty_assigned"],
-                'type_of_service' => $request->duty_personel_details["type_of_service"],
-            ],
-            'supervisor_signature' => $request->supervisor_signature,
-            'setup_time' => $request->setup_time,
-            'date_assigned' => $request->date_assigned
-        ]);
+        // $duty = Duty::create([
+        //     'week' => $request->week,
+        //     'duty_personel_details' => [
+        //         'member_name' => $request->duty_personel_details["member_name"],
+        //         'supervisor_name' => $request->duty_personel_details["supervisor_name"],
+        //         'workstation' => $request->duty_personel_details["workstation"],
+        //         'duty_assigned' => $request->duty_personel_details["duty_assigned"],
+        //         'type_of_service' => $request->duty_personel_details["type_of_service"],
+        //     ],
+        //     'supervisor_signature' => $request->supervisor_signature,
+        //     'setup_time' => $request->setup_time,
+        //     'date_assigned' => $request->date_assigned
+        // ]);
+
+        $duty = Duty::create($request->all());
 
 
-        if(!$duty){
-            return redirect()->route('admin.duty.index', auth()->user()->id)->with('error_message', 'Error occurred! Please try again');
-        }
+        dd($duty);
 
-        return redirect()->route('admin.duty.index', auth()->user()->id)->with('success_message', 'Duty Roster created successfully!!');
+
+        // if(!$duty){
+        //     return redirect()->route('admin.duty.index', auth()->user()->id)->with('error_message', 'Error occurred! Please try again');
+        // }
+
+        // return redirect()->route('admin.duty.index', auth()->user()->id)->with('success_message', 'Duty Roster created successfully!!');
 
         // $duty = Duty::create($request->all());
         // dd($duty);
@@ -155,13 +160,13 @@ class DutyController extends Controller
         //get the id of the already created duty roster and just update 'duty_personel_details' column
         $duty = Duty::findOrFail($id);
 
-        // dd($duty->duty_personel_details);
+        // dd($request->all());
 
         //insert the new values in the column/ Use a query Builder
         // $duty = DB::table('duties')->where('id', $id)->get();
 
         //add new data to that column
-        $duty->update($request->all());
+        $duty->update([$request->all()]);
 
         // $duty = Duty::create([
         //     'duty_personel_details' => [
