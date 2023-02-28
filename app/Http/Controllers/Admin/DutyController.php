@@ -28,6 +28,8 @@ class DutyController extends Controller
             return view('user.duty.index', compact('duties'));
 
         }
+
+        // dd($duties);
     }
 
     /**
@@ -56,21 +58,23 @@ class DutyController extends Controller
             'date_assigned' => 'date'
         ]);
 
-        // $duty = Duty::create([
-        //     'week' => $request->week,
-        //     'duty_personel_details' => [
-        //         'member_name' => $request->duty_personel_details["member_name"],
-        //         'supervisor_name' => $request->duty_personel_details["supervisor_name"],
-        //         'workstation' => $request->duty_personel_details["workstation"],
-        //         'duty_assigned' => $request->duty_personel_details["duty_assigned"],
-        //         'type_of_service' => $request->duty_personel_details["type_of_service"],
-        //     ],
-        //     'supervisor_signature' => $request->supervisor_signature,
-        //     'setup_time' => $request->setup_time,
-        //     'date_assigned' => $request->date_assigned
-        // ]);
+        $duty = Duty::create([
+            'week' => $request->week,
+            'duty_personel_details' => [
+                [
+                'member_name' => $request->duty_personel_details["member_name"],
+                'supervisor_name' => $request->duty_personel_details["supervisor_name"],
+                'workstation' => $request->duty_personel_details["workstation"],
+                'duty_assigned' => $request->duty_personel_details["duty_assigned"],
+                'type_of_service' => $request->duty_personel_details["type_of_service"]
+                ]
+            ],
+            'supervisor_signature' => $request->supervisor_signature,
+            'setup_time' => $request->setup_time,
+            'date_assigned' => $request->date_assigned
+        ]);
 
-        $duty = Duty::create($request->all());
+        // $duty = Duty::create($request->all());
 
 
         dd($duty);
@@ -160,27 +164,19 @@ class DutyController extends Controller
         //get the id of the already created duty roster and just update 'duty_personel_details' column
         $duty = Duty::findOrFail($id);
 
-        // dd($request->all());
+        // dd($request->duty_personel_details);
 
-        //insert the new values in the column/ Use a query Builder
-        // $duty = DB::table('duties')->where('id', $id)->get();
+        //use a query builder to add new data to that column
+        $updated_duty = DB::table('duties')->where('id', $id)->update(['duty_personel_details' => DB::raw("JSON_SET(duty_personel_details, '$[1]', $request->duty_personel_details)")]);
 
-        //add new data to that column
-        $duty->update([$request->all()]);
+        if($updated_duty) {
+            dd('Data added successfully to the table!!');
+        }
+        else{
+            dd("Something went wrong. Please try again");
+        }
 
-        // $duty = Duty::create([
-        //     'duty_personel_details' => [
-        //         'member_name' => $request->duty_personel_details["member_name"],
-        //         'supervisor_name' => $request->duty_personel_details["supervisor_name"],
-        //         'workstation' => $request->duty_personel_details["workstation"],
-        //         'duty_assigned' => $request->duty_personel_details["duty_assigned"],
-        //         'type_of_service' => $request->duty_personel_details["type_of_service"],
-        //     ],
-        // ]);
-
-        // dd($duty);
-
-        dd($duty);
+        // dd($updated_duty);
     }
 
 

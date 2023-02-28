@@ -131,7 +131,9 @@
             </div>
 
             @else
-            <a class="btn btn-primary btn-sm text-center float-right" id="createDutyRosterModalButton">CREATE NEW DUTY ROSTER</a>
+            <a class="btn btn-primary btn-sm text-center float-right" id="createDutyRosterModalButton">
+                <i class="bi bi-plus-circle"></i>
+                CREATE NEW DUTY ROSTER</a>
 
             <div class="modal" id="createDutyRosterModal" tabindex="-1" aria-labelledby="createDutyRosterModalLabel" aria-hidden="true">
                 <div class="modal-dialog">
@@ -255,7 +257,7 @@
                     <!-- Button trigger modal -->
                     <x-button type="button" class="btn btn-primary float-right" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
                         <i class="bi bi-plus-circle"></i>
-                        Add a new members details
+                        Add a new member's details
                     </x-button>
 
                     <!-- Modal for creating new duties for a media team member  -->
@@ -343,41 +345,43 @@
                                     <th scope="col">Duty Assigned</th>
                                     <th scope="col">Type of Service</th>
                                     <th scope="col">EDIT</th>
-                                    <!-- <th scope="col">GET DUTY ROSTER ID</th> -->
                                     <th scope="col">DELETE</th>
 
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    @for ($i=0; i<=10; $i++) <td>{{$duty->duty_personel_details[{{ $i }}]['member_name']}}</td>
-                                        <td>{{$duty->duty_personel_details[1]['supervisor_name']}}</td>
-                                        <td>{{$duty->duty_personel_details['workstation']}}</td>
-                                        <td>{{$duty->duty_personel_details['duty_assigned']}}</td>
-                                        <td>{{$duty->duty_personel_details['type_of_service']}}</td>
-                                        <td>
-                                            @endfor
-                                            <div>
-                                                <a class="btn btn-secondary btn-sm" id="updateProfileButton" data-id="{{$duty->id}}" href="{{route('admin.duty.edit', $duty->id)}}">EDIT</a>
-                                            </div>
-                                        </td>
+                                @foreach ($duty->duty_personel_details as $new_duty)
 
-                                        <!-- <td>
+                                <tr>
+                                    <td>{{$new_duty['member_name']}}</td>
+                                    <td>{{$new_duty['supervisor_name']}}</td>
+                                    <td>{{$new_duty['workstation']}}</td>
+                                    <td>{{$new_duty['duty_assigned']}}</td>
+                                    <td>{{$new_duty['type_of_service']}}</td>
+                                    <td>
+                                        <div>
+                                            <a class="btn btn-secondary btn-sm" id="updateProfileButton" data-id="{{$duty->id}}" href="{{route('admin.duty.edit', $duty->id)}}">EDIT</a>
+                                        </div>
+                                    </td>
+
+                                    <!-- <td>
                                         <div>
                                             <a class="btn btn-secondary btn-sm" id="getDutyRosterId" data-id="{{$duty->id}}" href="{{route('admin.duty.updateDutyPersonelDetails', $duty->id)}}">GET DUTY ROSTER ID</a>
                                         </div>
 
                                     </td> -->
 
-                                        <td>
-                                            <form action="{{ route('admin.duty.delete', [$duty->id]) }}" method="POST">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button id="deleteLeaveButton" class="btn btn-danger btn-sm">
-                                                    DELETE
-                                                </button>
-                                            </form>
-                                        </td>
+                                    <td>
+                                        <form action="{{ route('admin.duty.delete', [$duty->id]) }}" method="POST">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button id="deleteLeaveButton" class="btn btn-danger btn-sm">
+                                                DELETE
+                                            </button>
+                                        </form>
+                                    </td>
+                                </tr>
+                                @endforeach
                             </tbody>
                         </table>
                     </div>
