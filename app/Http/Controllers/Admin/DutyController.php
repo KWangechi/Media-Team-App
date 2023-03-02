@@ -20,13 +20,11 @@ class DutyController extends Controller
     {
         $duties = Duty::all();
 
-        if(auth()->user()->id == User::ROLE_ADMIN){
+        if (auth()->user()->id == User::ROLE_ADMIN) {
 
             return view('admin.duty.index', compact('duties'));
-        }
-        else{
+        } else {
             return view('user.duty.index', compact('duties'));
-
         }
 
         // dd($duties);
@@ -62,11 +60,11 @@ class DutyController extends Controller
             'week' => $request->week,
             'duty_personel_details' => [
                 [
-                'member_name' => $request->duty_personel_details["member_name"],
-                'supervisor_name' => $request->duty_personel_details["supervisor_name"],
-                'workstation' => $request->duty_personel_details["workstation"],
-                'duty_assigned' => $request->duty_personel_details["duty_assigned"],
-                'type_of_service' => $request->duty_personel_details["type_of_service"]
+                    'member_name' => $request->duty_personel_details["member_name"],
+                    'supervisor_name' => $request->duty_personel_details["supervisor_name"],
+                    'workstation' => $request->duty_personel_details["workstation"],
+                    'duty_assigned' => $request->duty_personel_details["duty_assigned"],
+                    'type_of_service' => $request->duty_personel_details["type_of_service"]
                 ]
             ],
             'supervisor_signature' => $request->supervisor_signature,
@@ -77,17 +75,17 @@ class DutyController extends Controller
         // $duty = Duty::create($request->all());
 
 
-        dd($duty);
-
-
-        // if(!$duty){
-        //     return redirect()->route('admin.duty.index', auth()->user()->id)->with('error_message', 'Error occurred! Please try again');
-        // }
-
-        // return redirect()->route('admin.duty.index', auth()->user()->id)->with('success_message', 'Duty Roster created successfully!!');
-
-        // $duty = Duty::create($request->all());
         // dd($duty);
+
+
+        if(!$duty){
+            return redirect()->route('admin.duty.index', auth()->user()->id)->with('error_message', 'Error occurred! Please try again');
+        }
+
+        return redirect()->route('admin.duty.index', auth()->user()->id)->with('success_message', 'Duty Roster created successfully!!');
+
+        $duty = Duty::create($request->all());
+        dd($duty);
     }
 
     /**
@@ -136,17 +134,12 @@ class DutyController extends Controller
     {
         $duty = Duty::findOrFail($duty_id);
 
-        if(!$duty){
+        if (!$duty) {
             dd("This ID does not exist!!");
-
-        }
-
-        else{
-            if(!$duty->delete()){
+        } else {
+            if (!$duty->delete()) {
                 dd("Error!! Deletion encountered an error");
-            }
-
-            else{
+            } else {
                 return redirect()->route('admin.duty.index', auth()->user()->id)->with('success_message', 'Duty Roster Deleted successfully!!');
             }
         }
@@ -159,25 +152,31 @@ class DutyController extends Controller
      * @param Request $request
      * @return \Illuminate\Http\Response
      */
-    public function updateDutyPersonelDetails(Request $request,$id){
-
-        //get the id of the already created duty roster and just update 'duty_personel_details' column
-        $duty = Duty::findOrFail($id);
-
-        // dd($request->duty_personel_details);
+    public function updateDutyPersonelDetails(Request $request, $id)
+    {
+        $member_details = [
+            'member_name' => $request->duty_personel_details['member_name'],
+            'supervisor_name' => $request->duty_personel_details['supervisor_name'],
+            'workstation' => $request->duty_personel_details['workstation'],
+            'duty_assigned' => $request->duty_personel_details['duty_assigned'],
+            'type_of_service' => $request->duty_personel_details['type_of_service']
+        ];
 
         //use a query builder to add new data to that column
-        $updated_duty = DB::table('duties')->where('id', $id)->update(['duty_personel_details' => DB::raw("JSON_SET(duty_personel_details, '$[1]', $request->duty_personel_details)")]);
-
-        if($updated_duty) {
-            dd('Data added successfully to the table!!');
-        }
-        else{
-            dd("Something went wrong. Please try again");
-        }
+        $updated_duty = DB::table('duties')->where('id', $id)->update(['duty_personel_details' => DB::raw("JSON_MERGE(duty_personel_details,'" . json_encode($member_details) . "')")]);
 
         // dd($updated_duty);
+
+
+        if(!$updated_duty){
+            return redirect()->route('admin.duty.index', auth()->user()->id)->with('error_message', 'Error occurred! Please try again');
+
+        }
+        else{
+            return redirect()->route('admin.duty.index', auth()->user()->id)->with('success_message', 'Member Details added successfully');
+
+        }
+
+        // dd($member_details);
     }
-
-
 }
