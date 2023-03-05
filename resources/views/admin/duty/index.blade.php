@@ -252,10 +252,10 @@
                     <hr>
                     <p class="card-text mb-4">Setup Time: {{$duty->setup_time}}</p>
                     <hr>
-                    <!-- <p class="card-text mb-4">Supervisor Name: {{$duty->supervisor_name}}</p> -->
+
                     <br>
                     <!-- Button trigger modal -->
-                    <x-button type="button" class="btn btn-primary float-right" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                    <x-button type="button" class="btn btn-primary float-right" data-bs-toggle="modal" data-bs-target="#staticBackdrop" id="createMemberDetails">
                         <i class="bi bi-plus-circle"></i>
                         Add a new member's details
                     </x-button>

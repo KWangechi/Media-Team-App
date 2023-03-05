@@ -68,9 +68,13 @@ Route::middleware(['auth'])->group(function () {
         Route::delete('/duty/{id}', [DutyController::class, 'destroy'])->name('admin.duty.delete');
 
         //duty roster personel details
+        Route::post('createDutyPersonelDetails/{id}', [DutyController::class, 'createDutyPersonelDetails'])
+            ->name('admin.duty.createDutyPersonelDetails');
         Route::post('updateDutyPersonelDetails/{id}', [DutyController::class, 'updateDutyPersonelDetails'])
             ->name('admin.duty.updateDutyPersonelDetails');
-
+        Route::post('deleteDutyPersonelDetails/{id}', [DutyController::class, 'deleteDutyPersonelDetails'])
+            ->name('admin.duty.deleteDutyPersonelDetails');
+        
         //Contributions
         Route::get('/contributions', [ContributionController::class, 'index'])->name('admin.users.contributions');
         Route::post('/contributions', [ContributionController::class, 'store'])->name('admin.users.contributions.create');

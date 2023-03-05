@@ -78,7 +78,7 @@ class DutyController extends Controller
         // dd($duty);
 
 
-        if(!$duty){
+        if (!$duty) {
             return redirect()->route('admin.duty.index', auth()->user()->id)->with('error_message', 'Error occurred! Please try again');
         }
 
@@ -145,6 +145,34 @@ class DutyController extends Controller
         }
     }
 
+
+    /**
+     * Creates just the member_name, supervisor_name, worskstation and duty assigned
+
+     * @param int $id
+     * @param Request $request
+     * @return \Illuminate\Http\Response
+     */
+    public function createDutyPersonelDetails(Request $request, $id)
+    {
+        $member_details = [
+            'member_name' => $request->duty_personel_details['member_name'],
+            'supervisor_name' => $request->duty_personel_details['supervisor_name'],
+            'workstation' => $request->duty_personel_details['workstation'],
+            'duty_assigned' => $request->duty_personel_details['duty_assigned'],
+            'type_of_service' => $request->duty_personel_details['type_of_service']
+        ];
+
+        //use a query builder to add new data to that column
+        $updated_duty = DB::table('duties')->where('id', $id)->update(['duty_personel_details' => DB::raw("JSON_MERGE(duty_personel_details,'" . json_encode($member_details) . "')")]);
+
+        if (!$updated_duty) {
+            return redirect()->route('admin.duty.index', auth()->user()->id)->with('error_message', 'Error occurred! Please try again');
+        } else {
+            return redirect()->route('admin.duty.index', auth()->user()->id)->with('success_message', 'Member Details added successfully');
+        }
+    }
+
     /**
      * Updates just the member_name, supervisor_name, worskstation and duty assigned
 
@@ -163,20 +191,12 @@ class DutyController extends Controller
         ];
 
         //use a query builder to add new data to that column
-        $updated_duty = DB::table('duties')->where('id', $id)->update(['duty_personel_details' => DB::raw("JSON_MERGE(duty_personel_details,'" . json_encode($member_details) . "')")]);
+        $updated_duty = DB::table('duties')->where('id', $id)->update(['duty_personel_details' => DB::raw("JSON_INSERT(duty_personel_details,'" . json_encode($member_details) . "')")]);
 
-        // dd($updated_duty);
-
-
-        if(!$updated_duty){
+        if (!$updated_duty) {
             return redirect()->route('admin.duty.index', auth()->user()->id)->with('error_message', 'Error occurred! Please try again');
-
-        }
-        else{
+        } else {
             return redirect()->route('admin.duty.index', auth()->user()->id)->with('success_message', 'Member Details added successfully');
-
         }
-
-        // dd($member_details);
     }
 }
