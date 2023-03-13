@@ -135,6 +135,7 @@
                 <i class="bi bi-plus-circle"></i>
                 CREATE NEW DUTY ROSTER</a>
 
+            <!-- Will reuse this same modal for the update -->
             <div class="modal" id="createDutyRosterModal" tabindex="-1" aria-labelledby="createDutyRosterModalLabel" aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
@@ -153,83 +154,82 @@
                                     <x-input class="block mt-1 w-full" id="week" name="week" type="week" autofocus placeholder="eg. Week 10" />
                                 </div>
 
-                                @for ($i=0; $i<=4; $i++) <!-- Member Name -->
-                                    <div class="mt-4">
-                                        <x-label for="member_name" :value="__('Member Name')" />
+                                <!-- Date Assigned -->
+                                <div class="mt-4">
+                                    <x-label for="date_assigned" :value="__('Date Assigned')" />
 
-                                        <x-input class="block mt-1 w-full" id="member_name" name="duty_personel_details[{{$i}}][member_name]" type="text" autofocus placeholder="eg. Nimoh Kamau" />
-                                    </div>
+                                    <x-input id="date_assigned" class="block mt-1 w-full" type="date" name="date_assigned" required />
+                                </div>
 
-                                    <!-- Supervisor Name -->
-                                    <div class="mt-4">
-                                        <x-label for="supervisor_name" :value="__('Supervisor Name')" />
+                                <!-- Setup Time -->
+                                <div class="mt-4">
+                                    <x-label for="setup_time" :value="__('Setup Time')" />
 
-                                        <x-input class="block mt-1 w-full" id="supervisor_name" name="duty_personel_details[{{$i}}][supervisor_name]" type="text" autofocus placeholder="eg. RKay" />
-                                    </div>
-
-                                    <!-- Workstation -->
-                                    <div class="mt-4">
-                                        <x-label for="workstation" :value="__('Workstation')" />
-
-                                        <x-input id="workstation" class="block mt-1 w-full" type="text" name="duty_personel_details[{{$i}}][workstation]" required placeholder="eg. Video, VMix" />
-                                    </div>
+                                    <x-input id="setup_time" class="block mt-1 w-full" type="time" name="setup time" required />
+                                </div>
 
 
-                                    <!-- Duty Assigned -->
-                                    <div class="mt-4">
-                                        <x-label for="duty_assigned" :value="__('Duty Assigned')" />
+                                <!-- Member Name -->
+                                <div class="mt-4">
+                                    <x-label for="member_name" :value="__('Member Name')" />
 
-                                        <x-input id="duty_assigned" class="block mt-1 w-full" type="text" name="duty_personel_details[{{$i}}][duty_assigned]" required placeholder="eg. Check on Sound Quality" />
-                                    </div>
+                                    <x-input class="block mt-1 w-full" id="member_name" name="duty_personel_details[member_name]" type="text" autofocus placeholder="eg. Nimoh Kamau" />
+                                </div>
 
-                                    <!-- Type of Service or Event -->
-                                    <div class="mt-4">
-                                        <x-label for="type_of_service" :value="__('Type of Service')" />
+                                <!-- Supervisor Name -->
+                                <div class="mt-4">
+                                    <x-label for="supervisor_name" :value="__('Supervisor Name')" />
 
-                                        <select name="duty_personel_details[{{$i}}][type_of_service]">
-                                            <option value="">-- Select Type of Service --</option>
-                                            <option value="1st Service">1st Service</option>
-                                            <option value="2nd Service">2nd Service</option>
-                                            <option value="Gwav Service">GWAV Service</option>
-                                            <option value="Wedding">Wedding</option>
-                                            <option value="Funeral">Funeral</option>
-                                            <option value="Graduation">Graduation</option>
+                                    <x-input class="block mt-1 w-full" id="supervisor_name" name="duty_personel_details[supervisor_name]" type="text" autofocus placeholder="eg. RKay" />
+                                </div>
 
-                                        </select>
-                                    </div>
+                                <!-- Workstation -->
+                                <div class="mt-4">
+                                    <x-label for="workstation" :value="__('Workstation')" />
 
-                                    @endfor
+                                    <x-input id="workstation" class="block mt-1 w-full" type="text" name="duty_personel_details[workstation]" required placeholder="eg. Video, VMix" />
+                                </div>
 
 
-                                    <!-- Supervisor signature -->
-                                    <div class="mt-4">
-                                        <x-label for="supervisor_signature" :value="__('Supervisor Signature')" />
+                                <!-- Duty Assigned -->
+                                <div class="mt-4">
+                                    <x-label for="duty_assigned" :value="__('Duty Assigned')" />
 
-                                        <select name="supervisor_signature">
-                                            <option value="0">Pending</option>
-                                            <option value="1">Signed</option>
-                                        </select>
-                                    </div>
+                                    <x-input id="duty_assigned" class="block mt-1 w-full" type="text" name="duty_personel_details[duty_assigned]" required placeholder="eg. Check on Sound Quality" />
+                                </div>
 
-                                    <!-- Setup Time -->
-                                    <div class="mt-4">
-                                        <x-label for="setup_time" :value="__('Setup Time')" />
+                                <!-- Type of Service or Event -->
+                                <div class="mt-4">
+                                    <x-label for="type_of_service" :value="__('Type of Service')" />
 
-                                        <x-input id="setup_time" class="block mt-1 w-full" type="time" name="setup time" required />
-                                    </div>
+                                    <select name="duty_personel_details[type_of_service]">
+                                        <option value="">-- Select Type of Service --</option>
+                                        <option value="1st Service">1st Service</option>
+                                        <option value="2nd Service">2nd Service</option>
+                                        <option value="Gwav Service">GWAV Service</option>
+                                        <option value="Wedding">Wedding</option>
+                                        <option value="Funeral">Funeral</option>
+                                        <option value="Graduation">Graduation</option>
 
-                                    <!-- Date Assigned -->
-                                    <div class="mt-4">
-                                        <x-label for="date_assigned" :value="__('Date Assigned')" />
+                                    </select>
+                                </div>
 
-                                        <x-input id="date_assigned" class="block mt-1 w-full" type="date" name="date_assigned" required />
-                                    </div>
+                                <!-- Supervisor signature -->
+                                <div class="mt-4">
+                                    <x-label for="supervisor_signature" :value="__('Supervisor Signature')" />
+
+                                    <select name="supervisor_signature">
+                                        <option value="0">Pending</option>
+                                        <option value="1">Signed</option>
+                                    </select>
+                                </div>
 
 
-                                    <br>
-                                    <x-button class="ml-4">
-                                        {{ __('Save') }}
-                                    </x-button>
+
+                                <br>
+                                <x-button class="ml-4">
+                                    {{ __('Save') }}
+                                </x-button>
                             </form>
                         </div>
                         <div class="modal-footer">
@@ -360,19 +360,12 @@
                                     <td>{{$new_duty['type_of_service']}}</td>
                                     <td>
                                         <div>
-                                            <a class="btn btn-secondary btn-sm" id="updateProfileButton" data-id="{{$duty->id}}" href="{{route('admin.duty.edit', $duty->id)}}">EDIT</a>
+                                            <a class="btn btn-secondary btn-sm" id="updateProfileButton" data-id="{{$duty->id}}" href="{{route('admin.duty.editPersonelDetails', $duty->id)}}">EDIT</a>
                                         </div>
                                     </td>
 
-                                    <!-- <td>
-                                        <div>
-                                            <a class="btn btn-secondary btn-sm" id="getDutyRosterId" data-id="{{$duty->id}}" href="{{route('admin.duty.updateDutyPersonelDetails', $duty->id)}}">GET DUTY ROSTER ID</a>
-                                        </div>
-
-                                    </td> -->
-
                                     <td>
-                                        <form action="{{ route('admin.duty.delete', [$duty->id]) }}" method="POST">
+                                        <form action="{{ route('admin.duty.deleteDutyPersonelDetails', [$duty->id]) }}" method="POST">
                                             @csrf
                                             @method('DELETE')
                                             <button id="deleteLeaveButton" class="btn btn-danger btn-sm">
@@ -394,6 +387,22 @@
 
 
                 </div>
+
+                <div class="card-footer text-center row">
+                    <div class="col float-left">
+
+                        <a href="{{ route('admin.duty.edit', $duty->id) }}" class="btn btn-secondary">EDIT DUTY ROSTER</a>
+                    </div>
+                        <!-- <button class="btn btn-danger ml-12">DELETE DUTY ROSTER</button> -->
+
+                    <form action ="{{ route('admin.duty.delete', $duty->id) }}" method="POST" class="float-right col">
+                        @csrf
+                        @method('DELETE')
+
+                        <button class="btn btn-danger ml-12">DELETE DUTY ROSTER</button>
+                    </form>
+
+                </div>
             </div>
             @endforeach
             @endif
@@ -409,6 +418,14 @@
     // createDutyRosterModalButton.addEventListener('click', function(){
     //     $("#createDutyRosterModal").fadeToggle();
     // })
+
+    // get the data from the api
+    function getDutyRosterId(dutyId){
+
+        fetch(`/admin/duty/${id}`).then((response) => {
+            console.log()
+        })
+    }
 
     $(document).ready(function() {
         $("#createDutyRosterModalButton").on('click', function() {

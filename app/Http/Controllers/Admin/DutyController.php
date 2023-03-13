@@ -72,9 +72,6 @@ class DutyController extends Controller
             'date_assigned' => $request->date_assigned
         ]);
 
-        // $duty = Duty::create($request->all());
-
-
         // dd($duty);
 
 
@@ -83,9 +80,6 @@ class DutyController extends Controller
         }
 
         return redirect()->route('admin.duty.index', auth()->user()->id)->with('success_message', 'Duty Roster created successfully!!');
-
-        $duty = Duty::create($request->all());
-        dd($duty);
     }
 
     /**
@@ -121,7 +115,17 @@ class DutyController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $duty = Duty::findOrFail($id);
+
+        if (!$duty) {
+            return;
+        } else {
+            if (!$duty->update($request->all())) {
+                return redirect()->route('admin.duty.index', auth()->user()->id)->with('error_message', 'Error Occurred while updating. Please check your request and try again!');
+            } else {
+                return redirect()->route('admin.duty.index', auth()->user()->id)->with('success_message', 'Duty Roster Updated successfully!!');
+            }
+        }
     }
 
     /**
@@ -135,15 +139,18 @@ class DutyController extends Controller
         $duty = Duty::findOrFail($duty_id);
 
         if (!$duty) {
-            dd("This ID does not exist!!");
+            return redirect()->route('admin.duty.index', auth()->user()->id)->with('error_message', 'ID doesn\t exist');
         } else {
             if (!$duty->delete()) {
-                dd("Error!! Deletion encountered an error");
+                return redirect()->route('admin.duty.index', auth()->user()->id)->with('error_message', 'An error occurred! Please check the request and try again!');
             } else {
                 return redirect()->route('admin.duty.index', auth()->user()->id)->with('success_message', 'Duty Roster Deleted successfully!!');
             }
         }
+
+        // dd($duty);
     }
+
 
 
     /**
@@ -198,5 +205,9 @@ class DutyController extends Controller
         } else {
             return redirect()->route('admin.duty.index', auth()->user()->id)->with('success_message', 'Member Details added successfully');
         }
+    }
+    public function deleteDutyPersonelDetails(Request $request, $id) {
+        $updated_duty = DB::table('duties')->where('id', $id)->delete();
+
     }
 }

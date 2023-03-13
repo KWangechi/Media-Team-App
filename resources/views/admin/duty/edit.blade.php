@@ -27,35 +27,35 @@
 
                 <!-- Member Name -->
                 <div class="mt-4">
-                                    <x-label for="member_name" :value="__('Member Name')" />
+                                    <x-label for="Week" :value="__('Week')" />
 
-                                    <x-input :value="$duty->member_name" class="block mt-1 w-full" id="member_name" name="member_name" type="text" autofocus />
+                                    <x-input value="{{ $duty->week }}" class="block mt-1 w-full" id="week" name="week" type="text" autofocus />
                                 </div>
 
                                 <!-- Supervisor Name -->
-                                <div class="mt-4">
+                                <!-- <div class="mt-4">
                                     <x-label for="supervisor_name" :value="__('Supervisor Name')" />
 
                                     <x-input :value="$duty->supervisor_name" class="block mt-1 w-full" id="supervisor_name" name="supervisor_name" type="text" autofocus placeholder="eg. RKay" />
-                                </div>
+                                </div> -->
 
                                 <!-- Workstation -->
-                                <div class="mt-4">
+                                <!-- <div class="mt-4">
                                     <x-label for="workstation" :value="__('Workstation')" />
 
                                     <x-input id="workstation" :value="$duty->workstation" class="block mt-1 w-full" type="text" name="workstation" required placeholder="eg. Video, VMix" />
-                                </div>
+                                </div> -->
 
 
                                 <!-- Duty Assigned -->
-                                <div class="mt-4">
+                                <!-- <div class="mt-4">
                                     <x-label for="duty_assigned" :value="__('Duty Assigned')" />
 
                                     <x-input id="duty_assigned" :value="$duty->duty_assigned" class="block mt-1 w-full" type="text" name="duty_assigned" required placeholder="eg. Check on Sound Quality" />
-                                </div>
+                                </div> -->
 
                                 <!-- Type of Service or Event -->
-                                <div class="mt-4">
+                                <!-- <div class="mt-4">
                                     <x-label for="type_of_service" :value="__('Type of Service')" />
 
                                     <select name="type_of_service">
@@ -68,7 +68,7 @@
                                         <option value="Graduation">Graduation</option>
 
                                     </select>
-                                </div>
+                                </div> -->
 
                                 <!-- Supervisor signature -->
                                 <div class="mt-4">
@@ -94,6 +94,17 @@
 
                                     <x-input id="date_assigned" :value="$duty->date_assigned" class="block mt-1 w-full" type="date" name="date_assigned" required />
                                 </div>
+
+                                <br>
+                <div class="ml-4">
+                    <x-button class="ml-4">
+                        {{ __('Update') }}
+                    </x-button>
+                </div>
+
+                <div class="mt-3 mb-150">
+                    <a class="btn btn-secondary float-right" href="{{ route('admin.duty.index') }}">Cancel</a>
+                </div>
 
                 <!-- <br>
                 <br> -->
