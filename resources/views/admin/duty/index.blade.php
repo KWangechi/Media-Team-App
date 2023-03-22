@@ -225,7 +225,6 @@
                                 </div>
 
 
-
                                 <br>
                                 <x-button class="ml-4">
                                     {{ __('Save') }}
@@ -269,7 +268,7 @@
                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                 </div>
                                 <div class="modal-body">
-                                    <form method="POST" id="createDutyRoster" action="{{ route('admin.duty.updateDutyPersonelDetails', $duty->id )}}">
+                                    <form method="POST" id="createDutyRoster" action="{{ route('admin.duty.createDutyPersonelDetails', $duty->id )}}">
                                         @csrf
 
                                         <!-- Member Name -->
@@ -360,7 +359,7 @@
                                     <td>{{$new_duty['type_of_service']}}</td>
                                     <td>
                                         <div>
-                                            <a class="btn btn-secondary btn-sm" id="updateProfileButton" data-id="{{$duty->id}}" href="{{route('admin.duty.editPersonelDetails', $duty->id)}}">EDIT</a>
+                                            <a class="btn btn-secondary btn-sm" id="updateProfileButton" data-id="{{$duty->id}}" href="{{route('admin.duty.editDutyPersonelDetails', $duty->id)}}">EDIT</a>
                                         </div>
                                     </td>
 
@@ -393,9 +392,9 @@
 
                         <a href="{{ route('admin.duty.edit', $duty->id) }}" class="btn btn-secondary">EDIT DUTY ROSTER</a>
                     </div>
-                        <!-- <button class="btn btn-danger ml-12">DELETE DUTY ROSTER</button> -->
+                    <!-- <button class="btn btn-danger ml-12">DELETE DUTY ROSTER</button> -->
 
-                    <form action ="{{ route('admin.duty.delete', $duty->id) }}" method="POST" class="float-right col">
+                    <form action="{{ route('admin.duty.delete', $duty->id) }}" method="POST" class="float-right col">
                         @csrf
                         @method('DELETE')
 
@@ -420,7 +419,7 @@
     // })
 
     // get the data from the api
-    function getDutyRosterId(dutyId){
+    function getDutyRosterId(dutyId) {
 
         fetch(`/admin/duty/${id}`).then((response) => {
             console.log()

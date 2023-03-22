@@ -210,4 +210,30 @@ class DutyController extends Controller
         $updated_duty = DB::table('duties')->where('id', $id)->delete();
 
     }
+
+    /**
+     * return the edit form view with the information of the members details
+     * @param Request $request
+     */
+    public function editDutyPersonelDetails(Request $request, $id) {
+        $duties = Duty::findOrFail($id);
+
+        // use a for-loop to traverse each record returned by the query
+        $length = count($duties->duty_personel_details);
+        // $duty = '';
+
+        for ($i=0; $i<count($duties->duty_personel_details); $i++) {
+            // $duty = $duties->duty_personel_details;
+            dd($i);
+            // dd($duty);
+        }
+
+        // foreach($duties->duty_personel_details as $duty){
+        //     dd($duty);
+        // }
+
+        // dd($length);
+        // dd(count(array($duties->duty_personel_details)));
+
+    }
 }
