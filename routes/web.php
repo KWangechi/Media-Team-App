@@ -71,7 +71,7 @@ Route::middleware(['auth'])->group(function () {
         Route::post('createDutyPersonelDetails/{id}', [DutyController::class, 'createDutyPersonelDetails'])
             ->name('admin.duty.createDutyPersonelDetails');
 
-        Route::get('editDutyPersonelDetails/{id}', [DutyController::class, 'editDutyPersonelDetails'])
+        Route::get('editDutyPersonelDetails/{id}/{duty_name}', [DutyController::class, 'editDutyPersonelDetails'])
             ->name('admin.duty.editDutyPersonelDetails');
 
         Route::post('updateDutyPersonelDetails/{id}', [DutyController::class, 'updateDutyPersonelDetails'])

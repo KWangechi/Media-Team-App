@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Duty;
 use App\Models\User;
+use Faker\Core\Uuid;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
@@ -60,6 +61,7 @@ class DutyController extends Controller
             'week' => $request->week,
             'duty_personel_details' => [
                 [
+                    'unique_id' => uniqid(mt_rand()),
                     'member_name' => $request->duty_personel_details["member_name"],
                     'supervisor_name' => $request->duty_personel_details["supervisor_name"],
                     'workstation' => $request->duty_personel_details["workstation"],
@@ -163,6 +165,7 @@ class DutyController extends Controller
     public function createDutyPersonelDetails(Request $request, $id)
     {
         $member_details = [
+            'unique_id' => uniqid(mt_rand(5,5)),
             'member_name' => $request->duty_personel_details['member_name'],
             'supervisor_name' => $request->duty_personel_details['supervisor_name'],
             'workstation' => $request->duty_personel_details['workstation'],
@@ -215,25 +218,18 @@ class DutyController extends Controller
      * return the edit form view with the information of the members details
      * @param Request $request
      */
-    public function editDutyPersonelDetails(Request $request, $id) {
-        $duties = Duty::findOrFail($id);
+    public function editDutyPersonelDetails($id, $unique_id) {
 
-        // use a for-loop to traverse each record returned by the query
-        $length = count($duties->duty_personel_details);
-        // $duty = '';
+        $duties = Duty::findOrFail($unique_id);
+        $duty_personel_details = $duties->duty_personel_details;
+        // dd($duty_personel_details);
 
-        for ($i=0; $i<count($duties->duty_personel_details); $i++) {
-            // $duty = $duties->duty_personel_details;
-            dd($i);
-            // dd($duty);
+        foreach($duty_personel_details as $new_duty) {
+            dd($new_duty['unique_id']);
         }
 
-        // foreach($duties->duty_personel_details as $duty){
-        //     dd($duty);
-        // }
 
-        // dd($length);
-        // dd(count(array($duties->duty_personel_details)));
+
 
     }
 }

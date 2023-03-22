@@ -359,7 +359,7 @@
                                     <td>{{$new_duty['type_of_service']}}</td>
                                     <td>
                                         <div>
-                                            <a class="btn btn-secondary btn-sm" id="updateProfileButton" data-id="{{$duty->id}}" href="{{route('admin.duty.editDutyPersonelDetails', $duty->id)}}">EDIT</a>
+                                            <a class="btn btn-secondary btn-sm" id="editProfileButton" data-id="{{$new_duty['unique_id']}}" href="{{route('admin.duty.editDutyPersonelDetails', [$duty->id, $new_duty['unique_id']])}}">EDIT</a>
                                         </div>
                                     </td>
 
