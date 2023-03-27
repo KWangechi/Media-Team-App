@@ -220,16 +220,30 @@ class DutyController extends Controller
      */
     public function editDutyPersonelDetails($id, $unique_id) {
 
-        $duties = Duty::findOrFail($unique_id);
-        $duty_personel_details = $duties->duty_personel_details;
-        // dd($duty_personel_details);
+        // dd($unique_id);
 
-        foreach($duty_personel_details as $new_duty) {
-            dd($new_duty['unique_id']);
-        }
+        // $duties = DB::table('duties')->whereJsonContains('duty_personel_details', [['member_name' => 'Carl Cote']])->select('duty_personel_details')->get();
+
+        // for ($i=0; $i < count($duties); $i++) {
+        //     # code...
+        //     dd([$i]);
+        // }
+        // dd(count($duties));
+
+        // $duties = Duty::findOrFail($id);
+        // $duty_personel_details = $duties->duty_personel_details;
+
+        // for ($i=0; $i < count($duty_personel_details); $i++) {
+        //     # code...
+        //     dd($i);
+        // }
+        // dd($duty_personel_details[count($duty_personel_details)-1]);
+        // dd(count($duty_personel_details));
 
 
-
-
+        // foreach($duty_personel_details as $new_duty) {
+        //     dd($new_duty['unique_id']);
+        // }
+        // dd($query->where());
     }
 }
