@@ -6,12 +6,14 @@ use App\Http\Controllers\Admin;
 use App\Http\Controllers\Admin\AnnouncementController;
 use App\Http\Controllers\Admin\ContributionController;
 use App\Http\Controllers\Admin\DutyController;
+use App\Http\Controllers\Admin\DutyMemberDetailsController;
 use App\Http\Controllers\Admin\FilterController;
 use App\Http\Controllers\Auth;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\LeaveController;
 use App\Models\Announcement;
 use App\Models\Contribution;
+use App\Models\DutyMemberDetails;
 use App\Models\Role;
 use RealRashid\SweetAlert\Facades\Alert;
 
@@ -68,16 +70,16 @@ Route::middleware(['auth'])->group(function () {
         Route::delete('/duty/{id}', [DutyController::class, 'destroy'])->name('admin.duty.delete');
 
         //duty roster personel details
-        Route::post('createDutyPersonelDetails/{id}', [DutyController::class, 'createDutyPersonelDetails'])
+        Route::post('createDutyPersonelDetails/{id}', [DutyMemberDetailsController::class, 'store'])
             ->name('admin.duty.createDutyPersonelDetails');
 
-        Route::get('editDutyPersonelDetails/{id}/{duty_id}', [DutyController::class, 'editDutyPersonelDetails'])
+        Route::get('editDutyPersonelDetails/{duty_id}', [DutyMemberDetailsController::class, 'edit'])
             ->name('admin.duty.editDutyPersonelDetails');
 
-        Route::post('updateDutyPersonelDetails/{id}', [DutyController::class, 'updateDutyPersonelDetails'])
+        Route::patch('updateDutyPersonelDetails/{id}', [DutyMemberDetailsController::class, 'update'])
             ->name('admin.duty.updateDutyPersonelDetails');
 
-        Route::post('deleteDutyPersonelDetails/{id}', [DutyController::class, 'deleteDutyPersonelDetails'])
+        Route::post('deleteDutyPersonelDetails/{id}', [DutyMemberDetailsController::class, 'delete'])
             ->name('admin.duty.deleteDutyPersonelDetails');
 
         //Contributions

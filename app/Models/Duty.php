@@ -11,20 +11,20 @@ class Duty extends Model
 
     protected $fillable = [
     'week',
-    'duty_personel_details',
     'supervisor_signature',
     'setup_time',
     'date_assigned',
 ];
 
-protected $casts = [
-    'duty_personel_details' => 'array'
-];
-
-
+// realtionships
 public function equipment(){
     return $this->hasMany(Equipment::class);
 }
+
+public function members() {
+    return $this->hasMany(DutyMemberDetails::class);
+}
+
 
 
 }

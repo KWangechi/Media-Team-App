@@ -39,6 +39,10 @@
                             <form method="POST" id="createLeaveForm" action="{{ route('admin.duty.create', auth()->user()->id )}}">
                                 @csrf
 
+                                <div class="mt-4">
+                                    <x-input class="block mt-1 w-full" id="duty_id" name="duty_id" type="number" hidden />
+                                </div>
+
                                 <!-- Week of the year when the duty is assigned -->
                                 <div class="mt-4">
                                     <x-label for="week" :value="__('Week')" />
@@ -51,21 +55,21 @@
                                 <div class="mt-4">
                                     <x-label for="member_name" :value="__('Member Name')" />
 
-                                    <x-input class="block mt-1 w-full" id="member_name" name="duty_personel_details[member_name]" type="text" autofocus placeholder="eg. Nimoh Kamau" />
+                                    <x-input class="block mt-1 w-full" id="member_name" name="member_name" type="text" autofocus placeholder="eg. Nimoh Kamau" />
                                 </div>
 
                                 <!-- Supervisor Name -->
                                 <div class="mt-4">
                                     <x-label for="supervisor_name" :value="__('Supervisor Name')" />
 
-                                    <x-input class="block mt-1 w-full" id="supervisor_name" name="duty_personel_details[supervisor_name]" type="text" autofocus placeholder="eg. RKay" />
+                                    <x-input class="block mt-1 w-full" id="supervisor_name" name="supervisor_name" type="text" autofocus placeholder="eg. RKay" />
                                 </div>
 
                                 <!-- Workstation -->
                                 <div class="mt-4">
                                     <x-label for="workstation" :value="__('Workstation')" />
 
-                                    <x-input id="workstation" class="block mt-1 w-full" type="text" name="duty_personel_details[workstation]" required placeholder="eg. Video, VMix" />
+                                    <x-input id="workstation" class="block mt-1 w-full" type="text" name="workstation" required placeholder="eg. Video, VMix" />
                                 </div>
 
 
@@ -73,15 +77,15 @@
                                 <div class="mt-4">
                                     <x-label for="duty_assigned" :value="__('Duty Assigned')" />
 
-                                    <x-input id="duty_assigned" class="block mt-1 w-full" type="text" name="duty_personel_details[duty_assigned]" required placeholder="eg. Check on Sound Quality" />
+                                    <x-input id="duty_assigned" class="block mt-1 w-full" type="text" name="duty_assigned" required placeholder="eg. Check on Sound Quality" />
                                 </div>
 
                                 <!-- Type of Service or Event -->
                                 <div class="mt-4">
-                                    <x-label for="type_of_service" :value="__('Type of Service')" />
+                                    <x-label for="event_type" :value="__('Type of Event')" />
 
-                                    <select name="duty_personel_details[type_of_service]">
-                                        <option value="">-- Select Type of Service --</option>
+                                    <select name="event_type">
+                                        <option value="">-- Select Type of Event --</option>
                                         <option value="1st Service">1st Service</option>
                                         <option value="2nd Service">2nd Service</option>
                                         <option value="Gwav Service">GWAV Service</option>
@@ -144,7 +148,7 @@
                             <a class="btn-close" id="closeModalButton" data-bs-dismiss="modal" aria-label="Close"></a>
                         </div>
                         <div class="modal-body">
-                            <form method="POST" id="createLeaveForm" action="{{ route('admin.duty.create', auth()->user()->id )}}">
+                            <form method="POST" id="createDutyRosterForm" action="{{ route('admin.duty.create', auth()->user()->id )}}">
                                 @csrf
 
                                 <!-- Week of the year when the duty is assigned -->
@@ -173,21 +177,21 @@
                                 <div class="mt-4">
                                     <x-label for="member_name" :value="__('Member Name')" />
 
-                                    <x-input class="block mt-1 w-full" id="member_name" name="duty_personel_details[member_name]" type="text" autofocus placeholder="eg. Nimoh Kamau" />
+                                    <x-input class="block mt-1 w-full" id="member_name" name="member_name" type="text" autofocus placeholder="eg. Nimoh Kamau" />
                                 </div>
 
                                 <!-- Supervisor Name -->
                                 <div class="mt-4">
                                     <x-label for="supervisor_name" :value="__('Supervisor Name')" />
 
-                                    <x-input class="block mt-1 w-full" id="supervisor_name" name="duty_personel_details[supervisor_name]" type="text" autofocus placeholder="eg. RKay" />
+                                    <x-input class="block mt-1 w-full" id="supervisor_name" name="supervisor_name" type="text" autofocus placeholder="eg. RKay" />
                                 </div>
 
                                 <!-- Workstation -->
                                 <div class="mt-4">
                                     <x-label for="workstation" :value="__('Workstation')" />
 
-                                    <x-input id="workstation" class="block mt-1 w-full" type="text" name="duty_personel_details[workstation]" required placeholder="eg. Video, VMix" />
+                                    <x-input id="workstation" class="block mt-1 w-full" type="text" name="workstation" required placeholder="eg. Video, VMix" />
                                 </div>
 
 
@@ -195,18 +199,18 @@
                                 <div class="mt-4">
                                     <x-label for="duty_assigned" :value="__('Duty Assigned')" />
 
-                                    <x-input id="duty_assigned" class="block mt-1 w-full" type="text" name="duty_personel_details[duty_assigned]" required placeholder="eg. Check on Sound Quality" />
+                                    <x-input id="duty_assigned" class="block mt-1 w-full" type="text" name="duty_assigned" required placeholder="eg. Check on Sound Quality" />
                                 </div>
 
                                 <!-- Type of Service or Event -->
                                 <div class="mt-4">
-                                    <x-label for="type_of_service" :value="__('Type of Service')" />
+                                    <x-label for="event_type" :value="__('Event Type')" />
 
-                                    <select name="duty_personel_details[type_of_service]">
-                                        <option value="">-- Select Type of Service --</option>
-                                        <option value="1st Service">1st Service</option>
-                                        <option value="2nd Service">2nd Service</option>
-                                        <option value="Gwav Service">GWAV Service</option>
+                                    <select name="event_type">
+                                        <option value="">-- Select Type of Event --</option>
+                                        <option value="1st Service">Sunday 1st Service</option>
+                                        <option value="2nd Service">Sunday 2nd Service</option>
+                                        <option value="Gwav Service">Sunday GWAV Service</option>
                                         <option value="Wedding">Wedding</option>
                                         <option value="Funeral">Funeral</option>
                                         <option value="Graduation">Graduation</option>
@@ -271,25 +275,32 @@
                                     <form method="POST" id="createDutyRoster" action="{{ route('admin.duty.createDutyPersonelDetails', $duty->id )}}">
                                         @csrf
 
+                                        <!-- Duty ID -->
+                                        <!-- <div class="mt-4">
+                                            <x-label for="duty_id" :value="__('Duty ID')" />
+
+                                            <x-input value="{{$duty->id}}" class="block mt-1 w-full" id="duty_id" name="duty_id" type="number" disabled/>
+                                        </div> -->
+
                                         <!-- Member Name -->
                                         <div class="mt-4">
                                             <x-label for="member_name" :value="__('Member Name')" />
 
-                                            <x-input class="block mt-1 w-full" id="member_name" name="duty_personel_details[member_name]" type="text" autofocus placeholder="eg. Nimoh Kamau" />
+                                            <x-input class="block mt-1 w-full" id="member_name" name="member_name" type="text" autofocus placeholder="eg. Nimoh Kamau"/>
                                         </div>
 
                                         <!-- Supervisor Name -->
                                         <div class="mt-4">
                                             <x-label for="supervisor_name" :value="__('Supervisor Name')" />
 
-                                            <x-input class="block mt-1 w-full" id="supervisor_name" name="duty_personel_details[supervisor_name]" type="text" autofocus placeholder="eg. RKay" />
+                                            <x-input class="block mt-1 w-full" id="supervisor_name" name="supervisor_name" type="text" autofocus placeholder="eg. RKay" />
                                         </div>
 
                                         <!-- Workstation -->
                                         <div class="mt-4">
                                             <x-label for="workstation" :value="__('Workstation')" />
 
-                                            <x-input id="workstation" class="block mt-1 w-full" type="text" name="duty_personel_details[workstation]" required placeholder="eg. Video, VMix" />
+                                            <x-input id="workstation" class="block mt-1 w-full" type="text" name="workstation" required placeholder="eg. Video, VMix" />
                                         </div>
 
 
@@ -297,15 +308,15 @@
                                         <div class="mt-4">
                                             <x-label for="duty_assigned" :value="__('Duty Assigned')" />
 
-                                            <x-input id="duty_assigned" class="block mt-1 w-full" type="text" name="duty_personel_details[duty_assigned]" required placeholder="eg. Check on Sound Quality" />
+                                            <x-input id="duty_assigned" class="block mt-1 w-full" type="text" name="duty_assigned" required placeholder="eg. Check on Sound Quality" />
                                         </div>
 
                                         <!-- Type of Service or Event -->
                                         <div class="mt-4">
-                                            <x-label for="type_of_service" :value="__('Type of Service')" />
+                                            <x-label for="event_type" :value="__('Type of Event')" />
 
-                                            <select name="duty_personel_details[type_of_service]">
-                                                <option value="">-- Select Type of Service --</option>
+                                            <select name="event_type">
+                                                <option value="">-- Select Type of Event --</option>
                                                 <option value="1st Service">1st Service</option>
                                                 <option value="2nd Service">2nd Service</option>
                                                 <option value="Gwav Service">GWAV Service</option>
@@ -342,36 +353,34 @@
                                     <th scope="col">Supervisor Name</th>
                                     <th scope="col">Workstation</th>
                                     <th scope="col">Duty Assigned</th>
-                                    <th scope="col">Type of Service</th>
+                                    <th scope="col">Type of Event</th>
                                     <th scope="col">EDIT</th>
                                     <th scope="col">DELETE</th>
 
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($duty->duty_personel_details as $new_duty)
+                                @foreach ($member_details as $new_duty)
 
                                 <tr>
-                                    <td>{{$new_duty['member_name']}}</td>
-                                    <td>{{$new_duty['supervisor_name']}}</td>
-                                    <td>{{$new_duty['workstation']}}</td>
-                                    <td>{{$new_duty['duty_assigned']}}</td>
-                                    <td>{{$new_duty['type_of_service']}}</td>
+                                    <td>{{ $new_duty->member_name }}</td>
+                                    <td>{{$new_duty->supervisor_name}}</td>
+                                    <td>{{$new_duty->workstation}}</td>
+                                    <td>{{$new_duty->duty_assigned}}</td>
+                                    <td>{{$new_duty->event_type}}</td>
+
                                     <td>
-                                        <div>
-                                            <a class="btn btn-secondary btn-sm" id="editProfileButton" data-id="{{$new_duty['unique_id']}}" href="{{route('admin.duty.editDutyPersonelDetails', [$duty->id, $new_duty['unique_id']])}}">EDIT</a>
-                                        </div>
+                                        <a href="{{route('admin.duty.editDutyPersonelDetails', [$new_duty->id])}}" class="btn btn-secondary btn-sm">EDIT</a>
                                     </td>
 
                                     <td>
-                                        <form action="{{ route('admin.duty.deleteDutyPersonelDetails', [$duty->id]) }}" method="POST">
+                                        <form action="{{route('admin.duty.delete', [$new_duty->id])}}">
                                             @csrf
                                             @method('DELETE')
-                                            <button id="deleteLeaveButton" class="btn btn-danger btn-sm">
-                                                DELETE
-                                            </button>
+                                            <button class="btn btn-sm btn-danger"> DELETE</button>
                                         </form>
                                     </td>
+
                                 </tr>
                                 @endforeach
                             </tbody>

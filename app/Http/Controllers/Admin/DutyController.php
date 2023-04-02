@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Duty;
+use App\Models\DutyMemberDetails;
 use App\Models\User;
 use Faker\Core\Uuid;
 use Illuminate\Http\Request;
@@ -20,15 +21,16 @@ class DutyController extends Controller
     public function index()
     {
         $duties = Duty::all();
+        $member_details = DutyMemberDetails::all();
 
         if (auth()->user()->id == User::ROLE_ADMIN) {
 
-            return view('admin.duty.index', compact('duties'));
+            return view('admin.duty.index', compact('duties', 'member_details'));
         } else {
-            return view('user.duty.index', compact('duties'));
+            return view('user.duty.index', compact('duties', 'member_details'));
         }
 
-        // dd($duties);
+        // dd($member_details);
     }
 
     /**
@@ -51,37 +53,43 @@ class DutyController extends Controller
     {
         $request->validate([
             'week' => 'string',
-            'duty_personel_details' => 'array',
             'supervisor_signature' => 'string',
             'setup_time' => 'required',
-            'date_assigned' => 'date'
+            'date_assigned' => 'date',
+            'duty_id' => 'number',
+            'member_name' => 'string',
+            'supervisor_name' => 'string',
+            'workstation' => 'string',
+            'duty_assigned' => 'string',
+            'event_type' => 'string'
         ]);
 
         $duty = Duty::create([
             'week' => $request->week,
-            'duty_personel_details' => [
-                [
-                    'unique_id' => uniqid(mt_rand()),
-                    'member_name' => $request->duty_personel_details["member_name"],
-                    'supervisor_name' => $request->duty_personel_details["supervisor_name"],
-                    'workstation' => $request->duty_personel_details["workstation"],
-                    'duty_assigned' => $request->duty_personel_details["duty_assigned"],
-                    'type_of_service' => $request->duty_personel_details["type_of_service"]
-                ]
-            ],
             'supervisor_signature' => $request->supervisor_signature,
             'setup_time' => $request->setup_time,
             'date_assigned' => $request->date_assigned
         ]);
 
-        // dd($duty);
 
+        $member_details = DutyMemberDetails::create([
+            'duty_id' => $duty->id,
+            'member_name' => $request->member_name,
+            'supervisor_name' => $request->supervisor_name,
+            'workstation' => $request->workstation,
+            'duty_assigned' => $request->duty_assigned,
+            'event_type' => $request->event_type
+        ]);
 
         if (!$duty) {
-            return redirect()->route('admin.duty.index', auth()->user()->id)->with('error_message', 'Error occurred! Please try again');
+            return redirect()->route('admin.duty.index', auth()->user()->id)->with('error_message', 'Error creating a new duty!!');
+        } else {
+            if (!$member_details) {
+                return redirect()->route('admin.duty.index', auth()->user()->id)->with('error_message', 'Error creating new duty mmber_details!!');
+            } else {
+                return redirect()->route('admin.duty.index', auth()->user()->id)->with('success_message', 'Duty Roster created successfully!!');
+            }
         }
-
-        return redirect()->route('admin.duty.index', auth()->user()->id)->with('success_message', 'Duty Roster created successfully!!');
     }
 
     /**
@@ -150,7 +158,6 @@ class DutyController extends Controller
             }
         }
 
-        // dd($duty);
     }
 
 
@@ -164,8 +171,9 @@ class DutyController extends Controller
      */
     public function createDutyPersonelDetails(Request $request, $id)
     {
+
         $member_details = [
-            'unique_id' => uniqid(mt_rand(5,5)),
+            'unique_id' => uniqid(mt_rand(5, 5)),
             'member_name' => $request->duty_personel_details['member_name'],
             'supervisor_name' => $request->duty_personel_details['supervisor_name'],
             'workstation' => $request->duty_personel_details['workstation'],
@@ -173,7 +181,8 @@ class DutyController extends Controller
             'type_of_service' => $request->duty_personel_details['type_of_service']
         ];
 
-        //use a query builder to add new data to that column
+
+        // //use a query builder to add new data to that column
         $updated_duty = DB::table('duties')->where('id', $id)->update(['duty_personel_details' => DB::raw("JSON_MERGE(duty_personel_details,'" . json_encode($member_details) . "')")]);
 
         if (!$updated_duty) {
@@ -192,25 +201,22 @@ class DutyController extends Controller
      */
     public function updateDutyPersonelDetails(Request $request, $id)
     {
-        $member_details = [
-            'member_name' => $request->duty_personel_details['member_name'],
-            'supervisor_name' => $request->duty_personel_details['supervisor_name'],
-            'workstation' => $request->duty_personel_details['workstation'],
-            'duty_assigned' => $request->duty_personel_details['duty_assigned'],
-            'type_of_service' => $request->duty_personel_details['type_of_service']
-        ];
+        $member_details = DutyMemberDetails::findOrFail($id);
 
-        //use a query builder to add new data to that column
-        $updated_duty = DB::table('duties')->where('id', $id)->update(['duty_personel_details' => DB::raw("JSON_INSERT(duty_personel_details,'" . json_encode($member_details) . "')")]);
-
-        if (!$updated_duty) {
-            return redirect()->route('admin.duty.index', auth()->user()->id)->with('error_message', 'Error occurred! Please try again');
+        if (!$member_details) {
+            return;
         } else {
-            return redirect()->route('admin.duty.index', auth()->user()->id)->with('success_message', 'Member Details added successfully');
+            if (!$member_details->update($request->all())) {
+                return redirect()->route('admin.duty.index', auth()->user()->id)->with('error_message', 'Error Occurred while updating. Please check your request and try again!');
+            } else {
+                return redirect()->route('admin.duty.index', auth()->user()->id)->with('success_message', 'Duty Roster Updated successfully!!');
+            }
         }
+
+        // dd($request->all());
     }
-    public function deleteDutyPersonelDetails(Request $request, $id) {
-        $updated_duty = DB::table('duties')->where('id', $id)->delete();
+    public function deleteDutyPersonelDetails($id)
+    {
 
     }
 
@@ -218,32 +224,15 @@ class DutyController extends Controller
      * return the edit form view with the information of the members details
      * @param Request $request
      */
-    public function editDutyPersonelDetails($id, $unique_id) {
+    public function editDutyPersonelDetails($duty_id)
 
-        // dd($unique_id);
+    {
+        // dd($duty_id);
 
-        // $duties = DB::table('duties')->whereJsonContains('duty_personel_details', [['member_name' => 'Carl Cote']])->select('duty_personel_details')->get();
+        // $member_details = Duty::findOrFail($duty_id)->members;
 
-        // for ($i=0; $i < count($duties); $i++) {
-        //     # code...
-        //     dd([$i]);
-        // }
-        // dd(count($duties));
+        
 
-        // $duties = Duty::findOrFail($id);
-        // $duty_personel_details = $duties->duty_personel_details;
-
-        // for ($i=0; $i < count($duty_personel_details); $i++) {
-        //     # code...
-        //     dd($i);
-        // }
-        // dd($duty_personel_details[count($duty_personel_details)-1]);
-        // dd(count($duty_personel_details));
-
-
-        // foreach($duty_personel_details as $new_duty) {
-        //     dd($new_duty['unique_id']);
-        // }
-        // dd($query->where());
+        // dd($member_details);
     }
 }
