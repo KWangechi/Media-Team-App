@@ -56,7 +56,7 @@ class DutyMemberDetailsController extends Controller
 
         $member_details = DutyMemberDetails::create([
             'duty_id' => $duty->id,
-            'member_name' =>$request->member_name,
+            'member_name' => $request->member_name,
             'supervisor_name' => $request->supervisor_name,
             'workstation' => $request->workstation,
             'duty_assigned' => $request->duty_assigned,
@@ -65,26 +65,11 @@ class DutyMemberDetailsController extends Controller
 
         if (!$member_details) {
             return redirect()->route('admin.duty.index', auth()->user()->id)->with('error_message', 'Error occurred!! Please try again');
-        }
-        else {
+        } else {
             return redirect()->route('admin.duty.index', auth()->user()->id)->with('success_message', 'Details created successfully!');
-
         }
-
-        // dd([$request->all(), $id]);
-        // dd($member_details);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
 
     /**
      * Show the form for editing the specified resource.
@@ -100,7 +85,6 @@ class DutyMemberDetailsController extends Controller
         } else {
             return view('admin.duty.edit', compact('member_details'));
         }
-
     }
 
     /**
@@ -120,7 +104,7 @@ class DutyMemberDetailsController extends Controller
             if (!$member_details->update($request->all())) {
                 return redirect()->route('admin.duty.index', auth()->user()->id)->with('error_message', 'Error Occurred while updating. Please check your request and try again!');
             } else {
-                return redirect()->route('admin.duty.index', auth()->user()->id)->with('success_message', 'Duty Roster Updated successfully!!');
+                return redirect()->route('admin.duty.index', auth()->user()->id)->with('success_message', 'Mmeber details updated successfully!!');
             }
         }
     }
@@ -131,10 +115,23 @@ class DutyMemberDetailsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function delete($id)
     {
-        $duty_member_details = Duty::findOrFail($id)->members;
+        $member_details = DutyMemberDetails::findOrFail($id);
 
-        dd($duty_member_details);
+        if (!$member_details) {
+            return redirect()->route('admin.duty.index', auth()->user()->id)->with('error_message', 'ID does not exist!!');
+        } else {
+            if(!$member_details->delete()) {
+                return redirect()->route('admin.duty.index', auth()->user()->id)->with('error_message', ' An error occurred. Deletion not successful');
+            }
+            return redirect()->route('admin.duty.index', auth()->user()->id)->with('success_message', 'Mmeber details deleted successfully!!');
+
+        }
+
+
+        // dd($member_details);
+
+        // dd($id);
     }
 }

@@ -160,8 +160,6 @@ class DutyController extends Controller
 
     }
 
-
-
     /**
      * Creates just the member_name, supervisor_name, worskstation and duty assigned
 
@@ -231,7 +229,7 @@ class DutyController extends Controller
 
         // $member_details = Duty::findOrFail($duty_id)->members;
 
-        
+
 
         // dd($member_details);
     }

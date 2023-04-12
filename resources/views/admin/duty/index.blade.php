@@ -374,7 +374,7 @@
                                     </td>
 
                                     <td>
-                                        <form action="{{route('admin.duty.delete', [$new_duty->id])}}">
+                                        <form action="{{route('admin.duty.deleteDutyPersonelDetails', [$new_duty->id])}}">
                                             @csrf
                                             @method('DELETE')
                                             <button class="btn btn-sm btn-danger"> DELETE</button>

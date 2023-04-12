@@ -79,7 +79,7 @@ Route::middleware(['auth'])->group(function () {
         Route::patch('updateDutyPersonelDetails/{id}', [DutyMemberDetailsController::class, 'update'])
             ->name('admin.duty.updateDutyPersonelDetails');
 
-        Route::post('deleteDutyPersonelDetails/{id}', [DutyMemberDetailsController::class, 'delete'])
+        Route::get('deleteDutyPersonelDetails/{id}', [DutyMemberDetailsController::class, 'delete'])
             ->name('admin.duty.deleteDutyPersonelDetails');
 
         //Contributions
