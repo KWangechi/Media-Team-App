@@ -45,7 +45,7 @@
 
             <!-- Login time -->
             @if ($day == "Sunday")
-            <div>
+            <div class="mt-4">
                 <x-label for="login_time" :value="__('Login Time')" />
 
                 <x-input id="login_time" class="block mt-1 w-full" type="text" name="login_time" value="{{$current_time}}" disabled required />

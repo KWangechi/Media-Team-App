@@ -264,83 +264,8 @@
                     </x-button>
 
                     <!-- Modal for creating new duties for a media team member  -->
-                    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                        <div class="modal-dialog">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="staticBackdropLabel">Duty Personnel Details</h5>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                </div>
-                                <div class="modal-body">
-                                    <form method="POST" id="createDutyRoster" action="{{ route('admin.duty.createDutyPersonelDetails', $duty->id )}}">
-                                        @csrf
+                    <!-- Reuse this form -->
 
-                                        <!-- Duty ID -->
-                                        <!-- <div class="mt-4">
-                                            <x-label for="duty_id" :value="__('Duty ID')" />
-
-                                            <x-input value="{{$duty->id}}" class="block mt-1 w-full" id="duty_id" name="duty_id" type="number" disabled/>
-                                        </div> -->
-
-                                        <!-- Member Name -->
-                                        <div class="mt-4">
-                                            <x-label for="member_name" :value="__('Member Name')" />
-
-                                            <x-input class="block mt-1 w-full" id="member_name" name="member_name" type="text" autofocus placeholder="eg. Nimoh Kamau"/>
-                                        </div>
-
-                                        <!-- Supervisor Name -->
-                                        <div class="mt-4">
-                                            <x-label for="supervisor_name" :value="__('Supervisor Name')" />
-
-                                            <x-input class="block mt-1 w-full" id="supervisor_name" name="supervisor_name" type="text" autofocus placeholder="eg. RKay" />
-                                        </div>
-
-                                        <!-- Workstation -->
-                                        <div class="mt-4">
-                                            <x-label for="workstation" :value="__('Workstation')" />
-
-                                            <x-input id="workstation" class="block mt-1 w-full" type="text" name="workstation" required placeholder="eg. Video, VMix" />
-                                        </div>
-
-
-                                        <!-- Duty Assigned -->
-                                        <div class="mt-4">
-                                            <x-label for="duty_assigned" :value="__('Duty Assigned')" />
-
-                                            <x-input id="duty_assigned" class="block mt-1 w-full" type="text" name="duty_assigned" required placeholder="eg. Check on Sound Quality" />
-                                        </div>
-
-                                        <!-- Type of Service or Event -->
-                                        <div class="mt-4">
-                                            <x-label for="event_type" :value="__('Type of Event')" />
-
-                                            <select name="event_type">
-                                                <option value="">-- Select Type of Event --</option>
-                                                <option value="1st Service">1st Service</option>
-                                                <option value="2nd Service">2nd Service</option>
-                                                <option value="Gwav Service">GWAV Service</option>
-                                                <option value="Wedding">Wedding</option>
-                                                <option value="Funeral">Funeral</option>
-                                                <option value="Graduation">Graduation</option>
-
-                                            </select>
-                                        </div>
-
-                                        <div class="modal-footer">
-                                            <!-- <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancel</button> -->
-
-                                            <a class="btn btn-danger btn-sm" id="cancelDutyRosterModalButton" data-bs-dismiss="modal">Cancel</a>
-
-                                            <button class="btn btn-primary btn-sm">Save</button>
-
-                                        </div>
-                                    </form>
-                                </div>
-
-                            </div>
-                        </div>
-                    </div>
 
                     <br>
                     <!-- put a table view in a card body -->
@@ -362,6 +287,84 @@
                             <tbody>
                                 @foreach ($member_details as $new_duty)
 
+                                <!-- move the edit form here -->
+                                <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="staticBackdropLabel">Duty Personnel Details</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <form method="POST" id="createDutyRoster" action="{{ route('admin.duty.updateDutyPersonelDetails', $new_duty->id )}}">
+                                                    @csrf
+
+                                                    <!-- Duty ID -->
+                                                    <!-- <div class="mt-4">
+                                            <x-label for="duty_id" :value="__('Duty ID')" />
+
+                                            <x-input value="{{$duty->id}}" class="block mt-1 w-full" id="duty_id" name="duty_id" type="number" disabled/>
+                                        </div> -->
+
+                                                    <!-- Member Name -->
+                                                    <div class="mt-4">
+                                                        <x-label for="member_name" :value="__('Member Name')" />
+
+                                                        <x-input class="block mt-1 w-full" id="member_name" name="member_name" value="{{ $new_duty->member_name }}" type="text" autofocus placeholder="eg. Nimoh Kamau" />
+                                                    </div>
+
+                                                    <!-- Supervisor Name -->
+                                                    <div class="mt-4">
+                                                        <x-label for="supervisor_name" :value="__('Supervisor Name')" />
+
+                                                        <x-input class="block mt-1 w-full" id="supervisor_name" name="supervisor_name" value="{{ $new_duty->supervisor_name }}" type="text" autofocus placeholder="eg. RKay" />
+                                                    </div>
+
+                                                    <!-- Workstation -->
+                                                    <div class="mt-4">
+                                                        <x-label for="workstation" :value="__('Workstation')" />
+
+                                                        <x-input id="workstation" class="block mt-1 w-full" type="text" name="workstation" required placeholder="eg. Video, VMix" />
+                                                    </div>
+
+
+                                                    <!-- Duty Assigned -->
+                                                    <div class="mt-4">
+                                                        <x-label for="duty_assigned" :value="__('Duty Assigned')" />
+
+                                                        <x-input id="duty_assigned" class="block mt-1 w-full" type="text" name="duty_assigned" required placeholder="eg. Check on Sound Quality" />
+                                                    </div>
+
+                                                    <!-- Type of Service or Event -->
+                                                    <div class="mt-4">
+                                                        <x-label for="event_type" :value="__('Type of Event')" />
+
+                                                        <select name="event_type">
+                                                            <option value="">-- Select Type of Event --</option>
+                                                            <option value="1st Service">1st Service</option>
+                                                            <option value="2nd Service">2nd Service</option>
+                                                            <option value="Gwav Service">GWAV Service</option>
+                                                            <option value="Wedding">Wedding</option>
+                                                            <option value="Funeral">Funeral</option>
+                                                            <option value="Graduation">Graduation</option>
+
+                                                        </select>
+                                                    </div>
+
+                                                    <div class="modal-footer">
+                                                        <!-- <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancel</button> -->
+
+                                                        <a class="btn btn-danger btn-sm" id="cancelDutyRosterModalButton" data-bs-dismiss="modal">Cancel</a>
+
+                                                        <button class="btn btn-primary btn-sm">Save</button>
+
+                                                    </div>
+                                                </form>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
                                 <tr>
                                     <td>{{ $new_duty->member_name }}</td>
                                     <td>{{$new_duty->supervisor_name}}</td>
@@ -370,7 +373,7 @@
                                     <td>{{$new_duty->event_type}}</td>
 
                                     <td>
-                                        <a href="{{route('admin.duty.editDutyPersonelDetails', [$new_duty->id])}}" class="btn btn-secondary btn-sm">EDIT</a>
+                                        <button class="btn btn-secondary btn-sm" id="editMemberDetails" data-id="{{$new_duty->id}}">EDIT</button>
                                     </td>
 
                                     <td>
@@ -401,7 +404,6 @@
 
                         <a href="{{ route('admin.duty.edit', $duty->id) }}" class="btn btn-secondary">EDIT DUTY ROSTER</a>
                     </div>
-                    <!-- <button class="btn btn-danger ml-12">DELETE DUTY ROSTER</button> -->
 
                     <form action="{{ route('admin.duty.delete', $duty->id) }}" method="POST" class="float-right col">
                         @csrf
@@ -421,25 +423,27 @@
 
 <script>
     let createDutyRosterModal = document.querySelector("#createDutyRosterModal")
-    let createDutyRosterModalButton = document.querySelector("#createDutyRosterModalButton")
+
+    let editMemberDetails = document.querySelector("#editMemberDetails")
+    let createMemberDetails = document.querySelector('#createMemberDetails')
 
     // createDutyRosterModalButton.addEventListener('click', function(){
     //     $("#createDutyRosterModal").fadeToggle();
     // })
 
-    // get the data from the api
-    function getDutyRosterId(dutyId) {
+    editMemberDetails.addEventListener('click', function(e) {
+        // console.log(editMemberDetails.innerText);
+        $("#staticBackdrop").modal('toggle');
+    })
 
-        fetch(`/admin/duty/${id}`).then((response) => {
-            console.log()
-        })
-    }
 
     $(document).ready(function() {
         $("#createDutyRosterModalButton").on('click', function() {
             $("#createDutyRosterModal").modal('toggle');
 
             // console.log('Clicked the create duty roster modal');
+            // console.log(editMemberDetails)
+
         })
 
         // $("#closeModalButton").on('click', function(){

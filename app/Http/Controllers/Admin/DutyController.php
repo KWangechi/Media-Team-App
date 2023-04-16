@@ -51,18 +51,18 @@ class DutyController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'week' => 'string',
-            'supervisor_signature' => 'string',
-            'setup_time' => 'required',
-            'date_assigned' => 'date',
-            'duty_id' => 'number',
-            'member_name' => 'string',
-            'supervisor_name' => 'string',
-            'workstation' => 'string',
-            'duty_assigned' => 'string',
-            'event_type' => 'string'
-        ]);
+        // $request->validate([
+        //     'week' => 'string',
+        //     'supervisor_signature' => 'string',
+        //     'setup_time' => 'required',
+        //     'date_assigned' => 'date',
+        //     'duty_id' => 'string',
+        //     'member_name' => 'string',
+        //     'supervisor_name' => 'string',
+        //     'workstation' => 'string',
+        //     'duty_assigned' => 'string',
+        //     'event_type' => 'string'
+        // ]);
 
         $duty = Duty::create([
             'week' => $request->week,
@@ -90,17 +90,10 @@ class DutyController extends Controller
                 return redirect()->route('admin.duty.index', auth()->user()->id)->with('success_message', 'Duty Roster created successfully!!');
             }
         }
-    }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
+        // // dd('hIZI NI NINI SASA');
+        // // dd($request->all());
+        // dd($duty, $member_details);
     }
 
     /**
