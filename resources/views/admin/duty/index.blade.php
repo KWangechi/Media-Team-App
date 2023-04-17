@@ -431,10 +431,10 @@
     //     $("#createDutyRosterModal").fadeToggle();
     // })
 
-    editMemberDetails.addEventListener('click', function(e) {
-        // console.log(editMemberDetails.innerText);
-        $("#staticBackdrop").modal('toggle');
-    })
+    // editMemberDetails.addEventListener('click', function(e) {
+    //     // console.log(editMemberDetails.innerText);
+    //     $("#staticBackdrop").modal('toggle');
+    // })
 
 
     $(document).ready(function() {
