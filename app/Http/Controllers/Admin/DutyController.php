@@ -106,7 +106,9 @@ class DutyController extends Controller
     {
         $duty = Duty::findOrFail($id);
 
-        return view('admin.duty.edit', compact('duty'));
+        // dd($duty);
+
+        return view('admin.duty.roster.edit', compact('duty'));
     }
 
     /**
@@ -120,15 +122,17 @@ class DutyController extends Controller
     {
         $duty = Duty::findOrFail($id);
 
-        if (!$duty) {
-            return;
-        } else {
-            if (!$duty->update($request->all())) {
-                return redirect()->route('admin.duty.index', auth()->user()->id)->with('error_message', 'Error Occurred while updating. Please check your request and try again!');
-            } else {
-                return redirect()->route('admin.duty.index', auth()->user()->id)->with('success_message', 'Duty Roster Updated successfully!!');
-            }
+        // dd(["Old data: " => $duty, "New data: " => $request->all()]);
+
+        try {
+            $duty->update($request->all());
+
+            return to_route('admin.duty.index', auth()->user()->id)->with('success_message', 'Duty Roster details updated successfully!!');
+
+        } catch (\Throwable $th) {
+            return to_route('admin.duty.index', auth()->user()->id)->with('error_message', $th->getMessage());
         }
+        
     }
 
     /**

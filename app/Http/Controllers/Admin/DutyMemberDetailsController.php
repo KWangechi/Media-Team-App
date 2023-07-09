@@ -65,9 +65,10 @@ class DutyMemberDetailsController extends Controller
 
         if (!$member_details) {
             return redirect()->route('admin.duty.index', auth()->user()->id)->with('error_message', 'Error occurred!! Please try again');
-        } else {
-            return redirect()->route('admin.duty.index', auth()->user()->id)->with('success_message', 'Details created successfully!');
         }
+
+            return redirect()->route('admin.duty.index', auth()->user()->id)->with('success_message', 'Details created successfully!');
+
     }
 
 
@@ -82,9 +83,9 @@ class DutyMemberDetailsController extends Controller
         $member_details = DutyMemberDetails::findOrFail($id);
         if (!$member_details) {
             return redirect()->route('admin.duty.index', auth()->user()->id)->with('error_message', 'ID does not exist!!');
-        } else {
-            return view('admin.duty.edit', compact('member_details'));
         }
+            return view('admin.duty.edit', compact('member_details'));
+        // dd($member_details);
     }
 
     /**
@@ -98,15 +99,18 @@ class DutyMemberDetailsController extends Controller
     {
         $member_details = DutyMemberDetails::findOrFail($id);
 
-        if (!$member_details) {
-            return;
-        } else {
-            if (!$member_details->update($request->all())) {
-                return redirect()->route('admin.duty.index', auth()->user()->id)->with('error_message', 'Error Occurred while updating. Please check your request and try again!');
-            } else {
-                return redirect()->route('admin.duty.index', auth()->user()->id)->with('success_message', 'Mmeber details updated successfully!!');
-            }
+        // dd($request->all());
+
+        try {
+            $member_details->update($request->all());
+
+            return to_route('admin.duty.index', auth()->user()->id)->with('success_message', 'Member details updated successfully!!');
+
+        } catch (\Throwable $th) {
+            return to_route('admin.duty.index', auth()->user()->id)->with('error_message', $th->getMessage());
         }
+
+
     }
 
     /**
@@ -125,13 +129,9 @@ class DutyMemberDetailsController extends Controller
             if(!$member_details->delete()) {
                 return redirect()->route('admin.duty.index', auth()->user()->id)->with('error_message', ' An error occurred. Deletion not successful');
             }
-            return redirect()->route('admin.duty.index', auth()->user()->id)->with('success_message', 'Mmeber details deleted successfully!!');
+            return redirect()->route('admin.duty.index', auth()->user()->id)->with('success_message', 'Member details deleted successfully!!');
 
         }
 
-
-        // dd($member_details);
-
-        // dd($id);
     }
 }

@@ -65,9 +65,9 @@ Route::middleware(['auth'])->group(function () {
         //Duty Roster
         Route::get('/duty', [DutyController::class, 'index'])->name('admin.duty.index');
         Route::post('/duty', [DutyController::class, 'store'])->name('admin.duty.create');
-        Route::get('/duty/{id}', [DutyController::class, 'edit'])->name('admin.duty.edit');
-        Route::patch('/duty/{id}', [DutyController::class, 'update'])->name('admin.duty.update');
-        Route::delete('/duty/{id}', [DutyController::class, 'destroy'])->name('admin.duty.delete');
+        Route::get('/duty/{id}', [DutyController::class, 'edit'])->name('admin.duty.roster.edit');
+        Route::patch('/duty/{id}', [DutyController::class, 'update'])->name('admin.duty.roster.update');
+        Route::delete('/duty/{id}', [DutyController::class, 'destroy'])->name('admin.duty.roster.delete');
 
         //duty roster personel details
         Route::post('createDutyPersonelDetails/{id}', [DutyMemberDetailsController::class, 'store'])

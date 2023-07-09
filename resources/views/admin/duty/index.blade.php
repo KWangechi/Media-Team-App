@@ -5,7 +5,7 @@
 
             <!-- Display error or success message -->
             @if (session('success_message'))
-            <div class="alert alert-success alert-dismissible fade show">
+            <div class="alert alert-success alert-dismissible fade show mx-auto text-center" style="max-width: 700px;">
                 {{ session('success_message') }}
                 <a class="btn-close" data-bs-dismiss="alert" aria-label="Close"></a>
             </div>
@@ -85,7 +85,7 @@
                                     <x-label for="event_type" :value="__('Type of Event')" />
 
                                     <select name="event_type">
-                                        <option value="">-- Select Type of Event --</option>
+                                        <option value="" selected disabled>-- Select Type of Event --</option>
                                         <option value="1st Service">1st Service</option>
                                         <option value="2nd Service">2nd Service</option>
                                         <option value="Gwav Service">GWAV Service</option>
@@ -207,7 +207,7 @@
                                     <x-label for="event_type" :value="__('Event Type')" />
 
                                     <select name="event_type">
-                                        <option value="">-- Select Type of Event --</option>
+                                        <option value="" selected disabled>-- Select Type of Event --</option>
                                         <option value="1st Service">Sunday 1st Service</option>
                                         <option value="2nd Service">Sunday 2nd Service</option>
                                         <option value="Gwav Service">Sunday GWAV Service</option>
@@ -258,16 +258,16 @@
 
                     <br>
                     <!-- Button trigger modal -->
-                    <x-button type="button" class="btn btn-primary float-right" data-bs-toggle="modal" data-bs-target="#staticBackdrop" id="createMemberDetails">
+                    <x-button type="button" class="btn btn-primary float-left pl-20" data-bs-toggle="modal" data-bs-target="#staticBackdrop" id="createMemberDetails">
                         <i class="bi bi-plus-circle"></i>
                         Add a new member's details
                     </x-button>
 
                     <!-- Modal for creating new duties for a media team member  -->
                     <!-- Reuse this form -->
-
-
                     <br>
+
+
                     <!-- put a table view in a card body -->
                     <div class="card mb-3 mt-4" style="width: max-content; height: max-content; align-items: center;">
                         <!-- <table> -->
@@ -296,7 +296,7 @@
                                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                             </div>
                                             <div class="modal-body">
-                                                <form method="POST" id="createDutyRoster" action="{{ route('admin.duty.updateDutyPersonelDetails', $new_duty->id )}}">
+                                                <form method="POST" id="createDutyRoster" action="{{ route('admin.duty.createDutyPersonelDetails', $new_duty->id )}}">
                                                     @csrf
 
                                                     <!-- Duty ID -->
@@ -340,7 +340,7 @@
                                                         <x-label for="event_type" :value="__('Type of Event')" />
 
                                                         <select name="event_type">
-                                                            <option value="">-- Select Type of Event --</option>
+                                                            <option value="" selected disabled>-- Select Type of Event --</option>
                                                             <option value="1st Service">1st Service</option>
                                                             <option value="2nd Service">2nd Service</option>
                                                             <option value="Gwav Service">GWAV Service</option>
@@ -373,7 +373,9 @@
                                     <td>{{$new_duty->event_type}}</td>
 
                                     <td>
-                                        <button class="btn btn-secondary btn-sm" id="editMemberDetails" data-id="{{$new_duty->id}}">EDIT</button>
+                                        <a href="{{route('admin.duty.editDutyPersonelDetails', $new_duty->id)}}">
+                                            <button class="btn btn-secondary btn-sm" id="editMemberDetails" >EDIT</button>
+                                        </a>
                                     </td>
 
                                     <td>
@@ -402,10 +404,10 @@
                 <div class="card-footer text-center row">
                     <div class="col float-left">
 
-                        <a href="{{ route('admin.duty.edit', $duty->id) }}" class="btn btn-secondary">EDIT DUTY ROSTER</a>
+                        <a href="{{ route('admin.duty.roster.edit', $duty->id) }}" class="btn btn-secondary">EDIT DUTY ROSTER</a>
                     </div>
 
-                    <form action="{{ route('admin.duty.delete', $duty->id) }}" method="POST" class="float-right col">
+                    <form action="{{ route('admin.duty.roster.delete', $duty->id) }}" method="POST" class="float-right col">
                         @csrf
                         @method('DELETE')
 

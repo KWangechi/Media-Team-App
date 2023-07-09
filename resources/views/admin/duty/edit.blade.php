@@ -23,7 +23,7 @@
 
                 <div class="mt-4">
                 <x-label for="Duty ID" :value="__('Duty ID')" />
-                    <x-input value="{{ $member_details->duty_id }}" class="block mt-1 w-full" id="duty_id" name="duty_id" type="number" disabled />
+                    <x-input value=" {{ $member_details->duty_id }}" class="block mt-1 w-full" id="duty_id" name="duty_id" type="number" disabled />
                 </div>
                 <!-- Member Name -->
                 <div class="mt-4">
@@ -46,13 +46,19 @@
                     <x-input id="workstation" :value="$member_details->workstation" class="block mt-1 w-full" type="text" name="workstation" required placeholder="eg. Video, VMix" />
                 </div>
 
+                <!-- Duty Aassigned -->
+                <div class="mt-4">
+                    <x-label for="duty_assigned" :value="__('Duty Assigned')" />
+                    <x-input :value="$member_details->duty_assigned" id="duty_assigned" class="block mt-1 w-full" type="text" name="duty_assigned" required placeholder="eg. Check on Sound Quality" />
+                </div>
+
 
                 <!-- Type of Service or Event -->
                 <div class="mt-4">
                     <x-label for="Event Type" :value="__('Event Type')" />
 
-                    <select name="type_of_service">
-                        <option value="$member_details->event_type"> {{ $member_details->event_type }} </option>
+                    <select name="event_type">
+                        <option value="{{ $member_details->event_type }}"> {{ $member_details->event_type }} </option>
                         <option value="1st Service">1st Service</option>
                         <option value="2nd Service">2nd Service</option>
                         <option value="Gwav Service">GWAV Service</option>
