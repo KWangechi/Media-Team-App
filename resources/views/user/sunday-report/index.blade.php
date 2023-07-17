@@ -25,7 +25,7 @@
 
             <a class="btn btn-primary btn-sm float-right" data-bs-toggle="modal" data-bs-target="#createReportModal" id="createReportModalButton">
                 <i class="bi bi-plus-circle"></i>
-                CREATE NEW A REPORT</a>
+                CREATE A NEW REPORT</a>
 
             <!-- Create a Report Modal -->
             <div class="modal" id="createReportModal" tabindex="-1" aria-labelledby="createReportModalLabel" aria-hidden="true">
