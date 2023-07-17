@@ -91,9 +91,6 @@ class DutyController extends Controller
             }
         }
 
-        // // dd('hIZI NI NINI SASA');
-        // // dd($request->all());
-        // dd($duty, $member_details);
     }
 
     /**
@@ -132,7 +129,7 @@ class DutyController extends Controller
         } catch (\Throwable $th) {
             return to_route('admin.duty.index', auth()->user()->id)->with('error_message', $th->getMessage());
         }
-        
+
     }
 
     /**

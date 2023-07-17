@@ -67,4 +67,8 @@ class User extends Authenticatable
         return $this->hasMany(Leave::class);
     }
 
+    public function summaries() {
+        return $this->hasMany(SundaySummary::class);
+    }
+
 }

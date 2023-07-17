@@ -33,6 +33,10 @@
                 </div>
                 @else
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                    <x-nav-link :href="route('user.sunday-report.index', auth()->user()->id)" :active="request()->routeIs('user.sunday-report.index')">
+                        {{ __('Sunday Report') }}
+                    </x-nav-link>
+
                     <x-nav-link :href="route('user.profile', auth()->user()->id)" :active="request()->routeIs('user.profile')">
                         {{ __('Profile') }}
                     </x-nav-link>

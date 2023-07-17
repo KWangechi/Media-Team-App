@@ -11,10 +11,14 @@ use App\Http\Controllers\Admin\FilterController;
 use App\Http\Controllers\Auth;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\LeaveController;
+use App\Http\Controllers\User\SundayReportController;
+use App\Http\Controllers\User\SundaySummaryController;
+
 use App\Models\Announcement;
 use App\Models\Contribution;
 use App\Models\DutyMemberDetails;
 use App\Models\Role;
+use App\Models\User;
 use RealRashid\SweetAlert\Facades\Alert;
 
 /*
@@ -125,6 +129,14 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/{user_id}/leave/{id}', [LeaveController::class, 'edit'])->name('user.leave.edit');
         Route::patch('/{user_id}/leave/{id}', [LeaveController::class, 'update'])->name('user.leave.update');
         Route::delete('/{user_id}/leave/{id}', [LeaveController::class, 'destroy'])->name('user.leave.delete');
+
+        // Summary for the Sunday service
+        Route::get('/{id}/sunday-report', [SundayReportController::class, 'index'])->name('user.sunday-report.index');
+        Route::post('/{id}/sunday-report', [SundayReportController::class, 'store'])->name('user.sunday-report.create');
+        Route::get('/{user_id}/sunday-report/{id}', [SundayReportController::class, 'edit'])->name('user.sunday-report.edit');
+        Route::patch('/{user_id}/sunday-report/{id}', [SundayReportController::class, 'update'])->name('user.sunday-report.update');
+        Route::delete('/{user_id}/sunday-report/{id}', [SundayReportController::class, 'destroy'])->name('user.sunday-report.delete');
+
 
         //Duty Roster
         Route::get('/{id}/duty', [DutyController::class, 'index'])->name('user.duty.index');
