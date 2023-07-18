@@ -100,6 +100,8 @@ Route::middleware(['auth'])->group(function () {
 
         // Sunday Reports
         Route::get('/sunday-reports', [SundayReportController::class, 'index'])->name('admin.users.sunday-reports.index');
+        // Route::post('/sunday-reports', [SundayReportController::class, 'store'])->name('admin.users.sunday-reports.create');
+
 
 
         //announcements

@@ -65,7 +65,7 @@
                                 </div>
 
                                 <br>
-                                <x-button class="ml-4">
+                                <x-button class="ml-4 btn-primary">
                                     {{ __('Save') }}
                                 </x-button>
                             </form>
@@ -78,36 +78,79 @@
             </div>
 
             @else
-            <a class="btn btn-primary btn-sm text-center float-right" id="createsummaryRosterModalButton">
+            <a class="btn btn-primary btn-sm float-right" data-bs-toggle="modal" data-bs-target="#createReportModal" id="createReportModalButton">
                 <i class="bi bi-plus-circle"></i>
                 CREATE A NEW REPORT</a>
 
-            <br>
-            <br>
+            <div class="modal" id="createReportModal" tabindex="-1" aria-labelledby="createReportModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="createReportModalTitle">Create a new Report</h5>
+                            <a class="btn-close" id="closeModalButton" data-bs-dismiss="modal" aria-label="Close"></a>
+                        </div>
+                        <div class="modal-body">
+                            <form method="POST" id="createReportForm" action="{{ route('user.sunday-report.create', auth()->user()->id )}}">
+                                @csrf
+
+                                <!-- Report Date -->
+                                <div class="mt-4">
+                                    <x-label for="report_date" :value="__('Report Date')" />
+
+                                    <x-input class="block mt-1 w-full" id="report_date" name="report_date" type="date" autofocus placeholder="eg. 2022-01-01" />
+                                </div>
+
+                                <!-- Event Title -->
+                                <div class="mt-4">
+                                    <x-label for="event_type" :value="__('Event Type')" />
+
+                                    <x-input id="event_type" class="block mt-1 w-full" type="text" name="event_type" required placeholder="eg. Second Service" />
+                                </div>
+
+                                <!-- Comments -->
+                                <div class="mt-4">
+                                    <x-label for="comments" :value="__('Report Comments')" />
+
+                                    <x-textarea id="comments" class="block mt-1 w-full" type="text" name="comments" required placeholder="eg. Microphones were making noises during the second service and we need to replace the wires" />
+                                </div>
+
+                                <br>
+                                <x-button class="ml-4 btn-primary">
+                                    {{ __('Save') }}
+                                </x-button>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <a class="btn btn-secondary" data-bs-dismiss="modal">Close</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
 
             <!-- card for displaying the summary roster -->
             @foreach ($reports as $report)
-            <div class="card border-primary mb-3 mx-auto" style="width: max-content; height: max-content;">
+            <div class="card border-primary mb-2 mx-auto" style="width: 500px; height: max-content; margin-top: 50px;">
+                <div class="card-header height: 6px;">
+                    <b>{{$report->report_date}}: </b>{{$report->event_type}}
+                </div>
                 <div class="card-body">
-                    <h1 class="card-title mb-4"><b>Report Date {{$report->report_date}}</b></h1>
-                    <hr>
-                    <p class="card-text mb-4">Report Comments: {{$report->report_comments}}</p>
-                    <hr>
+                    <p class="card-text mb-4"><b>Report Comments: </b></p>
+                    <p class="mt-0 mb-1">{{$report->comments}}</p>
+
 
                 </div>
 
-                <div class="card-footer text-center row">
-                    <div class="col float-left">
+                <div class="card-footer col-12">
+                    <a href="{{ route('user.sunday-report.edit', [auth()->user()->id, $report->id]) }}" class="btn btn-secondary col float-left my-auto">EDIT</a>
 
-                        <a href="{{ route('admin.summary.roster.edit', $summary->id) }}" class="btn btn-secondary">EDIT summary ROSTER</a>
-                    </div>
-
-                    <form action="{{ route('admin.summary.roster.delete', $summary->id) }}" method="POST" class="float-right col">
+                    <form action="{{ route('user.sunday-report.delete', [auth()->user()->id, $report->id]) }}" method="POST" class="float-right col">
                         @csrf
                         @method('DELETE')
 
-                        <button class="btn btn-danger ml-12">DELETE summary ROSTER</button>
+                        <button class="btn btn-danger ml-12">DELETE</button>
                     </form>
+                    <!-- </div> -->
                 </div>
             </div>
             @endforeach

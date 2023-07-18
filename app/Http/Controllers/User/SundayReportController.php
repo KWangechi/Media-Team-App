@@ -13,11 +13,17 @@ class SundayReportController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($id)
     {
         $reports = SundayReport::all();
 
-        return view('user.sunday-report.index', compact('reports'));
+        return view('user.sunday-report.index', [auth()->user()->id], compact('reports'));
+    }
+
+    public function getAllReports($id) {
+        $reports = SundayReport::all();
+
+        return view('admin.users.sunday-reports.index', [auth()->user()->id], compact('reports'));
     }
 
     /**
@@ -36,9 +42,34 @@ class SundayReportController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, $id)
     {
-        DD($request->all());
+        $request->validate([
+            'user_id' => 'integer',
+            'report_date' => 'date',
+            'event_type' => 'string',
+            'comments' => 'string'
+
+        ]);
+
+        try {
+
+            SundayReport::create([
+                'user_id' => $id,
+                'report_date' => $request->report_date,
+                'event_type' => $request->event_type,
+                'comments' => $request->comments
+            ]);
+
+            return redirect()->route('user.sunday-report.index', [auth()->user()->id])->with('success_message', 'Report created successfully!!');
+
+            // return view('user.sunday-report.index', auth()->id)->with('success_message', 'Report created successfully!!');
+
+        } catch (\Throwable $th) {
+            return view('user.sunday-report.index')->with('error_message', $th->getMessage());
+
+        }
+
     }
 
     /**
@@ -58,9 +89,9 @@ class SundayReportController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($user_id, $report_id)
     {
-        //
+        dd(['Report ID:' => $report_id, 'User ID:' => $user_id]);
     }
 
     /**
@@ -81,8 +112,17 @@ class SundayReportController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($user_id, $report_id)
     {
-        //
+        // dd(['Report ID:' => $report_id, 'User ID:' => $user_id]);
+        $report = SundayReport::where('user_id', $user_id)->findOrFail($report_id);
+
+        if(!$report->delete()){
+            return redirect()->route('user.sunday-report.index', $user_id)->with('error_message', 'Error! Please try agaain');
+        }
+
+        else{
+            return redirect()->route('user.sunday-report.index', $user_id)->with('success_message', 'Report deleted successfully!!');
+        }
     }
 }
