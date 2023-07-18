@@ -50,13 +50,18 @@
                                     <x-input class="block mt-1 w-full" id="report_date" name="report_date" type="date" autofocus placeholder="eg. 2022-01-01" />
                                 </div>
 
+                                <!-- Event Title -->
+                                <div class="mt-4">
+                                    <x-label for="event_type" :value="__('Event Type')" />
+
+                                    <x-input id="event_type" class="block mt-1 w-full" type="text" name="event_type" required placeholder="eg. Second Service" />
+                                </div>
 
                                 <!-- Comments -->
                                 <div class="mt-4">
                                     <x-label for="report_comments" :value="__('Report Comments')" />
 
-                                    <x-input id="report_comments" class="block mt-1 w-full" type="text" name="report_comments" required placeholder="eg. Microphones were making noises during the
-                                    second service and we need to replace the wires" />
+                                    <x-textarea id="report_comments" class="block mt-1 w-full" type="text" name="report_comments" required placeholder="eg. Microphones were making noises during the second service and we need to replace the wires" />
                                 </div>
 
                                 <br>

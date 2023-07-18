@@ -57,10 +57,10 @@ class AuthenticatedSessionController extends Controller
         //redirect when user is a normal user
         if(auth()->user()->role_id !== User::ROLE_ADMIN){
 
-            return redirect()->route('user.profile', [auth()->user()->id]);
+            return redirect()->route('user.profile', [auth()->user()->id])->with('success_message', 'Login successful!!!');
         }
 
-        return redirect()->route('admin.users.index');
+        return redirect()->route('admin.users.index')->with('success_message', 'Login successful!!!');
     }
 
     /**
@@ -77,6 +77,6 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerateToken();
 
-        return redirect('login');
+        return redirect('login')->with('message', 'Logout successfull!!');
     }
 }

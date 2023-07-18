@@ -52,6 +52,8 @@ Route::middleware(['auth'])->group(function () {
         Route::get('users/{id}', [Admin\UserController::class, 'edit'])->name('admin.users.edit');
         Route::post('/users/{id}', [Admin\UserController::class, 'update'])->name('admin.users.update');
 
+
+
         Route::get('search/', [Admin\UserController::class, 'search'])->name('admin.users.search');
 
         //leaves
@@ -96,6 +98,9 @@ Route::middleware(['auth'])->group(function () {
         Route::patch('/contributions/{id}', [ContributionController::class, 'update'])->name('admin.users.contributions.update');
         Route::delete('/contributions/{id}', [ContributionController::class, 'destroy'])->name('admin.users.contributions.delete');
 
+        // Sunday Reports
+        Route::get('/sunday-reports', [SundayReportController::class, 'index'])->name('admin.users.sunday-reports.index');
+
 
         //announcements
         Route::get('/announcements', [AnnouncementController::class, 'index'])->name('admin.announcements');
@@ -130,7 +135,7 @@ Route::middleware(['auth'])->group(function () {
         Route::patch('/{user_id}/leave/{id}', [LeaveController::class, 'update'])->name('user.leave.update');
         Route::delete('/{user_id}/leave/{id}', [LeaveController::class, 'destroy'])->name('user.leave.delete');
 
-        // Summary for the Sunday service
+        // Sunday Reports
         Route::get('/{id}/sunday-report', [SundayReportController::class, 'index'])->name('user.sunday-report.index');
         Route::post('/{id}/sunday-report', [SundayReportController::class, 'store'])->name('user.sunday-report.create');
         Route::get('/{user_id}/sunday-report/{id}', [SundayReportController::class, 'edit'])->name('user.sunday-report.edit');
