@@ -1,5 +1,5 @@
 <x-app-layout>
-    <x-slot name="slot">
+    <x-slot name="slot" class="body">
         <div class="container">
             <br>
 
@@ -129,32 +129,43 @@
 
 
             <!-- card for displaying the summary roster -->
+            <div class="row row-cols-1 row-cols-md-2 g-4" style="margin-top: 40px;">
             @foreach ($reports as $report)
-            <div class="card border-primary mb-2 mx-auto" style="width: 500px; height: max-content; margin-top: 50px;">
-                <div class="card-header height: 6px;">
-                    <b>{{$report->report_date}}: </b>{{$report->event_type}}
+                <div class="col">
+                    <div class="card border-primary mb-2">
+                        <div class="card-header">
+                            <b>{{$report->report_date}}: </b>{{$report->event_type}}
+                        </div>
+                        <div class="card-body">
+                            <p class="card-text mb-4"><b>Report Comments: </b></p>
+                            <p class="mt-0 mb-1">{{$report->comments}}</p>
+
+
+                        </div>
+
+                        <div class="card-footer col-12">
+                            <a href="{{ route('user.sunday-report.edit', [auth()->user()->id, $report->id]) }}" class="btn btn-secondary btn-sm col float-left my-auto">EDIT</a>
+
+                            <form action="{{ route('user.sunday-report.delete', [auth()->user()->id, $report->id]) }}" method="POST" class="float-right col">
+                                @csrf
+                                @method('DELETE')
+
+                                <button class="btn btn-danger btn-sm ml-12">DELETE</button>
+                            </form>
+                            <!-- </div> -->
+                        </div>
+                    </div>
                 </div>
-                <div class="card-body">
-                    <p class="card-text mb-4"><b>Report Comments: </b></p>
-                    <p class="mt-0 mb-1">{{$report->comments}}</p>
+                @endforeach
+            </div>
+            @endif
 
-
-                </div>
-
-                <div class="card-footer col-12">
-                    <a href="{{ route('user.sunday-report.edit', [auth()->user()->id, $report->id]) }}" class="btn btn-secondary col float-left my-auto">EDIT</a>
-
-                    <form action="{{ route('user.sunday-report.delete', [auth()->user()->id, $report->id]) }}" method="POST" class="float-right col">
-                        @csrf
-                        @method('DELETE')
-
-                        <button class="btn btn-danger ml-12">DELETE</button>
-                    </form>
-                    <!-- </div> -->
+            <!-- Pagination -->
+            <div class="row">
+                <div class="col offset-md-6 mb-3">
+                    {{$reports->links()}}
                 </div>
             </div>
-            @endforeach
-            @endif
 
         </div>
     </x-slot>
@@ -186,3 +197,6 @@
 
     })
 </script>
+<style>
+
+</style>

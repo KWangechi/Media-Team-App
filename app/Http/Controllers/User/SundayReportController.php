@@ -15,7 +15,7 @@ class SundayReportController extends Controller
      */
     public function index($id)
     {
-        $reports = SundayReport::all();
+        $reports = SundayReport::paginate(6);
 
         return view('user.sunday-report.index', [auth()->user()->id], compact('reports'));
     }
