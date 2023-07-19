@@ -1,5 +1,5 @@
 <x-app-layout>
-    <x-slot name="slot" class="body">
+    <x-slot name="slot">
         <div class="container">
             <br>
 

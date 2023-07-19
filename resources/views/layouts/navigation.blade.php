@@ -30,7 +30,7 @@
                         {{ __('Contributions') }}
                     </x-nav-link>
 
-                    <x-nav-link :href="route('admin.users.sunday-reports.index', auth()->user()->id)" :active="request()->routeIs('admin.users.sunday-reports.index')">
+                    <x-nav-link :href="route('admin.users.sunday-reports.index')" :active="request()->routeIs('admin.users.sunday-reports.index')">
                         {{ __('Sunday Reports') }}
                     </x-nav-link>
 

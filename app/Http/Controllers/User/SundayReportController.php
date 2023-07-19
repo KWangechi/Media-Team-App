@@ -20,10 +20,10 @@ class SundayReportController extends Controller
         return view('user.sunday-report.index', [auth()->user()->id], compact('reports'));
     }
 
-    public function getAllReports($id) {
-        $reports = SundayReport::all();
+    public function getAllReports() {
+        $reports = SundayReport::paginate(20);
 
-        return view('admin.users.sunday-reports.index', [auth()->user()->id], compact('reports'));
+        return view('admin.sunday-reports.index', compact('reports'));
     }
 
     /**
@@ -80,7 +80,12 @@ class SundayReportController extends Controller
      */
     public function show($id)
     {
-        //
+        $report = SundayReport::findOrFail($id);
+
+        return view('admin.users.sunday-reports.index', compact('report'));
+
+
+
     }
 
     /**
@@ -124,5 +129,10 @@ class SundayReportController extends Controller
         else{
             return redirect()->route('user.sunday-report.index', $user_id)->with('success_message', 'Report deleted successfully!!');
         }
+    }
+
+    public function downloadReportsAsAPDF(SundayReport $report) {
+
+        dd($report->id);
     }
 }

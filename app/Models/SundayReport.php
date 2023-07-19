@@ -14,7 +14,7 @@ class SundayReport extends Model
     protected $fillable = ['user_id', 'report_date', 'event_type', 'comments'];
 
     //relationship
-    public function users() {
+    public function user() {
         return $this->belongsTo(User::class, 'user_id');
 
     }

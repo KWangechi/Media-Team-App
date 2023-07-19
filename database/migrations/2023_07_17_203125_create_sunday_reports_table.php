@@ -18,6 +18,7 @@ return new class extends Migration
             $table->unsignedBigInteger('user_id')->nullable();
             $table->date('report_date')->nullable();
             $table->string('event_type')->nullable();
+            $table->string('workstation')->nullable();
             $table->text('comments')->nullable();
             $table->timestamps();
 
