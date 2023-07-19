@@ -4,7 +4,9 @@ namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
 use App\Models\SundayReport;
+use Barryvdh\DomPDF\Facade\Pdf as FacadePdf;
 use Illuminate\Http\Request;
+
 
 class SundayReportController extends Controller
 {
@@ -131,8 +133,15 @@ class SundayReportController extends Controller
         }
     }
 
-    public function downloadReportsAsAPDF(SundayReport $report) {
+    public function downloadReportsAsAPDF($id) {
 
-        dd($report->id);
+        $report = array(SundayReport::all());
+
+        // load the PDF file
+        view()->share('admin.sunday-reports.index', $report);
+        $pdf = FacadePdf::loadView('admin.sunday-reports.pdf-view', $report);
+
+        // dd($pdf);
+        return $pdf->download('pdf_file.pdf');
     }
 }
