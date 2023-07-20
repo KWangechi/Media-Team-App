@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Models\SundayReport;
 use Barryvdh\DomPDF\Facade\Pdf as FacadePdf;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use PDF;
 
 
 class SundayReportController extends Controller
@@ -22,8 +24,9 @@ class SundayReportController extends Controller
         return view('user.sunday-report.index', [auth()->user()->id], compact('reports'));
     }
 
-    public function getAllReports() {
-        $reports = SundayReport::paginate(20);
+    public function getAllReports()
+    {
+        $reports = SundayReport::paginate(10);
 
         return view('admin.sunday-reports.index', compact('reports'));
     }
@@ -69,9 +72,7 @@ class SundayReportController extends Controller
 
         } catch (\Throwable $th) {
             return view('user.sunday-report.index')->with('error_message', $th->getMessage());
-
         }
-
     }
 
     /**
@@ -85,9 +86,6 @@ class SundayReportController extends Controller
         $report = SundayReport::findOrFail($id);
 
         return view('admin.users.sunday-reports.index', compact('report'));
-
-
-
     }
 
     /**
@@ -124,24 +122,36 @@ class SundayReportController extends Controller
         // dd(['Report ID:' => $report_id, 'User ID:' => $user_id]);
         $report = SundayReport::where('user_id', $user_id)->findOrFail($report_id);
 
-        if(!$report->delete()){
+        if (!$report->delete()) {
             return redirect()->route('user.sunday-report.index', $user_id)->with('error_message', 'Error! Please try agaain');
-        }
-
-        else{
+        } else {
             return redirect()->route('user.sunday-report.index', $user_id)->with('success_message', 'Report deleted successfully!!');
         }
     }
 
-    public function downloadReportsAsAPDF($id) {
+    public function downloadReportsAsAPDF(Request $request, $id)
+    {
 
-        $report = array(SundayReport::all());
+        $allReports = SundayReport::all();
+        // dd($request);
 
         // load the PDF file
-        view()->share('admin.sunday-reports.index', $report);
-        $pdf = FacadePdf::loadView('admin.sunday-reports.pdf-view', $report);
+        view()->share('reports', $allReports);
+        $pdf = FacadePdf::loadView('admin.sunday-reports.pdf-view');
 
         // dd($pdf);
         return $pdf->download('pdf_file.pdf');
+
+
+        // view()->share('reports', $allReports);
+
+
+        // if ($request->has('download')) {
+
+        //     $pdf = FacadePdf::loadView('admin.sunday-reports.pdf-view');
+        //     return $pdf->download('pdfview.pdf');
+        // }
+
+        // return view('admin.sunday-reports.pdf-view', compact('id'));
     }
 }
