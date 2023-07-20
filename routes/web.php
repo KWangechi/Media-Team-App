@@ -101,7 +101,7 @@ Route::middleware(['auth'])->group(function () {
         // Sunday Reports
         Route::get('/sunday-reports', [SundayReportController::class, 'getAllReports'])->name('admin.users.sunday-reports.index');
         Route::get('/sunday-reports/{id}', [SundayReportController::class, 'show'])->name('admin.users.sunday-reports.show');
-        Route::get('/sunday-reports/{report_id}/downloadPDF', [SundayReportController::class, 'downloadReportsAsAPDF'])->name('admin.users.sunday-reports.downloadAsPDF');
+        Route::get('/downloadPDF', [SundayReportController::class, 'downloadReportsAsAPDF'])->name('admin.users.sunday-reports.downloadAsPDF');
 
 
         //announcements

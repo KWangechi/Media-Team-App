@@ -129,7 +129,7 @@ class SundayReportController extends Controller
         }
     }
 
-    public function downloadReportsAsAPDF(Request $request, $id)
+    public function downloadReportsAsAPDF()
     {
 
         $allReports = SundayReport::all();
