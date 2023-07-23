@@ -24,22 +24,14 @@ class DutyController extends Controller
     public function index()
     {
         $duties = Duty::all();
-        $member_details = [];
-
-        foreach ($duties as $key => $duty) {
-            $member_details = DutyMemberDetails::where('duty_id', $duty->id)->get();
-        }
-
-        $member_details = DutyMemberDetails::all();
 
         if (auth()->user()->id == User::ROLE_ADMIN) {
 
-            return view('admin.duty.index', compact('duties', 'member_details'));
+            return view('admin.duty.index', compact('duties'));
         } else {
-            return view('user.duty.index', compact('duties', 'member_details'));
+            return view('user.duty.index', compact('duties'));
         }
 
-        // dd($member_details);
     }
 
     /**

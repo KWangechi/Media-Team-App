@@ -196,10 +196,10 @@
 
                                     </select>
                                     <div class="mt-4">
-                                    <x-label for="Event Name" :value="__('Event Name')" class="mt-3"/>
+                                        <x-label for="Event Name" :value="__('Event Name')" class="mt-3" />
 
-                                    <x-input id="event_type" class="block mt-1 w-full" type="text" name="event_type" placeholder="eg. Mission in Mosiro"/>
-                                </div>
+                                        <x-input id="event_type" class="block mt-1 w-full" type="text" name="event_type" placeholder="eg. Mission in Mosiro" />
+                                    </div>
 
 
                                     <!-- // modal for adding a new event -->
@@ -260,7 +260,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($member_details as $new_duty)
+                                @foreach ($duty->members as $new_duty)
 
                                 <!-- move the edit form here -->
                                 <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
@@ -297,29 +297,33 @@
 
                                                     <!-- Type of Service or Event -->
                                                     <div class="mt-4">
-                                                        <x-label for="event_type" :value="__('Type of Event')" />
+                                                        <x-label for="event_type" :value="__('Event Type')" />
 
                                                         <select name="event_type">
                                                             <option value="" selected disabled>-- Select Type of Event --</option>
-                                                            <option value=""><a id="createNewEventType" class="btn btn-info btn-sm">Add a new event</a></option>
-                                                            <option value="1st Service">1st Service</option>
-                                                            <option value="2nd Service">2nd Service</option>
-                                                            <option value="Gwav Service">GWAV Service</option>
+                                                            <option value="">-- Type instead --</option>
+                                                            <option value="1st Service">Sunday 1st Service</option>
+                                                            <option value="2nd Service">Sunday 2nd Service</option>
+                                                            <option value="Gwav Service">Sunday GWAV Service</option>
                                                             <option value="Wedding">Wedding</option>
                                                             <option value="Funeral">Funeral</option>
                                                             <option value="Graduation">Graduation</option>
 
                                                         </select>
-                                                    </div>
+                                                        <div class="mt-4">
+                                                            <x-label for="Event Name" :value="__('Event Name')" class="mt-3" />
 
-                                                    <div class="modal-footer">
-                                                        <!-- <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancel</button> -->
+                                                            <x-input id="event_type" class="block mt-1 w-full" type="text" name="event_type" placeholder="eg. Mission in Mosiro" />
+                                                        </div>
 
-                                                        <a class="btn btn-danger btn-sm" id="cancelDutyRosterModalButton" data-bs-dismiss="modal">Cancel</a>
+                                                        <div class="modal-footer">
+                                                            <!-- <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancel</button> -->
 
-                                                        <button class="btn btn-primary btn-sm">Save</button>
+                                                            <a class="btn btn-danger btn-sm" id="cancelDutyRosterModalButton" data-bs-dismiss="modal">Cancel</a>
 
-                                                    </div>
+                                                            <button class="btn btn-primary btn-sm">Save</button>
+
+                                                        </div>
                                                 </form>
                                             </div>
 
