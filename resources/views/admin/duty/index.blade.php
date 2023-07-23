@@ -58,12 +58,6 @@
                                     <x-input class="block mt-1 w-full" id="member_name" name="member_name" type="text" autofocus placeholder="eg. Nimoh Kamau" />
                                 </div>
 
-                                <!-- Supervisor Name -->
-                                <div class="mt-4">
-                                    <x-label for="supervisor_name" :value="__('Supervisor Name')" />
-
-                                    <x-input class="block mt-1 w-full" id="supervisor_name" name="supervisor_name" type="text" autofocus placeholder="eg. RKay" />
-                                </div>
 
                                 <!-- Workstation -->
                                 <div class="mt-4">
@@ -85,7 +79,8 @@
                                     <x-label for="event_type" :value="__('Type of Event')" />
 
                                     <select name="event_type">
-                                        <option value="" selected disabled>-- Select Type of Event --</option>
+                                        <option value="" selected disabled>-- Select an event type --</option>
+                                        <option value=""><a id="createNewEventType" class="btn btn-info btn-sm">Add a new event</a></option>
                                         <option value="1st Service">1st Service</option>
                                         <option value="2nd Service">2nd Service</option>
                                         <option value="Gwav Service">GWAV Service</option>
@@ -93,16 +88,6 @@
                                         <option value="Funeral">Funeral</option>
                                         <option value="Graduation">Graduation</option>
 
-                                    </select>
-                                </div>
-
-                                <!-- Supervisor signature -->
-                                <div class="mt-4">
-                                    <x-label for="supervisor_signature" :value="__('Supervisor Signature')" />
-
-                                    <select name="supervisor_signature" class="block mt-2 w-full">
-                                        <option value="0">Pending</option>
-                                        <option value="1">Signed</option>
                                     </select>
                                 </div>
 
@@ -152,7 +137,7 @@
                                 @csrf
 
                                 <!-- Week of the year when the duty is assigned -->
-                                <div class="mt-4">
+                                <div class="mt-2">
                                     <x-label for="week" :value="__('Week')" />
 
                                     <x-input class="block mt-1 w-full" id="week" name="week" type="week" autofocus placeholder="eg. Week 10" />
@@ -180,13 +165,6 @@
                                     <x-input class="block mt-1 w-full" id="member_name" name="member_name" type="text" autofocus placeholder="eg. Nimoh Kamau" />
                                 </div>
 
-                                <!-- Supervisor Name -->
-                                <div class="mt-4">
-                                    <x-label for="supervisor_name" :value="__('Supervisor Name')" />
-
-                                    <x-input class="block mt-1 w-full" id="supervisor_name" name="supervisor_name" type="text" autofocus placeholder="eg. RKay" />
-                                </div>
-
                                 <!-- Workstation -->
                                 <div class="mt-4">
                                     <x-label for="workstation" :value="__('Workstation')" />
@@ -208,6 +186,7 @@
 
                                     <select name="event_type">
                                         <option value="" selected disabled>-- Select Type of Event --</option>
+                                        <option value="" selected>-- Type instead --</option>
                                         <option value="1st Service">Sunday 1st Service</option>
                                         <option value="2nd Service">Sunday 2nd Service</option>
                                         <option value="Gwav Service">Sunday GWAV Service</option>
@@ -216,18 +195,15 @@
                                         <option value="Graduation">Graduation</option>
 
                                     </select>
+                                    <div class="mt-4">
+                                    <x-label for="Event Name" :value="__('Event Name')" class="mt-3"/>
+
+                                    <x-input id="event_type" class="block mt-1 w-full" type="text" name="event_type" placeholder="eg. Mission in Mosiro"/>
                                 </div>
 
-                                <!-- Supervisor signature -->
-                                <div class="mt-4">
-                                    <x-label for="supervisor_signature" :value="__('Supervisor Signature')" />
 
-                                    <select name="supervisor_signature">
-                                        <option value="0">Pending</option>
-                                        <option value="1">Signed</option>
-                                    </select>
+                                    <!-- // modal for adding a new event -->
                                 </div>
-
 
                                 <br>
                                 <x-button class="ml-4">
@@ -249,11 +225,11 @@
             @foreach ($duties as $duty)
             <div class="card border-primary mb-3 mx-auto" style="width: max-content; height: max-content;">
                 <div class="card-body">
-                    <h1 class="card-title mb-4"><b>Week {{$duty->week}}</b></h1>
+                    <h1 class="card-title mb-4"><b>Week: {{$duty->week}}</b></h1>
                     <hr>
-                    <p class="card-text mb-4">Date assigned: {{$duty->date_assigned}}</p>
+                    <p class="card-text mb-3 mt-2">Date assigned: {{$duty->date_assigned}}</p>
                     <hr>
-                    <p class="card-text mb-4">Setup Time: {{$duty->setup_time}}</p>
+                    <p class="card-text mb-3 mt-2">Setup Time: {{$duty->setup_time}}</p>
                     <hr>
 
                     <br>
@@ -275,7 +251,6 @@
                             <thead>
                                 <tr>
                                     <th scope="col">Member Name</th>
-                                    <th scope="col">Supervisor Name</th>
                                     <th scope="col">Workstation</th>
                                     <th scope="col">Duty Assigned</th>
                                     <th scope="col">Type of Event</th>
@@ -298,26 +273,11 @@
                                             <div class="modal-body">
                                                 <form method="POST" id="createDutyRoster" action="{{ route('admin.duty.createDutyPersonelDetails', $new_duty->id )}}">
                                                     @csrf
-
-                                                    <!-- Duty ID -->
-                                                    <!-- <div class="mt-4">
-                                            <x-label for="duty_id" :value="__('Duty ID')" />
-
-                                            <x-input value="{{$duty->id}}" class="block mt-1 w-full" id="duty_id" name="duty_id" type="number" disabled/>
-                                        </div> -->
-
                                                     <!-- Member Name -->
                                                     <div class="mt-4">
                                                         <x-label for="member_name" :value="__('Member Name')" />
 
                                                         <x-input class="block mt-1 w-full" id="member_name" name="member_name" value="{{ $new_duty->member_name }}" type="text" autofocus placeholder="eg. Nimoh Kamau" />
-                                                    </div>
-
-                                                    <!-- Supervisor Name -->
-                                                    <div class="mt-4">
-                                                        <x-label for="supervisor_name" :value="__('Supervisor Name')" />
-
-                                                        <x-input class="block mt-1 w-full" id="supervisor_name" name="supervisor_name" value="{{ $new_duty->supervisor_name }}" type="text" autofocus placeholder="eg. RKay" />
                                                     </div>
 
                                                     <!-- Workstation -->
@@ -341,6 +301,7 @@
 
                                                         <select name="event_type">
                                                             <option value="" selected disabled>-- Select Type of Event --</option>
+                                                            <option value=""><a id="createNewEventType" class="btn btn-info btn-sm">Add a new event</a></option>
                                                             <option value="1st Service">1st Service</option>
                                                             <option value="2nd Service">2nd Service</option>
                                                             <option value="Gwav Service">GWAV Service</option>
@@ -366,15 +327,14 @@
                                     </div>
                                 </div>
                                 <tr>
-                                    <td>{{ $new_duty->member_name }}</td>
-                                    <td>{{$new_duty->supervisor_name}}</td>
+                                    <td>{{$new_duty->member_name }}</td>
                                     <td>{{$new_duty->workstation}}</td>
                                     <td>{{$new_duty->duty_assigned}}</td>
                                     <td>{{$new_duty->event_type}}</td>
 
                                     <td>
                                         <a href="{{route('admin.duty.editDutyPersonelDetails', $new_duty->id)}}">
-                                            <button class="btn btn-secondary btn-sm" id="editMemberDetails" >EDIT</button>
+                                            <button class="btn btn-secondary btn-sm" id="editMemberDetails">EDIT</button>
                                         </a>
                                     </td>
 
@@ -391,14 +351,6 @@
                             </tbody>
                         </table>
                     </div>
-
-                    @if ($duty->supervisor_signature == 1)
-                    <p class="card-text mb-4">Supervisor Signature: Signed</p>
-                    @else
-                    <p class="card-text mb-4">Supervisor Signature: Pending</p>
-                    @endif
-
-
                 </div>
 
                 <div class="card-footer text-center row">

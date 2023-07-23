@@ -7,8 +7,11 @@ use App\Models\Duty;
 use App\Models\DutyMemberDetails;
 use App\Models\User;
 use Faker\Core\Uuid;
+use Illuminate\Container\RewindableGenerator;
 use Illuminate\Http\Request;
+use Illuminate\Notifications\Notification;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Notification as FacadesNotification;
 use Illuminate\Support\Facades\Schema;
 
 class DutyController extends Controller
@@ -21,6 +24,12 @@ class DutyController extends Controller
     public function index()
     {
         $duties = Duty::all();
+        $member_details = [];
+
+        foreach ($duties as $key => $duty) {
+            $member_details = DutyMemberDetails::where('duty_id', $duty->id)->get();
+        }
+
         $member_details = DutyMemberDetails::all();
 
         if (auth()->user()->id == User::ROLE_ADMIN) {
@@ -66,7 +75,6 @@ class DutyController extends Controller
 
         $duty = Duty::create([
             'week' => $request->week,
-            'supervisor_signature' => $request->supervisor_signature,
             'setup_time' => $request->setup_time,
             'date_assigned' => $request->date_assigned
         ]);
@@ -75,11 +83,15 @@ class DutyController extends Controller
         $member_details = DutyMemberDetails::create([
             'duty_id' => $duty->id,
             'member_name' => $request->member_name,
-            'supervisor_name' => $request->supervisor_name,
             'workstation' => $request->workstation,
             'duty_assigned' => $request->duty_assigned,
             'event_type' => $request->event_type
         ]);
+
+        // dd(['Duty' => $duty, 'Member Details: ' => $member_details]);
+
+        // send a notification to the user if they have been selected
+
 
         if (!$duty) {
             return redirect()->route('admin.duty.index', auth()->user()->id)->with('error_message', 'Error creating a new duty!!');
@@ -167,7 +179,6 @@ class DutyController extends Controller
         $member_details = [
             'unique_id' => uniqid(mt_rand(5, 5)),
             'member_name' => $request->duty_personel_details['member_name'],
-            'supervisor_name' => $request->duty_personel_details['supervisor_name'],
             'workstation' => $request->duty_personel_details['workstation'],
             'duty_assigned' => $request->duty_personel_details['duty_assigned'],
             'type_of_service' => $request->duty_personel_details['type_of_service']
@@ -223,8 +234,10 @@ class DutyController extends Controller
 
         // $member_details = Duty::findOrFail($duty_id)->members;
 
-
-
         // dd($member_details);
+    }
+
+    public function createNewEvent(Request $request) {
+        // $event = Event
     }
 }

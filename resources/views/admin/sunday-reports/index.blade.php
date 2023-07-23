@@ -70,10 +70,9 @@
             <!-- card for displaying the summary roster for each staff member -->
 
             @endif
-
             <!-- Pagination -->
             <div class="row">
-                <div class="col offset-md-6 mb-3">
+                <div class="col offset-md-6 mb-3 mt-4">
                     {{$reports->links()}}
                 </div>
             </div>

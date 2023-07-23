@@ -14,7 +14,6 @@ class DutyMemberDetails extends Model
     protected $fillable = [
         'duty_id',
         'member_name',
-        'supervisor_name',
         'workstation',
         'duty_assigned',
         'event_type'
@@ -22,9 +21,8 @@ class DutyMemberDetails extends Model
     ];
 
     // relationships
-
     public function duties() {
-        return $this->belongsToMany(Duty:: class);
+        return $this->belongsToMany(Duty::class);
     }
 
 }

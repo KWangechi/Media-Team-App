@@ -11,7 +11,6 @@ class Duty extends Model
 
     protected $fillable = [
     'week',
-    'supervisor_signature',
     'setup_time',
     'date_assigned',
 ];
