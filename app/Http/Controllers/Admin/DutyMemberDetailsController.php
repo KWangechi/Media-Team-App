@@ -41,33 +41,33 @@ class DutyMemberDetailsController extends Controller
      */
     public function store(Request $request, $id)
     {
-        // query for the id of the duty
-        $duty = Duty::findOrFail($id);
+        // dd($request);
 
-        // dd($duty->id);
-        $request->validate([
-            'duty_id' => 'number',
-            'member_name' => 'string',
-            'supervisor_name' => 'string',
-            'workstation' => 'string',
-            'duty_assigned' => 'string',
-            'event_type' => 'required'
-        ]);
+        // $request->validate([
+        //     'duty_id' => 'number',
+        //     'member_name' => 'string',
+        //     'supervisor_name' => 'string',
+        //     'workstation' => 'string',
+        //     'duty_assigned' => 'string',
+        //     'event_type' => 'required'
+        // ]);
 
         $member_details = DutyMemberDetails::create([
-            'duty_id' => $duty->id,
+            'duty_id' => $id,
             'member_name' => $request->member_name,
             'supervisor_name' => $request->supervisor_name,
             'workstation' => $request->workstation,
             'duty_assigned' => $request->duty_assigned,
-            'event_type' => $request->event_type
+            'event_type' => $request->event_type || $request->event_name
         ]);
+
+        // dd($member_details);
 
         if (!$member_details) {
             return redirect()->route('admin.duty.index', auth()->user()->id)->with('error_message', 'Error occurred!! Please try again');
         }
 
-            return redirect()->route('admin.duty.index', auth()->user()->id)->with('success_message', 'Details created successfully!');
+            return redirect()->route('admin.duty.index', auth()->user()->id)->with('success_message', 'Member Details created successfully!');
 
     }
 
@@ -81,6 +81,7 @@ class DutyMemberDetailsController extends Controller
     public function edit($id)
     {
         $member_details = DutyMemberDetails::findOrFail($id);
+
         if (!$member_details) {
             return redirect()->route('admin.duty.index', auth()->user()->id)->with('error_message', 'ID does not exist!!');
         }
@@ -122,6 +123,8 @@ class DutyMemberDetailsController extends Controller
     public function delete($id)
     {
         $member_details = DutyMemberDetails::findOrFail($id);
+
+        // dd($member_details);
 
         if (!$member_details) {
             return redirect()->route('admin.duty.index', auth()->user()->id)->with('error_message', 'ID does not exist!!');

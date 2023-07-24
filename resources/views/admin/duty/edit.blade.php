@@ -32,13 +32,6 @@
                     <x-input value="{{ $member_details->member_name }}" class="block mt-1 w-full" id="member_name" name="member_name" type="text" autofocus />
                 </div>
 
-                <!-- Supervisor Name -->
-                <div class="mt-4">
-                    <x-label for="supervisor_name" :value="__('Supervisor Name')" />
-
-                    <x-input :value="$member_details->supervisor_name" class="block mt-1 w-full" id="supervisor_name" name="supervisor_name" type="text" autofocus placeholder="eg. RKay" />
-                </div>
-
                 <!-- Workstation -->
                 <div class="mt-4">
                     <x-label for="workstation" :value="__('Workstation')" />

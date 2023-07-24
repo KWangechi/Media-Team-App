@@ -120,12 +120,12 @@
             </div>
 
             @else
-            <a class="btn btn-primary btn-sm text-center float-right" id="createDutyRosterModalButton">
+            <a class="btn btn-primary btn-sm text-center float-right" id="createDutyRosterModalButton" data-bs-toggle="modal" data-bs-target="#createDutyRosterModal">
                 <i class="bi bi-plus-circle"></i>
                 CREATE NEW DUTY ROSTER</a>
 
             <!-- Will reuse this same modal for the update -->
-            <div class="modal" id="createDutyRosterModal" tabindex="-1" aria-labelledby="createDutyRosterModalLabel" aria-hidden="true">
+            <div class="modal fade" id="createDutyRosterModal" tabindex="-1" aria-labelledby="createDutyRosterModalLabel" aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
@@ -225,7 +225,7 @@
             @foreach ($duties as $duty)
             <div class="card border-primary mb-3 mx-auto" style="width: max-content; height: max-content;">
                 <div class="card-body">
-                    <h1 class="card-title mb-4"><b>Week: {{$duty->week}}</b></h1>
+                    <h1 class="card-title mb-4"><b>Week: {{$duty->week}} {{$duty->id}}</b></h1>
                     <hr>
                     <p class="card-text mb-3 mt-2">Date assigned: {{$duty->date_assigned}}</p>
                     <hr>
@@ -234,7 +234,7 @@
 
                     <br>
                     <!-- Button trigger modal -->
-                    <x-button type="button" class="btn btn-primary float-left pl-20" data-bs-toggle="modal" data-bs-target="#staticBackdrop" id="createMemberDetails">
+                    <x-button type="button" class="btn btn-primary float-left pl-20" data-bs-toggle="modal" data-bs-target="#staticBackdrop{{$duty->id}}" id="createMemberDetails" data-id="{{$duty->id}}">
                         <i class="bi bi-plus-circle"></i>
                         Add a new member's details
                     </x-button>
@@ -243,27 +243,8 @@
                     <!-- Reuse this form -->
                     <br>
 
-
-                    <!-- put a table view in a card body -->
-                    <div class="card mb-3 mt-4" style="width: max-content; height: max-content; align-items: center;">
-                        <!-- <table> -->
-                        <table class="table table-responsive table-striped text-center table-bordered">
-                            <thead>
-                                <tr>
-                                    <th scope="col">Member Name</th>
-                                    <th scope="col">Workstation</th>
-                                    <th scope="col">Duty Assigned</th>
-                                    <th scope="col">Type of Event</th>
-                                    <th scope="col">EDIT</th>
-                                    <th scope="col">DELETE</th>
-
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach ($duty->members as $new_duty)
-
-                                <!-- move the edit form here -->
-                                <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                    <!-- Add new member details -->
+                    <div class="modal fade" id="staticBackdrop{{$duty->id}}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="false" data-id="{{$duty->id}}">
                                     <div class="modal-dialog">
                                         <div class="modal-content">
                                             <div class="modal-header">
@@ -271,13 +252,13 @@
                                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                             </div>
                                             <div class="modal-body">
-                                                <form method="POST" id="createDutyRoster" action="{{ route('admin.duty.createDutyPersonelDetails', $new_duty->id )}}">
+                                                <form method="POST" id="createDutyPersonel" action="{{ route('admin.duty.createDutyPersonelDetails',[$duty->id])}}">
                                                     @csrf
                                                     <!-- Member Name -->
-                                                    <div class="mt-4">
+                                                    <div class="mt-1">
                                                         <x-label for="member_name" :value="__('Member Name')" />
 
-                                                        <x-input class="block mt-1 w-full" id="member_name" name="member_name" value="{{ $new_duty->member_name }}" type="text" autofocus placeholder="eg. Nimoh Kamau" />
+                                                        <x-input class="block mt-1 w-full" id="member_name" name="member_name" type="text" autofocus placeholder="eg. Nimoh Kamau" />
                                                     </div>
 
                                                     <!-- Workstation -->
@@ -301,7 +282,7 @@
 
                                                         <select name="event_type">
                                                             <option value="" selected disabled>-- Select Type of Event --</option>
-                                                            <option value="">-- Type instead --</option>
+                                                            <option value="" selected>-- Type instead --</option>
                                                             <option value="1st Service">Sunday 1st Service</option>
                                                             <option value="2nd Service">Sunday 2nd Service</option>
                                                             <option value="Gwav Service">Sunday GWAV Service</option>
@@ -310,26 +291,48 @@
                                                             <option value="Graduation">Graduation</option>
 
                                                         </select>
+
                                                         <div class="mt-4">
                                                             <x-label for="Event Name" :value="__('Event Name')" class="mt-3" />
 
                                                             <x-input id="event_type" class="block mt-1 w-full" type="text" name="event_type" placeholder="eg. Mission in Mosiro" />
                                                         </div>
+                                                    </div>
 
-                                                        <div class="modal-footer">
-                                                            <!-- <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancel</button> -->
+                                                    <div class="modal-footer">
+                                                        <!-- <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancel</button> -->
 
-                                                            <a class="btn btn-danger btn-sm" id="cancelDutyRosterModalButton" data-bs-dismiss="modal">Cancel</a>
+                                                        <a class="btn btn-danger btn-sm" id="cancelDutyRosterModalButton" data-bs-dismiss="modal">Cancel</a>
 
-                                                            <button class="btn btn-primary btn-sm">Save</button>
+                                                        <button class="btn btn-primary btn-sm">Save</button>
 
-                                                        </div>
+                                                    </div>
                                                 </form>
                                             </div>
 
                                         </div>
                                     </div>
                                 </div>
+
+
+                    <!-- put a table view in a card body -->
+                    <div class="card mb-3 mt-4" style="width: max-content; height: max-content; align-items: center;">
+                        <!-- <table> -->
+                        <table class="table table-responsive table-striped text-center table-bordered">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Member Name</th>
+                                    <th scope="col">Workstation</th>
+                                    <th scope="col">Duty Assigned</th>
+                                    <th scope="col">Type of Event</th>
+                                    <th scope="col">EDIT</th>
+                                    <th scope="col">DELETE</th>
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($duty->members as $new_duty)
+
                                 <tr>
                                     <td>{{$new_duty->member_name }}</td>
                                     <td>{{$new_duty->workstation}}</td>
@@ -380,10 +383,10 @@
 </x-app-layout>
 
 <script>
-    let createDutyRosterModal = document.querySelector("#createDutyRosterModal")
+    // let createDutyRosterModal = document.querySelector("#createDutyRosterModal")
 
-    let editMemberDetails = document.querySelector("#editMemberDetails")
-    let createMemberDetails = document.querySelector('#createMemberDetails')
+    // let editMemberDetails = document.querySelector("#editMemberDetails")
+    // let createMemberDetails = document.querySelector('#createMemberDetails')
 
     // createDutyRosterModalButton.addEventListener('click', function(){
     //     $("#createDutyRosterModal").fadeToggle();
@@ -395,17 +398,19 @@
     // })
 
 
-    $(document).ready(function() {
-        $("#createDutyRosterModalButton").on('click', function() {
-            $("#createDutyRosterModal").modal('toggle');
+    // $(document).ready(function() {
+    //     $("#createDutyRosterModalButton").on('click', function() {
+    //         $("#createDutyRosterModal").modal('toggle');
 
-            // console.log('Clicked the create duty roster modal');
-            // console.log(editMemberDetails)
+    //         // $("#createDutyRosterModal").;
 
-        })
+    //         // console.log('Clicked the create duty roster modal');
+    //         // console.log(editMemberDetails)
 
-        // $("#closeModalButton").on('click', function(){
-        //     $("#createDutyRosterModal").remove();
-        // })
-    })
+    //     })
+
+    //     // $("#closeModalButton").on('click', function(){
+    //     //     $("#createDutyRosterModal").remove();
+    //     // })
+    // })
 </script>
