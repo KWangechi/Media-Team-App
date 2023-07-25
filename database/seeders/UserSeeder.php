@@ -20,13 +20,13 @@ class UserSeeder extends Seeder
     {
         $admin = [
             'role_id' => User::ROLE_ADMIN,
-            'name' => 'Joseph Kamau',
-            'email' => 'josephkamau@hotmail.com',
+            'name' => 'George Kamau',
+            'email' => 'georgekamau@hotmail.com',
             'phone_number' => 224242424,
             'date_joined' => '2016-04-09',
             'department' => 'VMix',
             'account_status' => 'approved',
-            'password' => Hash::make('josekkamash'),
+            'password' => Hash::make('georgekkamash'),
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now()
 

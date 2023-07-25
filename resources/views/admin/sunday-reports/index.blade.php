@@ -40,7 +40,6 @@
                         <th scope="col">Report Date</th>
                         <th scope="col">Workstation</th>
                         <th scope="col">Comments</th>
-                        <th scope="colgroup">Actions</th>
                     </tr>
                 </thead>
                 <tbody style="word-wrap: break-word;">
@@ -56,11 +55,6 @@
                         <td style="word-wrap: break-word;min-width: 160px;max-width: 190px;">{{$report->comments}}</td>
 
                         <!-- <td>{{$report->workstation}}</td> -->
-                        <td>
-                            <a href="{{route('admin.users.sunday-reports.show', $report->id)}}" class="btn btn-primary btn-sm">
-                                View
-                            </a>
-                        </td>
                         @endforeach
                     </tr>
                 </tbody>

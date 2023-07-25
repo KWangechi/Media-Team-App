@@ -11,14 +11,16 @@ class DutyRosterCreated extends Notification
 {
     use Queueable;
 
+    // public $message;
+
     /**
      * Create a new notification instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct($message)
     {
-        //
+        // $this->message = $message;
     }
 
     /**
@@ -29,7 +31,7 @@ class DutyRosterCreated extends Notification
      */
     public function via($notifiable)
     {
-        return ['mail'];
+        return ['mail', 'database'];
     }
 
     /**
@@ -41,9 +43,12 @@ class DutyRosterCreated extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
-                    ->line('The introduction to the notification.')
-                    ->action('Notification Action', url('/'))
-                    ->line('Thank you for using our application!');
+            ->salutation('Dear Team Member: ')
+            ->greeting('Welcome to Kahawa Sukari Media Team App. Glad to have you on board!!')
+            ->line('This is to notify you that you have been selected to lead the service next Saturday.
+                    Click the link below to see the message in the app')
+            ->action('Go to My announcements', url('/'))
+            ->line('Please make sure you confirm your availability before Saturday 2:00pm. See you on Sunday');
     }
 
     /**
@@ -56,6 +61,12 @@ class DutyRosterCreated extends Notification
     {
         return [
             //
+        ];
+    }
+
+    public function toDatabase() {
+        return [
+
         ];
     }
 }

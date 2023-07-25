@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Models\Duty;
 use App\Models\DutyMemberDetails;
 use Illuminate\Http\Request;
+use Illuminate\Notifications\Notification;
+use Illuminate\Support\Facades\Notification as FacadesNotification;
 
 class DutyMemberDetailsController extends Controller
 {
@@ -55,13 +57,14 @@ class DutyMemberDetailsController extends Controller
         $member_details = DutyMemberDetails::create([
             'duty_id' => $id,
             'member_name' => $request->member_name,
-            'supervisor_name' => $request->supervisor_name,
             'workstation' => $request->workstation,
             'duty_assigned' => $request->duty_assigned,
             'event_type' => $request->event_type || $request->event_name
         ]);
 
-        // dd($member_details);
+        // send a notification to the users/member names(user_id should be a foreig id in the table duty)
+        // FacadesNotification::send($member_details->member_name, );
+        // FacadesNotification::send();
 
         if (!$member_details) {
             return redirect()->route('admin.duty.index', auth()->user()->id)->with('error_message', 'Error occurred!! Please try again');

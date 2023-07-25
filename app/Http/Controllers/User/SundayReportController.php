@@ -4,9 +4,12 @@ namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
 use App\Models\SundayReport;
+use App\Models\User;
+use App\Notifications\SundayReportSubmissions;
 use Barryvdh\DomPDF\Facade\Pdf as FacadePdf;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Notification;
 use PDF;
 
 
@@ -49,6 +52,12 @@ class SundayReportController extends Controller
      */
     public function store(Request $request, $id)
     {
+
+        // retrieve the admin
+        $user = User::where('id', User::ROLE_ADMIN)->get();
+        // dd($user);
+
+
         $request->validate([
             'user_id' => 'integer',
             'report_date' => 'date',
@@ -59,17 +68,19 @@ class SundayReportController extends Controller
 
         try {
 
-            SundayReport::create([
+            $sundayReport = SundayReport::create([
                 'user_id' => $id,
                 'report_date' => $request->report_date,
                 'event_type' => $request->event_type,
                 'comments' => $request->comments
             ]);
 
+            // send a notification to admin to notify that a report has been submitted
+            Notification::send($user, new SundayReportSubmissions());
+
             return redirect()->route('user.sunday-report.index', [auth()->user()->id])->with('success_message', 'Report created successfully!!');
 
-            // return view('user.sunday-report.index', auth()->id)->with('success_message', 'Report created successfully!!');
-
+        
         } catch (\Throwable $th) {
             return view('user.sunday-report.index')->with('error_message', $th->getMessage());
         }
