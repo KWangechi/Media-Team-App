@@ -11,16 +11,20 @@ class SundayReportSubmissions extends Notification
 {
     use Queueable;
 
-    // public $message;
+    public $message;
+    public $userEmail;
+    public $admin;
 
     /**
      * Create a new notification instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct($userEmail)
     {
         // $this->message = $message;
+        $this->userEmail = $userEmail;
+        // $this->admin = $admin;
     }
 
     /**
@@ -31,7 +35,7 @@ class SundayReportSubmissions extends Notification
      */
     public function via($notifiable)
     {
-        return ['mail'];
+        return ['mail', 'database'];
     }
 
     /**
@@ -42,11 +46,17 @@ class SundayReportSubmissions extends Notification
      */
     public function toMail($notifiable)
     {
+
+        $url = url('/admin/sunday-reports');
+        $greeting = 'Report submission from: '.$this->userEmail;
+
         return (new MailMessage)
+            ->from(auth()->user()->email, auth()->user()->name)
             ->subject('Sunday Report Submission')
-            // ->mailer(auth()->user()->email)
-            ->line('This is to notify you that I have submitted my Sunday Report with all the comments from the service.')
-            ->salutation('Thank you. Kind regards');
+            ->greeting($greeting)
+            ->line('This is to notify you that '.$this->userEmail.' has submitted their report. ')
+            ->action('View the reports', $url)
+            ->salutation('Kind regards, '.$this->userEmail);
     }
 
     /**
@@ -56,6 +66,13 @@ class SundayReportSubmissions extends Notification
      * @return array
      */
     public function toArray($notifiable)
+    {
+        return [
+            //
+        ];
+    }
+
+    public function toDatabase($notifiable)
     {
         return [
             //
