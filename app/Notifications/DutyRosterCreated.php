@@ -18,7 +18,7 @@ class DutyRosterCreated extends Notification
      *
      * @return void
      */
-    public function __construct($message)
+    public function __construct()
     {
         // $this->message = $message;
     }
@@ -43,12 +43,13 @@ class DutyRosterCreated extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
-            ->salutation('Dear Team Member: ')
-            ->greeting('Welcome to Kahawa Sukari Media Team App. Glad to have you on board!!')
-            ->line('This is to notify you that you have been selected to lead the service next Saturday.
-                    Click the link below to see the message in the app')
-            ->action('Go to My announcements', url('/'))
-            ->line('Please make sure you confirm your availability before Saturday 2:00pm. See you on Sunday');
+            ->greeting('Welcome to Kahawa Sukari Media Team App')
+            ->line('This is to notify you that you have been selected to lead the service next Saturday.')
+            ->line('Click the link below to see the message in the app')
+            ->action('Go to My announcements', url('/admin/announcements'))
+            ->line('Please make sure you confirm your availability before Saturday 2:00pm.')
+            ->line('See you on Sunday!!!')
+            ->salutation('Kind regards: Admin.');
     }
 
     /**
@@ -64,9 +65,8 @@ class DutyRosterCreated extends Notification
         ];
     }
 
-    public function toDatabase() {
-        return [
-
-        ];
+    public function toDatabase()
+    {
+        return [];
     }
 }

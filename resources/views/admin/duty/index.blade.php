@@ -23,12 +23,12 @@
                 The duty roster is not yet uploaded
             </div>
 
-            <a class="btn btn-primary btn-sm float-right" id="createDutyRosterModalButton">
+            <a class="btn btn-primary btn-sm float-left" id="createDutyRosterModalButton" data-bs-toggle="modal" data-bs-target="#createDutyRosterModal">
                 <i class="bi bi-plus-circle"></i>
                 CREATE NEW DUTY ROSTER</a>
 
             <!-- Create Duty Roster Modal -->
-            <div class="modal" id="createDutyRosterModal" tabindex="-1" aria-labelledby="createDutyRosterModalLabel" aria-hidden="true">
+            <div class="modal fade" id="createDutyRosterModal" tabindex="-1" aria-labelledby="createDutyRosterModalLabel" aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
@@ -198,7 +198,7 @@
                                     <div class="mt-4">
                                         <x-label for="Event Name" :value="__('Event Name')" class="mt-3" />
 
-                                        <x-input id="event_type" class="block mt-1 w-full" type="text" name="event_type" placeholder="eg. Mission in Mosiro" />
+                                        <x-input id="event_name" class="block mt-1 w-full" type="text" name="event_name" placeholder="eg. Mission in Mosiro" />
                                     </div>
 
 

@@ -9,7 +9,7 @@ class DutyMemberDetails extends Model
 {
     use HasFactory;
 
-    // public $table = 'duty_member_details';
+    public $table = 'duty_member_details';
 
     protected $fillable = [
         'duty_id',
@@ -22,7 +22,7 @@ class DutyMemberDetails extends Model
 
     // relationships
     public function duties() {
-        return $this->belongsToMany(Duty::class);
+        return $this->belongsToMany(Duty::class, 'duty_id');
     }
 
 }

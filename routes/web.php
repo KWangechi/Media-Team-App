@@ -109,6 +109,7 @@ Route::middleware(['auth'])->group(function () {
 
         //announcements
         Route::get('/announcements', [AnnouncementController::class, 'index'])->name('admin.announcements');
+        
 
         // Route::get('/announcements', function(){
         //     Alert::success('Title','Hello', 'success');

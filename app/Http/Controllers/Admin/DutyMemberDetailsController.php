@@ -5,9 +5,11 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Duty;
 use App\Models\DutyMemberDetails;
+use App\Models\User;
+use App\Notifications\DutyRosterCreated;
 use Illuminate\Http\Request;
-use Illuminate\Notifications\Notification;
-use Illuminate\Support\Facades\Notification as FacadesNotification;
+use Illuminate\Support\Facades\Notification;
+
 
 class DutyMemberDetailsController extends Controller
 {
@@ -59,19 +61,24 @@ class DutyMemberDetailsController extends Controller
             'member_name' => $request->member_name,
             'workstation' => $request->workstation,
             'duty_assigned' => $request->duty_assigned,
-            'event_type' => $request->event_type || $request->event_name
+            'event_type' => $request->event_type
         ]);
 
-        // send a notification to the users/member names(user_id should be a foreig id in the table duty)
-        // FacadesNotification::send($member_details->member_name, );
-        // FacadesNotification::send();
+        try {
+            $user = User::where('name', $member_details->member_name)->first();
 
-        if (!$member_details) {
-            return redirect()->route('admin.duty.index', auth()->user()->id)->with('error_message', 'Error occurred!! Please try again');
-        }
+            // send a notification to the users/member names(user_id should be a foreig id in the table duty)
+            Notification::send($user, new DutyRosterCreated());
+
+
+            if (!$member_details) {
+                return redirect()->route('admin.duty.index', auth()->user()->id)->with('error_message', 'Error occurred!! Please try again');
+            }
 
             return redirect()->route('admin.duty.index', auth()->user()->id)->with('success_message', 'Member Details created successfully!');
-
+        } catch (\Throwable $th) {
+            dd($th);
+        }
     }
 
 
@@ -88,8 +95,8 @@ class DutyMemberDetailsController extends Controller
         if (!$member_details) {
             return redirect()->route('admin.duty.index', auth()->user()->id)->with('error_message', 'ID does not exist!!');
         }
-            return view('admin.duty.edit', compact('member_details'));
-        // dd($member_details);
+        return view('admin.duty.edit', compact('member_details'));
+
     }
 
     /**
@@ -103,18 +110,14 @@ class DutyMemberDetailsController extends Controller
     {
         $member_details = DutyMemberDetails::findOrFail($id);
 
-        // dd($request->all());
 
         try {
             $member_details->update($request->all());
 
             return to_route('admin.duty.index', auth()->user()->id)->with('success_message', 'Member details updated successfully!!');
-
         } catch (\Throwable $th) {
             return to_route('admin.duty.index', auth()->user()->id)->with('error_message', $th->getMessage());
         }
-
-
     }
 
     /**
@@ -132,12 +135,10 @@ class DutyMemberDetailsController extends Controller
         if (!$member_details) {
             return redirect()->route('admin.duty.index', auth()->user()->id)->with('error_message', 'ID does not exist!!');
         } else {
-            if(!$member_details->delete()) {
+            if (!$member_details->delete()) {
                 return redirect()->route('admin.duty.index', auth()->user()->id)->with('error_message', ' An error occurred. Deletion not successful');
             }
             return redirect()->route('admin.duty.index', auth()->user()->id)->with('success_message', 'Member details deleted successfully!!');
-
         }
-
     }
 }

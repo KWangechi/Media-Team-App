@@ -31,7 +31,7 @@ class SundayReportSubmissions extends Notification
      */
     public function via($notifiable)
     {
-        return ['mail'];
+        return ['mail', 'database'];
     }
 
     /**
@@ -56,6 +56,13 @@ class SundayReportSubmissions extends Notification
      * @return array
      */
     public function toArray($notifiable)
+    {
+        return [
+            //
+        ];
+    }
+
+    public function toDatabase()
     {
         return [
             //
