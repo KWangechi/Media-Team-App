@@ -76,11 +76,11 @@ class SundayReportController extends Controller
             ]);
 
             // send a notification to admin to notify that a report has been submitted
-            Notification::send($user, new SundayReportSubmissions());
+            Notification::send($user, new SundayReportSubmissions(auth()->user()->name));
 
             return redirect()->route('user.sunday-report.index', [auth()->user()->id])->with('success_message', 'Report created successfully!!');
 
-        
+
         } catch (\Throwable $th) {
             return view('user.sunday-report.index')->with('error_message', $th->getMessage());
         }
