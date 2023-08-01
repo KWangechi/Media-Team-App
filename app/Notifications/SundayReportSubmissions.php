@@ -36,7 +36,6 @@ class SundayReportSubmissions extends Notification
     public function via($notifiable)
     {
         return ['mail', 'database'];
-        return ['mail', 'database'];
     }
 
     /**
@@ -73,12 +72,6 @@ class SundayReportSubmissions extends Notification
         ];
     }
 
-    public function toDatabase()
-    {
-        return [
-            //
-        ];
-    }
 
     public function toDatabase($notifiable)
     {
