@@ -6,7 +6,9 @@ use App\Http\Controllers\Controller;
 use App\Models\Announcement;
 use App\Models\User;
 use App\Notifications\NewAnnouncement;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Notification;
 use RealRashid\SweetAlert\Facades\Alert;
 use RealRashid\SweetAlert\SweetAlertServiceProvider;
@@ -20,7 +22,8 @@ class AnnouncementController extends Controller
      */
     public function index()
     {
-        $announcements = Announcement::paginate(6);
+        $announcements = DB::table('notifications')->select('*')->get();
+
         // dd($announcements);
         return view('admin.announcements.index', compact('announcements'));
     }
@@ -149,7 +152,11 @@ class AnnouncementController extends Controller
 
     public function readAnnouncement()
     {
-        $announcement = Notification::where('read_at', '=', null);
+        $read_at = [Carbon::now()];
+
+        $announcement = DB::table('notifications')->select('*')->where('read_at', '=', null)->get();
+        // $readAnnouncement = $announcement->update($read_at);
+
 
         dd($announcement);
     }

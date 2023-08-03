@@ -65,8 +65,20 @@ class DutyRosterCreated extends Notification
         ];
     }
 
+
+    /**
+     * Store the notification in the database
+     * This data will be stored in the 'data' column in the notifications table
+     * @return array
+     */
     public function toDatabase()
     {
-        return [];
+        return [
+            'subject' => 'Duty Roster Creation',
+            'message' => 'This is to notify you that you have been selected to lead the service next Saturday.
+               Please make sure you confirm your availability before Saturday 2:00pm.
+               See you on Sunday!!!',
+            'salutation' => 'Kind regards, Admin.'
+        ];
     }
 }

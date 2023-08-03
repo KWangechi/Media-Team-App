@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\User;
 use Carbon\Carbon;
+use Database\Factories\UserFactory;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
@@ -18,6 +19,8 @@ class UserSeeder extends Seeder
      */
     public function run()
     {
+        UserFactory::new();
+        
         $admin = [
             'role_id' => User::ROLE_ADMIN,
             'name' => 'George Kamau',
