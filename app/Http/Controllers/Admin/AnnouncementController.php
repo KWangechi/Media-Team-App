@@ -90,7 +90,7 @@ class AnnouncementController extends Controller
      */
     public function show($id)
     {
-        $annnoncement = Announcement::find($id);
+        // $annnoncement = Announcement::find($id);
 
         return redirect()->route('admin.announcement.show', compact('announcement'));
     }
@@ -137,28 +137,41 @@ class AnnouncementController extends Controller
      */
     public function destroy($id)
     {
-        $announcement = Announcement::findOrFail($id);
+        // $announcements = DB::table('notifications')->select('*')->get();
 
-        // if (!($announcement->destroy())) {
-        //     return redirect()->route('admin.announcements')->with('error_message', 'Something went wrong? Please try again!!');
-        // }
-        // else{
-        //     return to_route('admin.announcements')->with('success_message', 'Announcement deleted successfully!');
-        // }
-
-
-        dd($announcement);
+        dd($id);
     }
 
-    public function readAnnouncement()
+    /**
+     * Mark a notification in the database as read
+     * @param id the id of the notification
+     */
+
+    public function readAnnouncement($id)
     {
-        $read_at = [Carbon::now()];
 
-        $announcement = DB::table('notifications')->select('*')->where('read_at', '=', null)->get();
-        // $readAnnouncement = $announcement->update($read_at);
+        try {
+            $announcement = DB::table('notifications')->where('id', $id)->update(['read_at' => Carbon::now()]);
 
-
-        dd($announcement);
+            return to_route('admin.announcements', compact('success_mesage', 'Notification marked as read successfully!!'));
+        } catch (\Throwable $th) {
+            return to_route('admin.announcements', compact('error_message', $th->getMessage()));
+        }
     }
 
+    /**
+     * Mark a notification in the database as unread
+     * @param id the id of the notification
+     */
+
+    public function markAsUnread($id)
+    {
+        try {
+            $announcement = DB::table('notifications')->where('id', $id)->update(['read_at' => null]);
+
+            return to_route('admin.announcements', compact('success_mesage', 'Notification marked as unread successfully!!'));
+        } catch (\Throwable $th) {
+            return to_route('admin.announcements', compact('error_mesage', $th->getMessage()));
+        }
+    }
 }

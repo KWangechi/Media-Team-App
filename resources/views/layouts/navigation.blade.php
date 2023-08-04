@@ -58,6 +58,20 @@
 
             <!-- Settings Dropdown -->
             <div class="hidden sm:flex sm:items-center sm:ml-6">
+
+                <a href="{{route('admin.announcements')}}">
+                @if (count($announcements) > 0)
+
+                    <span class="bi bi-bell-fill">
+
+                        </span>
+                        <span class="rounded-pill badge-notification bg-primary" style="z-index: 100;">{{count($announcements)}}</span>
+                    @else
+                    <i class="bi bi-bell">
+                    </i>
+                    @endif
+                </a>
+
                 <x-dropdown align="right" width="48">
                     <x-slot name="trigger">
                         <button class="flex items-center text-sm font-medium text-gray-500 hover:text-gray-700 hover:border-gray-300 focus:outline-none focus:text-gray-700 focus:border-gray-300 transition duration-150 ease-in-out">
@@ -68,6 +82,7 @@
                                     <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
                                 </svg>
                             </div>
+
                         </button>
                     </x-slot>
 
@@ -78,18 +93,20 @@
                         </x-dropdown-link>
 
                         <x-dropdown-link :href="route('admin.announcements')">
-                            <i class="bi bi-bell"></i>
+
+                            <!-- @if (count($announcements) > 0)
+                            <i class="bi bi-app-indicator"></i>
+                            {{ __('Announcements - ') }} {{count($announcements)}}
+
+                            @else
+                            <i class="bi bi-bell">
                             {{ __('Announcements') }}
 
-                            @if ((2==3) )
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-1-circle-fill" viewBox="0 0 16 16">
-                                <path fill-rule="evenodd" d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0ZM9.283 4.002V12H7.971V5.338h-.065L6.072 6.656V5.385l1.899-1.383h1.312Z" />
-                            </svg>
-                            @else
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-5-circle-fill" viewBox="0 0 16 16">
-                                <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0Zm-8.006 4.158c1.74 0 2.924-1.119 2.924-2.806 0-1.641-1.178-2.584-2.56-2.584-.897 0-1.442.421-1.612.68h-.064l.193-2.344h3.621V4.002H5.791L5.445 8.63h1.149c.193-.358.668-.809 1.435-.809.85 0 1.582.604 1.582 1.57 0 1.085-.779 1.682-1.57 1.682-.697 0-1.389-.31-1.53-1.031H5.276c.065 1.213 1.149 2.115 2.72 2.115Z" />
-                            </svg>
-                            @endif
+                            </i>
+                                @endif -->
+
+                            <!-- {{count($announcements)}} -->
+
 
                         </x-dropdown-link>
 

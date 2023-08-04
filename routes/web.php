@@ -109,15 +109,17 @@ Route::middleware(['auth'])->group(function () {
 
         //announcements
         Route::get('/announcements', [AnnouncementController::class, 'index'])->name('admin.announcements');
-        
+
 
         // Route::get('/announcements', function(){
         //     Alert::success('Title','Hello', 'success');
         // });
         Route::post('/announcement', [AnnouncementController::class, 'store'])->name('admin.announcement.create');
-        Route::get('/readAnnouncement', [AnnouncementController::class, 'readAnnouncement'])->name('admin.announcement.readAnnouncement');
+        Route::get('/readAnnouncement/{id}', [AnnouncementController::class, 'readAnnouncement'])->name('admin.announcement.readAnnouncement');
+        Route::get('/unreadAnnouncement/{id}', [AnnouncementController::class, 'unreadAnnouncement'])->name('admin.announcement.unreadAnnouncement');
+
         Route::patch('/announcement/{id}', [AnnouncementController::class, 'update'])->name('admin.announcement.update');
-        Route::delete('/announcement/{id}', [AnnouncementController::class, 'delete'])->name('admin.announcement.delete');
+        Route::delete('/announcement/{id}', [AnnouncementController::class, 'destroy'])->name('admin.announcement.delete');
 
         //filter functionalities
         Route::get('/filterDate', [FilterController::class, 'filterDate'])->name('admin.announcement.filterDate');
