@@ -39,10 +39,6 @@
                             <form method="POST" id="createReportForm" action="{{ route('user.sunday-report.create', auth()->user()->id )}}">
                                 @csrf
 
-                                <!-- <div class="mt-4">
-                                    <x-input class="block mt-1 w-full" id="summary_id" name="summary_id" type="number" hidden />
-                                </div> -->
-
                                 <!-- Report Date -->
                                 <div class="mt-4">
                                     <x-label for="report_date" :value="__('Report Date')" />
@@ -55,6 +51,13 @@
                                     <x-label for="event_type" :value="__('Event Type')" />
 
                                     <x-input id="event_type" class="block mt-1 w-full" type="text" name="event_type" required placeholder="eg. Second Service" />
+                                </div>
+
+                                <!-- WorkStation -->
+                                <div class="mt-4">
+                                    <x-label for="workstation" :value="__('Workstation')" />
+
+                                    <x-input id="workstation" class="block mt-1 w-full" type="text" name="workstation" required placeholder="eg. VMix" />
                                 </div>
 
                                 <!-- Comments -->
@@ -107,11 +110,18 @@
                                     <x-input id="event_type" class="block mt-1 w-full" type="text" name="event_type" required placeholder="eg. Second Service" />
                                 </div>
 
+                                <!-- WorkStation -->
+                                <div class="mt-4">
+                                    <x-label for="workstation" :value="__('Workstation')" />
+
+                                    <x-input id="workstation" class="block mt-1 w-full" type="text" name="workstation" required placeholder="eg. VMix" />
+                                </div>
+
                                 <!-- Comments -->
                                 <div class="mt-4">
                                     <x-label for="comments" :value="__('Report Comments')" />
 
-                                    <x-textarea id="comments" class="block mt-1 w-full" type="text" name="comments" required placeholder="eg. Microphones were making noises during the second service and we need to replace the wires" />
+                                    <x-textarea id="report_comments" class="block mt-1 w-full" type="text" name="report_comments" required placeholder="eg. Microphones were making noises during the second service and we need to replace the wires" />
                                 </div>
 
                                 <br>

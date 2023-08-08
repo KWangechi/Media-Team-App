@@ -55,30 +55,32 @@ class SundayReportController extends Controller
 
         // retrieve the admin
         $user = User::where('id', User::ROLE_ADMIN)->get();
-        // dd($user);
-
 
         $request->validate([
             'user_id' => 'integer',
             'report_date' => 'date',
             'event_type' => 'string',
+            'workstation' => 'string',
             'comments' => 'string'
 
         ]);
 
         try {
 
-            $sundayReport = SundayReport::create([
+            $report = SundayReport::create([
                 'user_id' => $id,
                 'report_date' => $request->report_date,
                 'event_type' => $request->event_type,
-                'comments' => $request->comments
+                'workstation' => $request->workstation,
+                'comments' => $request->report_comments
             ]);
+
+            dd($request);
 
             // send a notification to admin to notify that a report has been submitted
             Notification::send($user, new SundayReportSubmissions(auth()->user()->name));
 
-            return redirect()->route('user.sunday-report.index', [auth()->user()->id])->with('success_message', 'Report created successfully!!');
+            // return redirect()->route('user.sunday-report.index', [auth()->user()->id])->with('success_message', 'Report created successfully!!');
 
 
         } catch (\Throwable $th) {

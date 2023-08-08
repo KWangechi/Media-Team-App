@@ -50,11 +50,10 @@
                         <td>{{$report->user->login_time}}</td>
                         <td>{{$report->event_type}}</td>
                         <td>{{$report->user->phone_number}}</td>
+                        <td>{{$report->workstation}}</td>
                         <td>{{$report->report_date}}</td>
-                        <td>Sound Stage Management</td>
                         <td style="word-wrap: break-word;min-width: 160px;max-width: 190px;">{{$report->comments}}</td>
 
-                        <!-- <td>{{$report->workstation}}</td> -->
                         @endforeach
                     </tr>
                 </tbody>

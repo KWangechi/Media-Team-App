@@ -11,7 +11,7 @@ class SundayReport extends Model
 
     public $table = 'sunday_reports';
 
-    protected $fillable = ['user_id', 'report_date', 'event_type', 'comments'];
+    protected $fillable = ['user_id', 'report_date', 'event_type', 'comments', 'workstation'];
 
     //relationship
     public function user() {

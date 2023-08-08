@@ -1,42 +1,30 @@
         <div class="container">
             <br>
 
-            <div class="card">
-                <table class="table table-responsive table-bordered table-striped align-middle mt-5 p-5">
-                    <thead class="align-middle h-1">
-                        <tr>
-                            <th scope="col">Member Name</th>
-                            <th scope="col">Last Login Time</th>
-                            <th scope="col">Event Title</th>
-                            <th scope="col">Phone Number</th>
-                            <th scope="col">Report Date</th>
-                            <th scope="col">Workstation</th>
-                            <th scope="col">Comments</th>
-                        </tr>
-                    </thead>
-                    <tbody style="word-wrap: break-word;">
-                        @foreach ($reports as $key=>$report)
-                        <tr>
-                            <td>{{$report->user->name}}</td>
-                            <td>{{$report->user->login_time}}</td>
-                            <td>{{$report->event_type}}</td>
-                            <td>{{$report->user->phone_number}}</td>
-                            <td>{{$report->report_date}}</td>
-                            <!-- <td>{{$report->user->workstation}}</td> -->
-                            <td>Sound Stage Management</td>
-                            <td style="word-wrap: break-word;min-width: 160px;max-width: 190px;">{{$report->comments}}</td>
+            <!-- convert it into a date that can be read(ISO String) -->
+            <h3 style="margin-left: 10px;">{{$reports[0]->report_date}}</h3>
 
-                            </td>
-                            @endforeach
-                        </tr>
-                    </tbody>
-                </table>
+            <p style="margin-left: 10px;">Below are the reports for the workstations and the challenges faced: </p>
+
+            @foreach ($reports as $report)
+            <h4 style="margin-left: 10px;">{{$report->event_type}}</h4>
+
+            <li style="margin-left: 50px;">{{$report->workstation}}</li>
+
+            <p style="margin-left: 20px;">{{$report->comments}}</p>
+            @endforeach
+
+            <br>
+            <div class="row" style="margin-left: 10px;">
+
+                Name: ..............................................
+                <p style="margin-top: 15px;">Chairperson's Signature........................................</p>
+
+            </div>
+            <br>
+            <div class="row" style="margin-left: 10px;">
+                Name: ...............................................
+                <p style="margin-top: 15px;">Church Admin's Signature........................................</p>
             </div>
 
-
         </div>
-
-
-        <style>
-
-        </style>

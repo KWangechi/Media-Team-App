@@ -63,9 +63,8 @@
                 @if (count($announcements) > 0)
 
                     <span class="bi bi-bell-fill">
-
+                        <span class="rounded-pill badge-notification" style="z-index: 100;">{{count($announcements)}}</span>
                         </span>
-                        <span class="rounded-pill badge-notification bg-primary" style="z-index: 100;">{{count($announcements)}}</span>
                     @else
                     <i class="bi bi-bell">
                     </i>
