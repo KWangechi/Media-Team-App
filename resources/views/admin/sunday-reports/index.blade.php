@@ -24,10 +24,33 @@
             </div>
 
             @else
-            <a href="{{route('admin.users.sunday-reports.downloadAsPDF')}}" class="btn btn-primary btn-sm">
-                <i class="bi bi-file-earmark-arrow-down"></i>
-                DOWNLOAD FULL REPORT</a>
+            <div class="row">
+                <div class="col float-right">
+                    <select name="filter" id="filter" for="member_name" style="border-radius: 10px;">
+                        <option value="" selected disabled>Filter By: </option>
+                        <option value="member_name">Member Name</option>
+                        <option value="event_type">Event Title</option>
+                        <option value="report_date">Report Date</option>
+                        <option value="workstation">Workstation</option>
 
+                    </select>
+                </div>
+
+                <div class="col">
+                    <a href="/#" class="btn btn-secondary btn-sm float-right">
+                    <i class="bi bi-files"></i>
+                        View Previous Reports
+                    </a>
+                </div>
+
+                <div class="col">
+                    <a href="{{route('admin.users.sunday-reports.downloadAsPDF')}}" class="btn btn-primary btn-sm">
+                        <i class="bi bi-file-earmark-arrow-down"></i>
+                        DOWNLOAD FULL REPORT</a>
+                </div>
+
+
+            </div>
 
             <table class="table table-responsive table-bordered table-striped align-middle mt-3 p-5">
                 <thead class="align-middle h-1">
@@ -37,8 +60,8 @@
                         <th scope="col">Last Login Time</th>
                         <th scope="col">Event Title</th>
                         <th scope="col">Phone Number</th>
-                        <th scope="col">Report Date</th>
                         <th scope="col">Workstation</th>
+                        <th scope="col">Report Date</th>
                         <th scope="col">Comments</th>
                     </tr>
                 </thead>

@@ -7,6 +7,7 @@ use App\Models\SundayReport;
 use App\Models\User;
 use App\Notifications\SundayReportSubmissions;
 use Barryvdh\DomPDF\Facade\Pdf as FacadePdf;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Notification;
@@ -67,7 +68,7 @@ class SundayReportController extends Controller
 
         try {
 
-            $report = SundayReport::create([
+            SundayReport::create([
                 'user_id' => $id,
                 'report_date' => $request->report_date,
                 'event_type' => $request->event_type,
@@ -75,12 +76,12 @@ class SundayReportController extends Controller
                 'comments' => $request->report_comments
             ]);
 
-            dd($request);
+            // dd($request);
 
             // send a notification to admin to notify that a report has been submitted
             Notification::send($user, new SundayReportSubmissions(auth()->user()->name));
 
-            // return redirect()->route('user.sunday-report.index', [auth()->user()->id])->with('success_message', 'Report created successfully!!');
+            return redirect()->route('user.sunday-report.index', [auth()->user()->id])->with('success_message', 'Report created successfully!!');
 
 
         } catch (\Throwable $th) {
@@ -153,18 +154,16 @@ class SundayReportController extends Controller
         $pdf = FacadePdf::loadView('admin.sunday-reports.pdf-view');
 
         // dd($pdf);
-        return $pdf->download('pdf_file.pdf');
+        // store these PDF'S in a table, with the name, doc_type, path, text, etc
+        return $pdf->download(Carbon::now().'-sunday-report.pdf');
 
+    }
 
-        // view()->share('reports', $allReports);
+/**
+ * Get all the previous reports for other Sundays
+ */
+    public function getAllPreviousReportDocuments() {
+        dd('Get all the previous report docs');
 
-
-        // if ($request->has('download')) {
-
-        //     $pdf = FacadePdf::loadView('admin.sunday-reports.pdf-view');
-        //     return $pdf->download('pdfview.pdf');
-        // }
-
-        // return view('admin.sunday-reports.pdf-view', compact('id'));
     }
 }
