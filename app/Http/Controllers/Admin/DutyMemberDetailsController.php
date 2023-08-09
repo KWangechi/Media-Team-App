@@ -64,21 +64,25 @@ class DutyMemberDetailsController extends Controller
             'event_type' => $request->event_type
         ]);
 
+        if($member_details) {
+
         try {
             $user = User::where('name', $member_details->member_name)->first();
 
             // send a notification to the users/member names(user_id should be a foreig id in the table duty)
             Notification::send($user, new DutyRosterCreated());
 
+            return redirect()->route('admin.duty.index', auth()->user()->id)->with('success_message', 'Notification sent successfully!!');
 
-            if (!$member_details) {
-                return redirect()->route('admin.duty.index', auth()->user()->id)->with('error_message', 'Error occurred!! Please try again');
-            }
-
-            return redirect()->route('admin.duty.index', auth()->user()->id)->with('success_message', 'Member Details created successfully!');
         } catch (\Throwable $th) {
-            dd($th);
+            return redirect()->route('admin.duty.index', auth()->user()->id)->with('error_message', 'Unable to send notification. Please check the user exists!');
+
         }
+        return redirect()->route('admin.duty.index', auth()->user()->id)->with('success_message', 'Member Details created successfully!');
+
+    }
+    return redirect()->route('admin.duty.index', auth()->user()->id)->with('success_message', 'Member Details created successfully!');
+
     }
 
 

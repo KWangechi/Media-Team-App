@@ -181,28 +181,11 @@
                                 </div>
 
                                 <!-- Type of Service or Event -->
+
                                 <div class="mt-4">
-                                    <x-label for="event_type" :value="__('Event Type')" />
+                                    <x-label for="Event Name" :value="__('Event Name')" class="mt-3" />
 
-                                    <select name="event_type">
-                                        <option value="" selected disabled>-- Select Type of Event --</option>
-                                        <option value="" selected>-- Type instead --</option>
-                                        <option value="1st Service">Sunday 1st Service</option>
-                                        <option value="2nd Service">Sunday 2nd Service</option>
-                                        <option value="Gwav Service">Sunday GWAV Service</option>
-                                        <option value="Wedding">Wedding</option>
-                                        <option value="Funeral">Funeral</option>
-                                        <option value="Graduation">Graduation</option>
-
-                                    </select>
-                                    <div class="mt-4">
-                                        <x-label for="Event Name" :value="__('Event Name')" class="mt-3" />
-
-                                        <x-input id="event_name" class="block mt-1 w-full" type="text" name="event_name" placeholder="eg. Mission in Mosiro" />
-                                    </div>
-
-
-                                    <!-- // modal for adding a new event -->
+                                    <x-input id="event_type" class="block mt-1 w-full" type="text" name="event_type" placeholder="eg. Mission in Mosiro" />
                                 </div>
 
                                 <br>
@@ -277,7 +260,7 @@
                                                     </div>
 
                                                     <!-- Type of Service or Event -->
-                                                    <div class="mt-4">
+                                                    <!-- <div class="mt-4">
                                                         <x-label for="event_type" :value="__('Event Type')" />
 
                                                         <select name="event_type">
@@ -292,11 +275,11 @@
 
                                                         </select>
 
-                                                        <div class="mt-4">
-                                                            <x-label for="Event Name" :value="__('Event Name')" class="mt-3" />
+                                                    </div> -->
+                                                    <div class="mt-4">
+                                                        <x-label for="Event Name" :value="__('Event Name / Event Type')" class="mt-3" />
 
-                                                            <x-input id="event_type" class="block mt-1 w-full" type="text" name="event_type" placeholder="eg. Mission in Mosiro" />
-                                                        </div>
+                                                        <x-input id="event_type" class="block mt-1 w-full" type="text" name="event_type" placeholder="eg. Mission in Mosiro" />
                                                     </div>
 
                                                     <div class="modal-footer">
@@ -382,35 +365,3 @@
     </x-slot>
 </x-app-layout>
 
-<script>
-    // let createDutyRosterModal = document.querySelector("#createDutyRosterModal")
-
-    // let editMemberDetails = document.querySelector("#editMemberDetails")
-    // let createMemberDetails = document.querySelector('#createMemberDetails')
-
-    // createDutyRosterModalButton.addEventListener('click', function(){
-    //     $("#createDutyRosterModal").fadeToggle();
-    // })
-
-    // editMemberDetails.addEventListener('click', function(e) {
-    //     // console.log(editMemberDetails.innerText);
-    //     $("#staticBackdrop").modal('toggle');
-    // })
-
-
-    // $(document).ready(function() {
-    //     $("#createDutyRosterModalButton").on('click', function() {
-    //         $("#createDutyRosterModal").modal('toggle');
-
-    //         // $("#createDutyRosterModal").;
-
-    //         // console.log('Clicked the create duty roster modal');
-    //         // console.log(editMemberDetails)
-
-    //     })
-
-    //     // $("#closeModalButton").on('click', function(){
-    //     //     $("#createDutyRosterModal").remove();
-    //     // })
-    // })
-</script>
