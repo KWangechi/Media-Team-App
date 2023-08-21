@@ -26,25 +26,35 @@
             @else
             <div class="row">
                 <div class="col float-right">
-                    <select name="filter" id="filter" for="member_name" style="border-radius: 10px;">
-                        <option value="" selected disabled>Filter By: </option>
+                    <x-input id="dateFilter" class="block mt-1 w-12" type="date" name="dateFilter" placeholder="Filter By date" />
+                </div>
+                <div class="col float-right">
+
+                    <x-input id="nameFilter" class="block mt-1 w-12" type="text" name="nameFilter" placeholder="Filter By name" />
+                </div>
+                <div class="col float-right">
+
+                    <x-input id="workstationFilter" class="block mt-1 w-12" type="text" name="workstationFilter" placeholder="Filter By workstation" />
+
+                    <!-- <select name="filter" id="filter" for="member_name" style="border-radius: 10px;">
+                        <option value="" selected disabled>Filter By Name</option>
                         <option value="member_name">Member Name</option>
                         <option value="event_type">Event Title</option>
                         <option value="report_date">Report Date</option>
                         <option value="workstation">Workstation</option>
 
-                    </select>
+                    </select> -->
                 </div>
 
                 <div class="col">
-                    <a href="/#" class="btn btn-secondary btn-sm float-right">
-                    <i class="bi bi-files"></i>
+                    <a href="/#" class="btn btn-secondary btn-sm float-right mt-2">
+                        <i class="bi bi-files"></i>
                         View Previous Reports
                     </a>
                 </div>
 
                 <div class="col">
-                    <a href="{{route('admin.users.sunday-reports.downloadAsPDF')}}" class="btn btn-primary btn-sm">
+                    <a href="{{route('admin.users.sunday-reports.downloadAsPDF')}}" class="btn btn-primary btn-sm mt-2">
                         <i class="bi bi-file-earmark-arrow-down"></i>
                         DOWNLOAD FULL REPORT</a>
                 </div>
@@ -103,21 +113,10 @@
     let editMemberDetails = document.querySelector("#editMemberDetails")
     let createMemberDetails = document.querySelector('#createMemberDetails')
 
-    // createsummaryRosterModalButton.addEventListener('click', function(){
-    //     $("#createsummaryRosterModal").fadeToggle();
-    // })
-
-    // editMemberDetails.addEventListener('click', function(e) {
-    //     // console.log(editMemberDetails.innerText);
-    //     $("#staticBackdrop").modal('toggle');
-    // })
-
 
     $(document).ready(function() {
         $("#createsummaryRosterModalButton").on('click', function() {
             $("#createsummaryRosterModal").modal('toggle');
-
-
 
         })
 

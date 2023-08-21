@@ -10,10 +10,10 @@ class Leave extends Model
     use HasFactory;
 
     protected $fillable=['user_id', 'reason', 'start_date', 'end_date', 'status'];
-    
+
     public $timestamps = false;
 
-    public function users(){
+    public function user(){
         return $this->belongsToMany(User::class);
     }
 }

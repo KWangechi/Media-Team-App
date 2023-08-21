@@ -16,7 +16,7 @@
             </div>
             @endif
 
-            <a class="btn btn-primary btn-sm text-center float-right" data-bs-toggle="modal" data-bs-target="#createLeaveModal" id="createLeaveModalButton">
+            <a class="btn btn-primary btn-sm text-center float-right" data-bs-toggle="modal" data-bs-target="#createContributionModal" id="createContributionModalButton">
                 <i class="bi bi-plus-circle"></i>
                 CREATE NEW CONTRIBUTION
             </a>
@@ -50,7 +50,7 @@
             </div>
 
             <!-- Create Contributions Modal -->
-            <div class="modal fade" id="createLeaveModal" tabindex="-1" aria-labelledby="createLeaveModalLabel" aria-hidden="true">
+            <div class="modal fade" id="createContributionModal" tabindex="-1" aria-labelledby="createContributionModalLabel" aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header ">
@@ -116,7 +116,7 @@
             </a> -->
 
             <!-- Create Contributions Modal -->
-            <div class="modal fade" id="createLeaveModal" tabindex="-1" aria-labelledby="createLeaveModalLabel" aria-hidden="true">
+            <div class="modal fade" id="createContributionModal" tabindex="-1" aria-labelledby="createContributionModalLabel" aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header ">
@@ -181,7 +181,7 @@
                 <thead>
                     <tr>
                         <th scope="col">ID</th>
-                        <th scope="col">User ID</th>
+                        <th scope="col">Member Name</th>
                         <th scope="col">Amount Contributed(Kshs.)</th>
                         <th scope="col">Date Contributed</th>
                         <th scope="col">Comment</th>
@@ -193,7 +193,7 @@
                     @foreach ($contributions as $contribution)
                     <tr>
                         <td>{{$contribution->id}}</td>
-                        <td>{{$contribution->user_id}}</td>
+                        <td>{{$contribution->user->name}}</td>
                         <td>{{$contribution->amount_contributed}}</td>
                         <td>{{$contribution->date_contributed}}</td>
                         <td>{{$contribution->comment}}</td>

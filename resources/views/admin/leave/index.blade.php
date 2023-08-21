@@ -82,7 +82,7 @@
                 <thead>
                     <tr>
                         <th scope="col">ID</th>
-                        <th scope="col">Username</th>
+                        <th scope="col">Member Name</th>
                         <th scope="col">Reason</th>
                         <th scope="col">Start Date</th>
                         <th scope="col">End Date</th>
@@ -93,7 +93,7 @@
                     @foreach ($leaves as $leave)
                     <tr>
                         <td>{{$leave->id}}</td>
-                        <td>{{$leave->user_id}}</td>
+                        <td>{{$leave->user->name}}</td>
                         <td>{{$leave->reason}}</td>
                         <td>{{$leave->start_date}}</td>
                         <td>{{$leave->end_date}}</td>
