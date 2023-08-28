@@ -1,11 +1,25 @@
-name: Deploy
+name: Deploy Application to Github Actions
 on: [push]
 
 jobs:
   tests:
     name: Run tests
     runs-on: ubuntu-latest
+    services:
+      mysql:
+            image: mysql:latest
+            env:
+                MYSQL_ALLOW_EMPTY_PASSWORD: yes
+                MYSQL_USER: root
+                MYSQL_PASSWORD: ""
+                MYSQL_DATABASE: media_team_app
+            ports:
+                - 3306/tcp
+
+            options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
+
     steps:
+      - name: Checkout code
       - uses: actions/checkout@v3
 
       - name: Setup PHP
@@ -23,5 +37,5 @@ jobs:
           cp .env.ci .env
           php artisan key:generate
 
-      - name: Run app
+      - name: Run Application
         run: php artisan serve
