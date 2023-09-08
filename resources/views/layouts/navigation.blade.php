@@ -18,7 +18,7 @@
                     <x-nav-link :href="route('admin.users.index')" :active="request()->routeIs('admin.users.index') || request()->routeIs('admin.users.edit', Auth::user()->id) || request()->routeIs('admin.users.search', Auth::user()->id) ">
                         {{ __('Users') }}
                     </x-nav-link>
-                    <x-nav-link :href="route('admin.leaves.index', auth()->user()->id)" :active="request()->routeIs('admin.leaves.index')">
+                    <x-nav-link :href="route('admin.leaves.index')" :active="request()->routeIs('admin.leaves.index')">
                         {{ __('Leaves') }}
                     </x-nav-link>
 

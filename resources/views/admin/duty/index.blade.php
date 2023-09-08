@@ -54,8 +54,12 @@
                                 <!-- Member Name -->
                                 <div class="mt-4">
                                     <x-label for="member_name" :value="__('Member Name')" />
-
-                                    <x-input class="block mt-1 w-full" id="member_name" name="member_name" type="text" autofocus placeholder="eg. Nimoh Kamau" />
+                                    <select name="member_name" id="member_name" class="block mt-1 w-full rounded shadow-sm">
+                                        @foreach ($users as $user)
+                                        <option value="{{$user->name}}">{{$user->name}}</option>
+                                        @endforeach
+                                    </select>
+                                    <!-- <x-input class="block mt-1 w-full" id="member_name" name="member_name" type="text" autofocus placeholder="eg. Nimoh Kamau" /> -->
                                 </div>
 
 
@@ -120,7 +124,7 @@
             </div>
 
             @else
-            <a class="btn btn-primary btn-sm text-center float-right" id="createDutyRosterModalButton" data-bs-toggle="modal" data-bs-target="#createDutyRosterModal">
+            <a class="btn btn-primary btn-sm text-center float-left" id="createDutyRosterModalButton" data-bs-toggle="modal" data-bs-target="#createDutyRosterModal">
                 <i class="bi bi-plus-circle"></i>
                 CREATE NEW DUTY ROSTER</a>
 
@@ -161,8 +165,12 @@
                                 <!-- Member Name -->
                                 <div class="mt-4">
                                     <x-label for="member_name" :value="__('Member Name')" />
-
-                                    <x-input class="block mt-1 w-full" id="member_name" name="member_name" type="text" autofocus placeholder="eg. Nimoh Kamau" />
+                                    <select name="member_name" id="member_name" class="block mt-1 w-full rounded shadow-sm">
+                                        @foreach ($users as $user)
+                                        <option value="{{$user->name}}">{{$user->name}}</option>
+                                        @endforeach
+                                    </select>
+                                    <!-- <x-input class="block mt-1 w-full" id="member_name" name="member_name" type="text" autofocus placeholder="eg. Nimoh Kamau" /> -->
                                 </div>
 
                                 <!-- Workstation -->
@@ -228,39 +236,43 @@
 
                     <!-- Add new member details -->
                     <div class="modal fade" id="staticBackdrop{{$duty->id}}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="false" data-id="{{$duty->id}}">
-                                    <div class="modal-dialog">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h5 class="modal-title" id="staticBackdropLabel">Duty Personnel Details</h5>
-                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                            </div>
-                                            <div class="modal-body">
-                                                <form method="POST" id="createDutyPersonel" action="{{ route('admin.duty.createDutyPersonelDetails',[$duty->id])}}">
-                                                    @csrf
-                                                    <!-- Member Name -->
-                                                    <div class="mt-1">
-                                                        <x-label for="member_name" :value="__('Member Name')" />
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="staticBackdropLabel">Duty Personnel Details</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <form method="POST" id="createDutyPersonel" action="{{ route('admin.duty.createDutyPersonelDetails',[$duty->id])}}">
+                                        @csrf
+                                        <!-- Member Name -->
+                                        <div class="mt-1">
+                                            <x-label for="member_name" :value="__('Member Name')" />
+                                            <select name="member_name" id="member_name" class="block mt-1 w-full rounded shadow-sm">
+                                                @foreach ($users as $user)
+                                                <option value="{{$user->name}}">{{$user->name}}</option>
+                                                @endforeach
+                                            </select>
+                                            <!-- <x-input class="block mt-1 w-full" id="member_name" name="member_name" type="text" autofocus placeholder="eg. Nimoh Kamau" /> -->
+                                        </div>
 
-                                                        <x-input class="block mt-1 w-full" id="member_name" name="member_name" type="text" autofocus placeholder="eg. Nimoh Kamau" />
-                                                    </div>
+                                        <!-- Workstation -->
+                                        <div class="mt-4">
+                                            <x-label for="workstation" :value="__('Workstation')" />
 
-                                                    <!-- Workstation -->
-                                                    <div class="mt-4">
-                                                        <x-label for="workstation" :value="__('Workstation')" />
-
-                                                        <x-input id="workstation" class="block mt-1 w-full" type="text" name="workstation" required placeholder="eg. Video, VMix" />
-                                                    </div>
+                                            <x-input id="workstation" class="block mt-1 w-full" type="text" name="workstation" required placeholder="eg. Video, VMix" />
+                                        </div>
 
 
-                                                    <!-- Duty Assigned -->
-                                                    <div class="mt-4">
-                                                        <x-label for="duty_assigned" :value="__('Duty Assigned')" />
+                                        <!-- Duty Assigned -->
+                                        <div class="mt-4">
+                                            <x-label for="duty_assigned" :value="__('Duty Assigned')" />
 
-                                                        <x-input id="duty_assigned" class="block mt-1 w-full" type="text" name="duty_assigned" required placeholder="eg. Check on Sound Quality" />
-                                                    </div>
+                                            <x-input id="duty_assigned" class="block mt-1 w-full" type="text" name="duty_assigned" required placeholder="eg. Check on Sound Quality" />
+                                        </div>
 
-                                                    <!-- Type of Service or Event -->
-                                                    <!-- <div class="mt-4">
+                                        <!-- Type of Service or Event -->
+                                        <!-- <div class="mt-4">
                                                         <x-label for="event_type" :value="__('Event Type')" />
 
                                                         <select name="event_type">
@@ -276,26 +288,26 @@
                                                         </select>
 
                                                     </div> -->
-                                                    <div class="mt-4">
-                                                        <x-label for="Event Name" :value="__('Event Name / Event Type')" class="mt-3" />
+                                        <div class="mt-4">
+                                            <x-label for="Event Name" :value="__('Event Name / Event Type')" class="mt-3" />
 
-                                                        <x-input id="event_type" class="block mt-1 w-full" type="text" name="event_type" placeholder="eg. Mission in Mosiro" />
-                                                    </div>
+                                            <x-input id="event_type" class="block mt-1 w-full" type="text" name="event_type" placeholder="eg. Mission in Mosiro" />
+                                        </div>
 
-                                                    <div class="modal-footer">
-                                                        <!-- <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancel</button> -->
+                                        <div class="modal-footer">
+                                            <!-- <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancel</button> -->
 
-                                                        <a class="btn btn-danger btn-sm" id="cancelDutyRosterModalButton" data-bs-dismiss="modal">Cancel</a>
+                                            <a class="btn btn-danger btn-sm" id="cancelDutyRosterModalButton" data-bs-dismiss="modal">Cancel</a>
 
-                                                        <button class="btn btn-primary btn-sm">Save</button>
-
-                                                    </div>
-                                                </form>
-                                            </div>
+                                            <button class="btn btn-primary btn-sm">Save</button>
 
                                         </div>
-                                    </div>
+                                    </form>
                                 </div>
+
+                            </div>
+                        </div>
+                    </div>
 
 
                     <!-- put a table view in a card body -->
@@ -364,4 +376,3 @@
         </div>
     </x-slot>
 </x-app-layout>
-

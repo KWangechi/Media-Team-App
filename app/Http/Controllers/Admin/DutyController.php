@@ -24,10 +24,12 @@ class DutyController extends Controller
     public function index()
     {
         $duties = Duty::all();
+        $users = User::all();
+
 
         if (auth()->user()->id == User::ROLE_ADMIN) {
 
-            return view('admin.duty.index', compact('duties'));
+            return view('admin.duty.index', compact('duties', 'users'));
         } else {
             return view('user.duty.index', compact('duties'));
         }

@@ -52,12 +52,11 @@ Route::middleware(['auth'])->group(function () {
         Route::get('users/{id}', [Admin\UserController::class, 'edit'])->name('admin.users.edit');
         Route::post('/users/{id}', [Admin\UserController::class, 'update'])->name('admin.users.update');
 
-
-
+        
         Route::get('search/', [Admin\UserController::class, 'search'])->name('admin.users.search');
 
         //leaves
-        Route::get('/{id}/leaves', [Admin\LeaveController::class, 'index'])->name('admin.leaves.index');
+        Route::get('/leaves', [Admin\LeaveController::class, 'index'])->name('admin.leaves.index');
         Route::get('/{id}/leave', [Admin\LeaveController::class, 'show'])->name('admin.leave.show');
         Route::post('/{id}/leave', [Admin\LeaveController::class, 'store'])->name('admin.leave.create');
         Route::get('/{id}/my_leave', [Admin\LeaveController::class, 'edit'])->name('admin.leave.edit');

@@ -16,15 +16,11 @@ class LeaveController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index($id)
+    public function index()
     {
-        $leaves = Leave::paginate(7);
+        // dd($id);
 
-        // $adminLeave = Leave::where('user_id', auth()->user()->id)->find($id);
-
-        // dd('This should work');
-
-        return view('admin.leave.leaves', [auth()->user()->id], compact(['leaves']));
+        return view('admin.leave.leaves', compact(['leaves']));
     }
 
     /**
