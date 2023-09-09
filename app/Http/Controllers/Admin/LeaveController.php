@@ -19,6 +19,7 @@ class LeaveController extends Controller
     public function index()
     {
         // dd($id);
+        $leaves = Leave::paginate(10);
 
         return view('admin.leave.leaves', compact(['leaves']));
     }

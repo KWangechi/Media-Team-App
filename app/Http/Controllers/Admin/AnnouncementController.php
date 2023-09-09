@@ -24,6 +24,7 @@ class AnnouncementController extends Controller
     {
         $announcements = DB::table('notifications')->select('*')->get();
 
+
         // dd($announcements);
         return view('admin.announcements.index', compact('announcements'));
     }

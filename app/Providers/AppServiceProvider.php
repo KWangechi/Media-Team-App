@@ -24,7 +24,10 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        // share announcements with navigation blade file
-        view()->share('announcements', DB::table('notifications')->where('read_at', '=', null)->get());
+        if (!app()->runningInConsole() || app()->runningUnitTests()) {
+
+            // share announcements with navigation blade file
+            view()->share('announcements', DB::table('notifications')->where('read_at', '=', null)->get());
+        }
     }
 }

@@ -52,7 +52,7 @@ Route::middleware(['auth'])->group(function () {
         Route::get('users/{id}', [Admin\UserController::class, 'edit'])->name('admin.users.edit');
         Route::post('/users/{id}', [Admin\UserController::class, 'update'])->name('admin.users.update');
 
-        
+
         Route::get('search/', [Admin\UserController::class, 'search'])->name('admin.users.search');
 
         //leaves
@@ -108,11 +108,6 @@ Route::middleware(['auth'])->group(function () {
 
         //announcements
         Route::get('/announcements', [AnnouncementController::class, 'index'])->name('admin.announcements');
-
-
-        // Route::get('/announcements', function(){
-        //     Alert::success('Title','Hello', 'success');
-        // });
         Route::post('/announcement', [AnnouncementController::class, 'store'])->name('admin.announcement.create');
         Route::get('/readAnnouncement/{id}', [AnnouncementController::class, 'readAnnouncement'])->name('admin.announcement.readAnnouncement');
         Route::get('/unreadAnnouncement/{id}', [AnnouncementController::class, 'unreadAnnouncement'])->name('admin.announcement.unreadAnnouncement');
