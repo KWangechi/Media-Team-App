@@ -21,12 +21,73 @@
             <div class="alert alert-info alert-dismissible">
                 You do not have any leaves
             </div>
-            <a class="btn btn-primary btn-sm text-center" id="createLeaveModalButton">
-
+            <a class="btn btn-primary btn-sm text-center" data-bs-toggle="modal" data-bs-target="#createLeaveModal" id="createLeaveModalButton">
                 <i class="bi bi-plus-circle"></i>
                 CREATE NEW LEAVE REQUEST
             </a>
 
+
+            <!-- Create Leave Request Modal -->
+            <div class="modal fade" id="createLeaveModal" tabindex="-1" aria-labelledby="createLeaveModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header ">
+                            <h5 class="modal-title" id="createLeaveModalTitle">Create a New Leave Request</h5>
+                            <a class="btn-close" id="closeModalButton" data-bs-dismiss="modal" aria-label="Close"></a>
+                        </div>
+                        <div class="modal-body">
+                            <form action="{{ route('user.leave.create', auth()->user()->id) }}" method="POST" id="createLeaveForm">
+                                @csrf
+
+                                <!-- Reason -->
+                                <div class="mt-4">
+                                    <x-label for="reason" :value="__('Reason')" />
+                                    <select name="reason" class="block w-full rounded">
+                                        <option value="">Select the reason</option>
+                                        <option value="Sickness">Sickness</option>
+                                        <option value="Bereavement">Bereavement</option>
+                                        <option value="Travelling">Travelling</option>
+                                        <option value="Personal Reasons">Personal Reasons(Prefer not to say)</option>
+                                    </select>
+                                </div>
+
+                                <!-- Start Date -->
+                                <div class="mt-4">
+                                    <x-label for="start_date" :value="__('Start Date')" />
+
+                                    <x-input id="start_date" class="block mt-1 w-full" type="date" name="start_date" required />
+                                </div>
+
+                                <!-- error message for start date and end date -->
+                                <!-- @if (session('leave_error_message'))
+                                <div class="input">
+                                    {{ session('leave_error_message') }}
+                                </div>
+                                @else
+                                @endif -->
+
+                                <!-- error leave message -->
+                                <div class="input" id="input">
+                                </div>
+
+                                <!-- End Date -->
+                                <div class="mt-4">
+                                    <x-label for="end_date" :value="__('End Date')" />
+
+                                    <x-input id="end_date" class="block mt-1 w-full" type="date" name="end_date" required />
+                                </div>
+                                <br>
+                                <x-button class="ml-4" id="createLeaveButton">
+                                    {{ __('Save') }}
+                                </x-button>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <a class="btn btn-secondary" data-bs-dismiss="modal">Close</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
             @else
             <a class="btn btn-primary btn-sm text-center float-right" data-bs-toggle="modal" data-bs-target="#createLeaveModal" id="createLeaveModalButton">
@@ -103,13 +164,11 @@
                 <thead>
                     <tr>
                         <th scope="col">ID</th>
-                        <th scope="col">User ID</th>
                         <th scope="col">Reason</th>
                         <th scope="col">Start Date</th>
                         <th scope="col">End Date</th>
                         <th scope="col">Status</th>
                         <th scope="col">EDIT</th>
-                        <th scope="col">DELETE</th>
 
                     </tr>
                 </thead>
@@ -117,7 +176,6 @@
                     @foreach ($leaves as $leave)
                     <tr>
                         <td>{{$leave->id}}</td>
-                        <td>{{$leave->user_id}}</td>
                         <td>{{$leave->reason}}</td>
                         <td>{{$leave->start_date}}</td>
                         <td>{{$leave->end_date}}</td>
@@ -191,18 +249,6 @@
 
 
                         </td>
-                        <td>
-                            <form action="{{ route('user.leave.delete', [auth()->user()->id, $leave->id]) }}" method="POST">
-                                @csrf
-                                @method('DELETE')
-                                <button id="deleteLeaveButton" class="btn btn-danger btn-sm">
-                                    DELETE
-                                </button>
-                            </form>
-                        </td>
-
-                        <!-- Update Modal -->
-
         </div>
 
         @endforeach

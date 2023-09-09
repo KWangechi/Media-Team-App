@@ -54,12 +54,10 @@
                 </div>
                 @endif
 
+
             </div>
-
-            <!-- Settings Dropdown -->
-            <div class="hidden sm:flex sm:items-center sm:ml-6">
-
-                <a href="{{route('admin.announcements')}}">
+            <div class="flex items-center">
+                <a href="{{route('announcements')}}">
                 @if (count($announcements) > 0)
 
                     <span class="bi bi-bell-fill">
@@ -70,6 +68,11 @@
                     </i>
                     @endif
                 </a>
+            </div>
+
+            <!-- Settings Dropdown -->
+            <div class="hidden sm:flex sm:items-center sm:ml-6">
+
 
                 <x-dropdown align="right" width="48">
                     <x-slot name="trigger">
@@ -91,22 +94,17 @@
                             {{ __('My Profile') }}
                         </x-dropdown-link>
 
-                        <x-dropdown-link :href="route('admin.announcements')">
+                        <x-dropdown-link :href="route('announcements')">
 
-                            <!-- @if (count($announcements) > 0)
+                            @if (count($announcements) > 0)
                             <i class="bi bi-app-indicator"></i>
                             {{ __('Announcements - ') }} {{count($announcements)}}
 
                             @else
                             <i class="bi bi-bell">
                             {{ __('Announcements') }}
-
                             </i>
-                                @endif -->
-
-                            <!-- {{count($announcements)}} -->
-
-
+                                @endif
                         </x-dropdown-link>
 
                         <!-- Authentication -->

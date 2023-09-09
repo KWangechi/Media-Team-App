@@ -150,6 +150,18 @@ Route::middleware(['auth'])->group(function () {
 
         //Duty Roster
         Route::get('/{id}/duty', [DutyController::class, 'index'])->name('user.duty.index');
+
+        //Announcements
+        // Route::get('/announcements', [AnnouncementController::class, 'index'])->name('announcements');
+
     });
+
+    Route::get('/readAnnouncement/{id}', [AnnouncementController::class, 'readAnnouncement'])->name('announcement.readAnnouncement');
+    Route::get('/unreadAnnouncement/{id}', [AnnouncementController::class, 'unreadAnnouncement'])->name('announcement.unreadAnnouncement');
+
+    Route::patch('/announcement/{id}', [AnnouncementController::class, 'update'])->name('announcement.update');
+    Route::delete('/announcement/{id}', [AnnouncementController::class, 'destroy'])->name('announcement.delete');
+    Route::get('/announcements', [AnnouncementController::class, 'index'])->name('announcements');
+
 });
 require __DIR__ . '/auth.php';

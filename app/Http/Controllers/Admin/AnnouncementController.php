@@ -24,9 +24,13 @@ class AnnouncementController extends Controller
     {
         $announcements = DB::table('notifications')->select('*')->get();
 
+        if(auth()->user()->id === User::ROLE_ADMIN) {
+            return view('admin.announcements.index', compact('announcements'));
+
+        }
 
         // dd($announcements);
-        return view('admin.announcements.index', compact('announcements'));
+        return view('user.announcements.index', compact('announcements'));
     }
 
     /**
@@ -138,9 +142,17 @@ class AnnouncementController extends Controller
      */
     public function destroy($id)
     {
-        // $announcements = DB::table('notifications')->select('*')->get();
+        $announcement = DB::table('notifications')->where('id', $id);
 
-        dd($id);
+        try {
+            $announcement->delete();
+
+            return to_route('announcements')->with('success_message', 'Notification deleted successfully!!!');
+
+        } catch (\Throwable $th) {
+            return to_route('announcements')->with('error_message', $th->getMessage());
+
+        }
     }
 
     /**
@@ -154,9 +166,9 @@ class AnnouncementController extends Controller
         try {
             $announcement = DB::table('notifications')->where('id', $id)->update(['read_at' => Carbon::now()]);
 
-            return to_route('admin.announcements', compact('success_mesage', 'Notification marked as read successfully!!'));
+            return to_route('announcements')->with('success_mesage', 'Notification marked as read successfully!!');
         } catch (\Throwable $th) {
-            return to_route('admin.announcements', compact('error_message', $th->getMessage()));
+            return to_route('announcements')->with('error_message', $th->getMessage());
         }
     }
 

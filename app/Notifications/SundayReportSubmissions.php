@@ -47,7 +47,7 @@ class SundayReportSubmissions extends Notification
     public function toMail($notifiable)
     {
 
-        $url = url('/admin/sunday-reports');
+        $url = url(env('APP_URL').'admin/sunday-reports');
         $greeting = 'Report submission from: '.$this->userEmail;
 
         return (new MailMessage)
@@ -76,7 +76,9 @@ class SundayReportSubmissions extends Notification
     public function toDatabase($notifiable)
     {
         return [
-            //
+            'subject' => 'Report Submission',
+            'message' => 'This is to notify you that '.$this->userEmail.' has submitted their report!!',
+            'salutation' => 'Kind regards, '.$this->userEmail
         ];
     }
 }

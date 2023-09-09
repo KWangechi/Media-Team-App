@@ -156,13 +156,6 @@
                         <div class="card-footer col-12">
                             <a href="{{ route('user.sunday-report.edit', [auth()->user()->id, $report->id]) }}" class="btn btn-secondary btn-sm col float-left my-auto">EDIT</a>
 
-                            <form action="{{ route('user.sunday-report.delete', [auth()->user()->id, $report->id]) }}" method="POST" class="float-right col">
-                                @csrf
-                                @method('DELETE')
-
-                                <button class="btn btn-danger btn-sm ml-12">DELETE</button>
-                            </form>
-                            <!-- </div> -->
                         </div>
                     </div>
                 </div>
