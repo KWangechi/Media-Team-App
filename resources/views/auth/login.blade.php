@@ -13,7 +13,7 @@
         <x-auth-session-status class="mb-4" :status="session('status')" />
 
         @if (session('message'))
-        <div class="alert alert-primary alert-dismissible fade show">
+        <div class="alert alert-success alert-dismissible fade show">
                 {{ session('message') }}
                 <a class="btn-close" data-bs-dismiss="alert" aria-label="Close"></a>
             </div>

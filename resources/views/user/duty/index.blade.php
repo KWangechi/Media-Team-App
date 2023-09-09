@@ -10,55 +10,48 @@
             </div>
 
             @else
+            @foreach ($duties as $duty)
+            <div class="card border-primary mb-3 mx-auto" style="width: max-content; height: max-content;">
+                <div class="card-body">
+                    <h1 class="card-title mb-4"><b>Week: {{$duty->week}} {{$duty->id}}</b></h1>
+                    <hr>
+                    <p class="card-text mb-3 mt-2">Date assigned: {{$duty->date_assigned}}</p>
+                    <hr>
+                    <p class="card-text mb-3 mt-2">Setup Time: {{$duty->setup_time}}</p>
+                    <hr>
 
-            <!-- Table -->
-            <br>
-            <br>
+                    <!-- Table View for the other members -->
+                    <!-- put a table view in a card body -->
+                    <div class="card mb-3 mt-4" style="width: max-content; height: max-content; align-items: center;">
+                        <!-- <table> -->
+                        <table class="table table-responsive table-striped text-center table-bordered">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Member Name</th>
+                                    <th scope="col">Workstation</th>
+                                    <th scope="col">Duty Assigned</th>
+                                    <th scope="col">Type of Event</th>
 
-            <table class="table table-responsive table-bordered table-striped">
-                <thead>
-                    <tr>
-                        <th scope="col">ID</th>
-                        <th scope="col">Member Name</th>
-                        <th scope="col">Supervisor Name</th>
-                        <th scope="col">Workstation</th>
-                        <th scope="col">Duty Assigned</th>
-                        <th scope="col">Type of Service</th>
-                        <th scope="col">Supervisor Signature</th>
-                        <th scope="col">Setup Time</th>
-                        <th scope="col">Date Assigned</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($duty->members as $new_duty)
 
-
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach ($duties as $duty)
-                    <tr>
-                        <td>{{$duty->id}}</td>
-                        <td>{{$duty->member_name}}</td>
-                        <td>{{$duty->supervisor_name}}</td>
-                        <td>{{$duty->workstation}}</td>
-                        <td>{{$duty->duty_assigned}}</td>
-                        <td>
-                            {{$duty->type_of_service}}
-                        </td>
-
-                        <td>
-                            {{$duty->supervisor_signature}}
-                        </td>
-                        <td>
-                            {{$duty->setup_time}}
-                        </td>
-                        <td>
-                            {{$duty->date_assigned}}
-                        </td>
+                                <tr>
+                                    <td>{{$new_duty->member_name }}</td>
+                                    <td>{{$new_duty->workstation}}</td>
+                                    <td>{{$new_duty->duty_assigned}}</td>
+                                    <td>{{$new_duty->event_type}}</td>
+                                </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            @endforeach
 
         </div>
-
-        @endforeach
-        </tr>
-        </tbody>
-        </table>
 
         <!-- Pagination -->
 

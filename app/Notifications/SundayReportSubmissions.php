@@ -11,19 +11,18 @@ class SundayReportSubmissions extends Notification
 {
     use Queueable;
 
-    public $message;
-    public $userEmail;
-    public $admin;
-
+    private $userEmail;
+    private $data;
     /**
      * Create a new notification instance.
      *
      * @return void
      */
-    public function __construct($userEmail)
+    public function __construct($userEmail, $data)
     {
         // $this->message = $message;
         $this->userEmail = $userEmail;
+        $this->data = $data;
         // $this->admin = $admin;
     }
 
@@ -47,16 +46,16 @@ class SundayReportSubmissions extends Notification
     public function toMail($notifiable)
     {
 
-        $url = url(env('APP_URL').'admin/sunday-reports');
-        $greeting = 'Report submission from: '.$this->userEmail;
+        $url = url(env('APP_URL') . 'admin/sunday-reports');
+        $greeting = 'Report submission from: ' . $this->userEmail;
 
         return (new MailMessage)
             ->from(auth()->user()->email, auth()->user()->name)
-            ->subject('Sunday Report Submission')
+            ->subject($this->data['subject'])
             ->greeting($greeting)
-            ->line('This is to notify you that '.$this->userEmail.' has submitted their report. ')
+            ->line($this->data['message'])
             ->action('View the reports', $url)
-            ->salutation('Kind regards, '.$this->userEmail);
+            ->salutation($this->data['salutation']);
     }
 
     /**
@@ -68,17 +67,15 @@ class SundayReportSubmissions extends Notification
     public function toArray($notifiable)
     {
         return [
-            //
+            'message' => $this->data['subject'] .' '. $this->data['message'].' '. $this->data['salutation']
+
         ];
     }
-
 
     public function toDatabase($notifiable)
     {
         return [
-            'subject' => 'Report Submission',
-            'message' => 'This is to notify you that '.$this->userEmail.' has submitted their report!!',
-            'salutation' => 'Kind regards, '.$this->userEmail
+            'message' => $this->data['subject'] .' '. $this->data['message'].' '. $this->data['salutation']
         ];
     }
 }

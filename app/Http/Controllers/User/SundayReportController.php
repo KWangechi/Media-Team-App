@@ -25,25 +25,17 @@ class SundayReportController extends Controller
     {
         $reports = SundayReport::paginate(6);
 
-        return view('user.sunday-report.index', [auth()->user()->id], compact('reports'));
+
+        return view('user.sunday-report.index', compact('reports'));
     }
 
     public function getAllReports()
     {
-        $reports = SundayReport::paginate(10);
+        $all_reports = SundayReport::paginate(10);
 
-        return view('admin.sunday-reports.index', compact('reports'));
+        return view('admin.sunday-reports.index', compact('all_reports'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
 
     /**
      * Store a newly created resource in storage.
@@ -77,15 +69,18 @@ class SundayReportController extends Controller
             ]);
 
             // dd($request);
+            $data = [
+                'subject' => 'Sunday Report Submission',
+                'message' => 'This is to notify you that ' . auth()->user()->name . ' has submitted their report!!',
+                'salutation' => 'Kind regards, ' . auth()->user()->name
+            ];
 
             // send a notification to admin to notify that a report has been submitted
-            Notification::send($user, new SundayReportSubmissions(auth()->user()->name));
+            Notification::send($user, new SundayReportSubmissions(auth()->user()->name, $data));
 
             return redirect()->route('user.sunday-report.index', [auth()->user()->id])->with('success_message', 'Report created successfully!!');
-
-
         } catch (\Throwable $th) {
-            return view('user.sunday-report.index')->with('error_message', $th->getMessage());
+            return redirect()->route('user.sunday-report.index', [auth()->user()->id])->with('error_message', $th->getMessage());
         }
     }
 
@@ -155,15 +150,14 @@ class SundayReportController extends Controller
 
         // dd($pdf);
         // store these PDF'S in a table, with the name, doc_type, path, text, etc
-        return $pdf->download(Carbon::now().'-sunday-report.pdf');
-
+        return $pdf->download(Carbon::now() . '-sunday-report.pdf');
     }
 
-/**
- * Get all the previous reports for other Sundays
- */
-    public function getAllPreviousReportDocuments() {
+    /**
+     * Get all the previous reports for other Sundays
+     */
+    public function getAllPreviousReportDocuments()
+    {
         dd('Get all the previous report docs');
-
     }
 }

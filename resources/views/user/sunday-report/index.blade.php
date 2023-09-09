@@ -17,8 +17,8 @@
             </div>
             @endif
 
-            <!-- check if leave is empty -->
-            @if ($reports->isEmpty())
+            <!-- check if there are any reports -->
+            @if ($reports->count() < 1)
             <div class="alert alert-info alert-dismissible">
                 No report uploaded yet
             </div>

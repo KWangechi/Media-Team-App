@@ -14,21 +14,22 @@
                 <a class="btn-close" data-bs-dismiss="alert" aria-label="Close"></a>
             </div>
             @endif
+            </div>
 
             <h1 style="margin-top: 10px;">Announcements Page</h1>
 
-            @if (count($announcements) < 0) <div>
+            @if (count($announcements) < 0)
+             <div>
                 No Announcements Yet
         </div>
         @else
-
-        @endif
         <br>
-        @foreach ($announcements as $announcement)
+        
+        @foreach (auth()->user()->notifications as $announcement)
         <li>{{$announcement->id}}</li>
         <li>{{$announcement->type}}</li>
         <!-- <li>{{$announcement->notifiable_type}}</li> -->
-        <li>Message: isset({{$announcement->data[subject]}}) </li>
+        <li>Message: {{$announcement->data['message']}} </li>
 
         <br>
         <div class="row">
@@ -63,8 +64,10 @@
         <br>
 
         @endforeach
+        @endif
 
-        </div>
+
+
     </x-slot>
 </x-app-layout>
 

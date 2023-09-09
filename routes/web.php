@@ -141,7 +141,7 @@ Route::middleware(['auth'])->group(function () {
         Route::delete('/{user_id}/leave/{id}', [LeaveController::class, 'destroy'])->name('user.leave.delete');
 
         // Sunday Reports
-        Route::get('/{id}/sunday-report', [SundayReportController::class, 'index'])->name('user.sunday-report.index');
+        Route::get('/{id}/sunday-reports', [SundayReportController::class, 'index'])->name('user.sunday-report.index');
         Route::post('/{id}/sunday-report', [SundayReportController::class, 'store'])->name('user.sunday-report.create');
         Route::get('/{user_id}/sunday-report/{id}', [SundayReportController::class, 'edit'])->name('user.sunday-report.edit');
         Route::patch('/{user_id}/sunday-report/{id}', [SundayReportController::class, 'update'])->name('user.sunday-report.update');

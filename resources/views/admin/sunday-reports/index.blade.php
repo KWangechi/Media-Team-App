@@ -18,7 +18,7 @@
             @endif
 
             <!-- check if leave is empty -->
-            @if ($reports->isEmpty())
+            @if ($all_reports->isEmpty())
             <div class="alert alert-info alert-dismissible">
                 No reports uploaded yet
             </div>
@@ -76,7 +76,7 @@
                     </tr>
                 </thead>
                 <tbody style="word-wrap: break-word;">
-                    @foreach ($reports as $report)
+                    @foreach ($all_reports as $report)
                     <tr>
                         <td>{{$report->id}}</td>
                         <td>{{$report->user->name}}</td>
@@ -99,7 +99,7 @@
             <!-- Pagination -->
             <div class="row">
                 <div class="col offset-md-6 mb-3 mt-4">
-                    {{$reports->links()}}
+                    {{$all_reports->links()}}
                 </div>
             </div>
 
