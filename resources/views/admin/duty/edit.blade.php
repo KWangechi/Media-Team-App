@@ -21,10 +21,6 @@
                 @csrf
                 @method('PATCH')
 
-                <div class="mt-4">
-                <x-label for="Duty ID" :value="__('Duty ID')" />
-                    <x-input value=" {{ $member_details->duty_id }}" class="block mt-1 w-full" id="duty_id" name="duty_id" type="number" disabled />
-                </div>
                 <!-- Member Name -->
                 <div class="mt-4">
                     <x-label for="Member Name" :value="__('Member Name')" />
@@ -50,7 +46,7 @@
                 <div class="mt-4">
                     <x-label for="Event Type" :value="__('Event Type')" />
 
-                    <select name="event_type">
+                    <select name="event_type" class="w-full rounded shadow-sm">
                         <option value="{{ $member_details->event_type }}"> {{ $member_details->event_type }} </option>
                         <option value="1st Service">1st Service</option>
                         <option value="2nd Service">2nd Service</option>

@@ -216,7 +216,7 @@
             @foreach ($duties as $duty)
             <div class="card border-primary mb-3 mx-auto" style="width: max-content; height: max-content;">
                 <div class="card-body">
-                    <h1 class="card-title mb-4"><b>Week: {{$duty->week}} {{$duty->id}}</b></h1>
+                    <h1 class="card-title mb-4"><b>Week: {{$duty->week}}</b></h1>
                     <hr>
                     <p class="card-text mb-3 mt-2">Date assigned: {{$duty->date_assigned}}</p>
                     <hr>
@@ -355,19 +355,20 @@
                     </div>
                 </div>
 
-                <div class="card-footer text-center row">
-                    <div class="col float-left">
+                <div class="card-footer text-center flex justify-content-between">
+                    <div class="col-4 align-items-start">
 
                         <a href="{{ route('admin.duty.roster.edit', $duty->id) }}" class="btn btn-secondary">EDIT DUTY ROSTER</a>
                     </div>
 
-                    <form action="{{ route('admin.duty.roster.delete', $duty->id) }}" method="POST" class="float-right col">
-                        @csrf
-                        @method('DELETE')
+                    <div class="col-6">
+                        <form action="{{ route('admin.duty.roster.delete', $duty->id) }}" method="POST" class="float-right col">
+                            @csrf
+                            @method('DELETE')
 
-                        <button class="btn btn-danger ml-12">DELETE DUTY ROSTER</button>
-                    </form>
-
+                            <button class="btn btn-danger ml-12">DELETE DUTY ROSTER</button>
+                        </form>
+                    </div>
                 </div>
             </div>
             @endforeach
