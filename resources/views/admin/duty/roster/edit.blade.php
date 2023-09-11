@@ -28,20 +28,6 @@
                     <x-input :value="$duty->week" class="block mt-1 w-full" id="week" name="week" type="week" autofocus placeholder="eg. Week 10" />
                 </div>
 
-
-                <!-- Supervisor signature -->
-                <div class="mt-4">
-                    <x-label for="supervisor_signature" :value="__('Supervisor Signature')" />
-
-                    <select name="supervisor_signature" class="block mt-2 w-full">
-                        <option value="none" selected disabled> < --Select-- > </option>
-                        <option value="{{$duty->supervisor_signature}}">{{$duty->supervisor_signature}}</option>
-
-                        <option value="0">Pending</option>
-                        <option value="1">Signed</option>
-                    </select>
-                </div>
-
                 <!-- Setup Time -->
                 <div class="mt-4">
                     <x-label for="setup_time" :value="__('Setup Time')" />
