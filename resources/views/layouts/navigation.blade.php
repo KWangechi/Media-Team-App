@@ -18,21 +18,24 @@
                     <x-nav-link :href="route('admin.users.index')" :active="request()->routeIs('admin.users.index') || request()->routeIs('admin.users.edit', Auth::user()->id) || request()->routeIs('admin.users.search', Auth::user()->id) ">
                         {{ __('Users') }}
                     </x-nav-link>
-                    <x-nav-link :href="route('admin.leaves.index')" :active="request()->routeIs('admin.leaves.index')">
-                        {{ __('Leaves') }}
-                    </x-nav-link>
 
                     <x-nav-link :href="route('admin.duty.index', auth()->user()->id)" :active="request()->routeIs('admin.duty.index') || request()->routeIs('admin.duty.edit')">
                         {{ __('Duty Roster') }}
                     </x-nav-link>
 
+                    <x-nav-link :href="route('admin.users.sunday-reports.index')" :active="request()->routeIs('admin.users.sunday-reports.index')">
+                        {{ __('Sunday Reports') }}
+                    </x-nav-link>
+
+                    <x-nav-link :href="route('admin.leaves.index')" :active="request()->routeIs('admin.leaves.index')">
+                        {{ __('Leaves') }}
+                    </x-nav-link>
+
+
                     <x-nav-link :href="route('admin.users.contributions', auth()->user()->id)" :active="request()->routeIs('admin.users.contributions') || request()->routeIs('admin.users.contributions.search') || request()->routeIs('admin.users.contributions.edit')">
                         {{ __('Contributions') }}
                     </x-nav-link>
 
-                    <x-nav-link :href="route('admin.users.sunday-reports.index')" :active="request()->routeIs('admin.users.sunday-reports.index')">
-                        {{ __('Sunday Reports') }}
-                    </x-nav-link>
 
                 </div>
                 @else
@@ -58,11 +61,11 @@
             </div>
             <div class="flex items-center">
                 <a href="{{route('announcements')}}">
-                @if (count(auth()->user()->notifications)> 0)
+                    @if (count(auth()->user()->notifications)> 0)
 
                     <span class="bi bi-bell-fill">
                         <span class="rounded-pill badge-notification" style="z-index: 100;">{{count(auth()->user()->notifications)}}</span>
-                        </span>
+                    </span>
                     @else
                     <i class="bi bi-bell">
                     </i>
@@ -102,9 +105,9 @@
 
                             @else
                             <i class="bi bi-bell">
-                            {{ __('Announcements') }}
+                                {{ __('Announcements') }}
                             </i>
-                                @endif
+                            @endif
                         </x-dropdown-link>
 
                         <!-- Authentication -->
