@@ -87,8 +87,8 @@
                                 <!-- Department -->
                                 <div class="mt-4">
                                     <x-label for="deparment" :value="__('Department')" />
-                                    <select name="department">
-                                        <option value="">Select the department</option>
+                                    <select name="department" class="block mt-1 w-full rounded shadow-sm">
+                                        <option value="" selected disabled>---Select the department---</option>
                                         <option value="Video">Video</option>
                                         <option value="Sound">Sound</option>
                                         <option value="Computer">Computer</option>
@@ -100,8 +100,8 @@
                                 <div class="mt-4">
                                     <x-label for="role" :value="__('Usertype')" />
 
-                                    <select name="role_id">
-                                        <option value="">Select the usertype</option>
+                                    <select name="role_id" class="block mt-1 w-full rounded shadow-sm">
+                                        <option value="" selected disabled>---Select the usertype---</option>
                                         @foreach($roles as $role)
                                         <option value="{{$role->id}}">{{$role->name}}</option>
                                         @endforeach

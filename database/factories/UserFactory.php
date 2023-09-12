@@ -22,17 +22,17 @@ class UserFactory extends Factory
     public function definition()
     {
 
-        $departments = [
-            'VMix',
-            'Sound',
-            'Stage Management',
-            'Camera',
-        ];
+        // $departments = [
+        //     'VMix',
+        //     'Sound',
+        //     'Stage Management',
+        //     'Camera',
+        // ];
 
-        $statuses = [
-            'approved',
-            'rejected'
-        ];
+        // $statuses = [
+        //     'approved',
+        //     'rejected'
+        // ];
 
 
         return [

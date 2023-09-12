@@ -61,10 +61,10 @@
             </div>
             <div class="flex items-center">
                 <a href="{{route('announcements')}}">
-                    @if (count(auth()->user()->notifications)> 0)
+                    @if (count(auth()->user()->unReadNotifications)> 0)
 
                     <span class="bi bi-bell-fill">
-                        <span class="rounded-pill badge-notification" style="z-index: 100;">{{count(auth()->user()->notifications)}}</span>
+                        <span class="rounded-pill badge-notification" style="z-index: 100;">{{count(auth()->user()->unReadNotifications)}}</span>
                     </span>
                     @else
                     <i class="bi bi-bell">
@@ -99,9 +99,9 @@
 
                         <x-dropdown-link :href="route('announcements')">
 
-                            @if (count(auth()->user()->notifications) > 0)
+                            @if (count(auth()->user()->unReadNotifications) > 0)
                             <i class="bi bi-app-indicator"></i>
-                            {{ __('Announcements - ') }} {{count(auth()->user()->notifications)}}
+                            {{ __('Announcements - ') }} {{count(auth()->user()->unReadNotifications)}}
 
                             @else
                             <i class="bi bi-bell">
