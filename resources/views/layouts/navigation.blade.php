@@ -60,7 +60,7 @@
 
             </div>
             <div class="flex items-center">
-                <a href="{{route('announcements')}}">
+                <a data-bs-toggle="modal" data-bs-target="#notificationModal" id="notificationsBellButton">
                     @if (count(auth()->user()->unReadNotifications)> 0)
 
                     <span class="bi bi-bell-fill">
@@ -71,6 +71,28 @@
                     </i>
                     @endif
                 </a>
+
+
+                <!-- Open a small modal for viewing the notification - unread -->
+                <div class="modal fade" id="notificationModal" tabindex="-1" aria-labelledby="notificationModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                               @foreach (auth()->user()->unreadNotifications as $notification)
+                               {{ $notification->data}}
+                               @endforeach
+                            </div>
+                            <div class="modal-footer">
+                                <x-button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</x-button>
+                                <x-button type="button" class="btn btn-primary">Save changes</x-button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
 
             <!-- Settings Dropdown -->
