@@ -7,16 +7,18 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class LeaveApproved extends Notification
+class LeaveCreated extends Notification
 {
     use Queueable;
 
     public $message;
+
     /**
      * Create a new notification instance.
      *
      * @return void
      */
+
     public function __construct($message)
     {
         $this->message = $message;
@@ -45,7 +47,8 @@ class LeaveApproved extends Notification
         return (new MailMessage)
                     ->line($this->message['title'])
                     ->line($this->message['body'])
-                    ->action('Click here to view your status', route('user.leaves.index', auth()->user()->id));
+                    ->action('Click here to view your leave requests', url('/'))
+                    ->salutation($this->message['salutation']);
     }
 
     /**
@@ -57,7 +60,23 @@ class LeaveApproved extends Notification
     public function toArray($notifiable)
     {
         return [
+            //
+        ];
+    }
 
+
+    /**
+     * Get the array representation of the notification.
+     *
+     * @param  mixed  $notifiable
+     * @return array
+     */
+    public function toDatabase($notifiable)
+    {
+        return [
+            'title' => $this->message['title'],
+            'body' => $this->message['body'],
+            'salutation' => $this->message['salutation']
         ];
     }
 }

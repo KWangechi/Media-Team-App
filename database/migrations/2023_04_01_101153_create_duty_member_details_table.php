@@ -17,7 +17,6 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('duty_id')->nullable();
             $table->string('member_name')->nullable();
-            $table->string('supervisor_name')->nullable();
             $table->string('workstation')->nullable();
             $table->text('duty_assigned')->nullable();
             $table->string('event_type')->nullable();

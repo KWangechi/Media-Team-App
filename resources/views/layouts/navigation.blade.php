@@ -83,7 +83,7 @@
                             </div>
                             <div class="modal-body">
                                @foreach (auth()->user()->unreadNotifications as $notification)
-                               {{ $notification->data}}
+                               {{ $notification}}
                                @endforeach
                             </div>
                             <div class="modal-footer">

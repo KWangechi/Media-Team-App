@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Leave;
 use App\Models\User;
 use App\Notifications\LeaveApproved;
+use App\Notifications\LeaveCreated;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Notification;
 
@@ -32,6 +33,8 @@ class LeaveController extends Controller
      */
     public function store(Request $request)
     {
+
+        $user = auth()->user();
         $request->validate(
             [
                 'user_id',
@@ -41,13 +44,6 @@ class LeaveController extends Controller
             ]
         );
 
-        // dd($request->reason);
-
-
-
-        // User::where('id', auth()->user()->id)->update([
-        //     'status' => 'approved'
-        // ]);
 
         if ($request->start_date > $request->end_date) {
             return redirect()->route('admin.leaves.index', [auth()->user()->id])->with('error_message', 'Start date should not be later than the end date!!');
@@ -59,11 +55,24 @@ class LeaveController extends Controller
                 'end_date' => $request->end_date
             ]);
 
-            if (!$leave) {
-                return redirect()->route('admin.leaves.index', [auth()->user()->id])->with('error_message', 'Error! Please try again');
-            }
+            $message = [
+                'title' => 'Hello'.$user,
+                'body' => 'Your Leave Request has been created successfully. Once the admin approves your request,
+                you will receive a notification on the same. The leave will run from '.$leave->start_date.' to '.$leave->end_date,
+                'salutation' => 'Regards, '.(env('APP_NAME'))
+            ];
 
-            return redirect()->route('admin.leaves.index', [auth()->user()->id])->with('success_message', 'Leave request created successfully!!');
+            // send a notification for creating a Leave request
+            // Notification::send($user, new LeaveCreated($message));
+
+            // if (!$leave) {
+            //     return redirect()->route('admin.leaves.index', [auth()->user()->id])->with('error_message', 'Error! Please try again');
+            // }
+
+            // return redirect()->route('admin.leaves.index', [auth()->user()->id])->with('success_message', 'Leave request created successfully!!');
+
+            dd($leave);
+
         }
     }
 

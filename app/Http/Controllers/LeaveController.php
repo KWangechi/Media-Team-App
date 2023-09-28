@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Leave;
 use App\Models\User;
+use App\Notifications\LeaveCreated;
 use App\Notifications\RequestLeave;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -47,6 +48,10 @@ class LeaveController extends Controller
      */
     public function store(Request $request)
     {
+        $user = auth()->user();
+
+        // dd($u ser);
+
 
         // dd($request->input('reason'));
         $request->validate([
@@ -59,9 +64,9 @@ class LeaveController extends Controller
 
         //error when start date is more than the end date and vice versa
         if ($request->start_date > $request->end_date) {
-            return redirect()->route('user.leaves.index', auth()->user()->id)->with('leave_error_message', 'Start Date should not be later than the End Date');
+            return redirect()->route('user.leaves.index', auth()->user()->id)->with('error_message', 'Start Date should not be later than the End Date');
         } else {
-            Leave::create([
+            $leave = Leave::create([
                 'user_id' => auth()->user()->id,
                 'reason' => $request->reason,
                 'start_date' => $request->start_date,
@@ -70,7 +75,26 @@ class LeaveController extends Controller
 
             // dd($leave);
 
-            return redirect()->route('user.leaves.index', auth()->user()->id)->with('success_message', 'Leave request created successfully!!!');
+            $message = [
+                'title' => 'Hello '.auth()->user(),
+                'body' => 'Your Leave Request has been created successfully. Once the admin approves your request,
+                you will receive a notification on the same. The leave will run from '.$leave->start_date.' to '.$leave->end_date,
+                'salutation' => 'Regards, '.(env('APP_NAME'))
+            ];
+
+            // send a notification for creating a Leave request
+            Notification::send($user, new LeaveCreated($message));
+
+            if (!$leave) {
+                return redirect()->route('user.leaves.index', auth()->user()->id)->with('error_message', 'Error! Please try again');
+            }
+
+            return redirect()->route('user.leaves.index', auth()->user()->id)->with('success_message', 'Leave request created successfully!!');
+
+
+            dd($leave);
+
+            // return redirect()->route('user.leaves.index', auth()->user()->id)->with('success_message', 'Leave request created successfully!!!');
         }
     }
 

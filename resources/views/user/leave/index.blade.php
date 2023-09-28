@@ -126,14 +126,6 @@
                                     <x-input id="start_date" class="block mt-1 w-full" type="date" name="start_date" required />
                                 </div>
 
-                                <!-- error message for start date and end date -->
-                                <!-- @if (session('leave_error_message'))
-                                <div class="input">
-                                    {{ session('leave_error_message') }}
-                                </div>
-                                @else
-                                @endif -->
-
                                 <!-- error leave message -->
                                 <div class="input" id="input">
                                 </div>
@@ -163,7 +155,6 @@
             <table class="table table-responsive table-bordered table-striped text-center">
                 <thead>
                     <tr>
-                        <th scope="col">ID</th>
                         <th scope="col">Reason</th>
                         <th scope="col">Start Date</th>
                         <th scope="col">End Date</th>
@@ -175,7 +166,6 @@
                 <tbody>
                     @foreach ($leaves as $leave)
                     <tr>
-                        <td>{{$leave->id}}</td>
                         <td>{{$leave->reason}}</td>
                         <td>{{$leave->start_date}}</td>
                         <td>{{$leave->end_date}}</td>
