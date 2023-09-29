@@ -56,22 +56,22 @@ class LeaveController extends Controller
             ]);
 
             $message = [
-                'title' => 'Hello'.$user,
+                'title' => 'Hello'.$user->name,
                 'body' => 'Your Leave Request has been created successfully. Once the admin approves your request,
                 you will receive a notification on the same. The leave will run from '.$leave->start_date.' to '.$leave->end_date,
                 'salutation' => 'Regards, '.(env('APP_NAME'))
             ];
 
             // send a notification for creating a Leave request
-            // Notification::send($user, new LeaveCreated($message));
+            Notification::send($user, new LeaveCreated($message));
 
-            // if (!$leave) {
-            //     return redirect()->route('admin.leaves.index', [auth()->user()->id])->with('error_message', 'Error! Please try again');
-            // }
+            if (!$leave) {
+                return redirect()->route('admin.leaves.index', [auth()->user()->id])->with('error_message', 'Error! Please try again');
+            }
 
-            // return redirect()->route('admin.leaves.index', [auth()->user()->id])->with('success_message', 'Leave request created successfully!!');
+            return redirect()->route('admin.leaves.index', [auth()->user()->id])->with('success_message', 'Leave request created successfully!!');
 
-            dd($leave);
+            // dd($leave);
 
         }
     }

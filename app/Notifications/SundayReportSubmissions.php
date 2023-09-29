@@ -23,7 +23,6 @@ class SundayReportSubmissions extends Notification
         // $this->message = $message;
         $this->userEmail = $userEmail;
         $this->data = $data;
-        // $this->admin = $admin;
     }
 
     /**

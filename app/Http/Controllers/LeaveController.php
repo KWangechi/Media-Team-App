@@ -21,7 +21,7 @@ class LeaveController extends Controller
      */
     public function index($id)
     {
-        $leaves = Leave::where('user_id', $id)->paginate(15);
+        $leaves = Leave::where('user_id', $id)->paginate(7);
 
         // $userLeave  = User::with('leaves')->get();
 
@@ -50,9 +50,6 @@ class LeaveController extends Controller
     {
         $user = auth()->user();
 
-        // dd($u ser);
-
-
         // dd($request->input('reason'));
         $request->validate([
             'user_id',
@@ -76,7 +73,7 @@ class LeaveController extends Controller
             // dd($leave);
 
             $message = [
-                'title' => 'Hello '.auth()->user(),
+                'title' => 'Dear '.$user->name,
                 'body' => 'Your Leave Request has been created successfully. Once the admin approves your request,
                 you will receive a notification on the same. The leave will run from '.$leave->start_date.' to '.$leave->end_date,
                 'salutation' => 'Regards, '.(env('APP_NAME'))
@@ -92,7 +89,7 @@ class LeaveController extends Controller
             return redirect()->route('user.leaves.index', auth()->user()->id)->with('success_message', 'Leave request created successfully!!');
 
 
-            dd($leave);
+            // dd($leave);
 
             // return redirect()->route('user.leaves.index', auth()->user()->id)->with('success_message', 'Leave request created successfully!!!');
         }

@@ -11,7 +11,7 @@ class LeaveCreated extends Notification
 {
     use Queueable;
 
-    public $message;
+    private $message;
 
     /**
      * Create a new notification instance.
@@ -22,7 +22,6 @@ class LeaveCreated extends Notification
     public function __construct($message)
     {
         $this->message = $message;
-
     }
 
     /**
@@ -45,10 +44,11 @@ class LeaveCreated extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
-                    ->line($this->message['title'])
-                    ->line($this->message['body'])
-                    ->action('Click here to view your leave requests', url('/'))
-                    ->salutation($this->message['salutation']);
+            ->subject('Leave Created')
+            ->line($this->message['title'])
+            ->line($this->message['body'])
+            ->action('Click here to view your leave requests', url('/'))
+            ->salutation($this->message['salutation']);
     }
 
     /**
