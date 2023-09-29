@@ -161,7 +161,7 @@ Route::middleware(['auth'])->group(function () {
 
     Route::patch('/announcement/{id}', [AnnouncementController::class, 'update'])->name('announcement.update');
     Route::delete('/announcement/{id}', [AnnouncementController::class, 'destroy'])->name('announcement.delete');
-    Route::get('/announcements', [AnnouncementController::class, 'index'])->name('announcements');
+    Route::get('/announcements', [AnnouncementController::class, 'index'])->name('user.announcements');
 
 });
 require __DIR__ . '/auth.php';

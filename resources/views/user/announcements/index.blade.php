@@ -24,25 +24,25 @@
         </div>
         @else
         <br>
-        
         @foreach (auth()->user()->notifications as $announcement)
-        <li>{{$announcement->id}}</li>
-        <li>{{$announcement->type}}</li>
-        <!-- <li>{{$announcement->notifiable_type}}</li> -->
-        <li>Message: {{$announcement->data['message']}} </li>
+        <div class="mt-2" style="margin-left: 30px;">
 
-        <br>
-        <div class="row">
-            <div class="col">
-                <form action="{{route('announcement.delete', [$announcement->id])}}" method="post">
-                    @csrf
-                    <button class="btn btn-sm btn-danger">Delete</button>
-                    @method('DELETE')
-                </form>
+            <li>Title: {{$announcement->data['title']}} </li>
+            <b><i><li>{{$announcement->type}}</li></i></b>
+            <li>Message: {{$announcement->data['body']}} </li>
 
-            </div>
+            <br>
+            <div class="row">
+                <div class="col">
+                    <form action="{{route('announcement.delete', [$announcement->id])}}" method="post">
+                        @csrf
+                        <button class="btn btn-sm btn-danger">Delete</button>
+                        @method('DELETE')
+                    </form>
 
-            <div class="col">
+                </div>
+
+                <div class="col">
 
                 @if ($announcement->read_at == null)
                 <a href="{{route('announcement.readAnnouncement', [$announcement->id])}}">
@@ -55,6 +55,7 @@
 
                 @endif
             </div>
+        </div>
 
         </div>
         <br>

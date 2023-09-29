@@ -166,9 +166,9 @@ class AnnouncementController extends Controller
         try {
             $announcement = DB::table('notifications')->where('id', $id)->update(['read_at' => Carbon::now()]);
 
-            return to_route('announcements')->with('success_mesage', 'Notification marked as read successfully!!');
+            return to_route('user.announcements')->with('success_mesage', 'Notification marked as read successfully!!');
         } catch (\Throwable $th) {
-            return to_route('announcements')->with('error_message', $th->getMessage());
+            return to_route('user.announcements')->with('error_message', $th->getMessage());
         }
     }
 

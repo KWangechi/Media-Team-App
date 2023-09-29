@@ -96,7 +96,9 @@
                             </div>
                             <div class="modal-footer">
                                 <x-button type="button" class="btn btn-danger btn-sm" data-bs-dismiss="modal">Close</x-button>
-                                <x-button type="button" class="btn btn-primary btn-sm">Open in new window</x-button>
+                                <a href="{{route('user.announcements')}}">
+                                    <x-button class="btn btn-sm">Open in New Window</x-button>
+                                </a>
                             </div>
                         </div>
                     </div>
@@ -127,7 +129,7 @@
                             {{ __('My Profile') }}
                         </x-dropdown-link>
 
-                        <x-dropdown-link :href="route('announcements')">
+                        <x-dropdown-link :href="route('user.announcements')">
 
                             @if (count(auth()->user()->unReadNotifications) > 0)
                             <i class="bi bi-app-indicator"></i>
