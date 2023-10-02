@@ -16,7 +16,7 @@
             @endif
             </div>
 
-            <h1 style="margin-top: 10px;">Announcements Page</h1>
+            <h1 style="margin-top: 10px; margin-left: 30px;">Announcements Page</h1>
 
             @if (count($announcements) < 0)
              <div>
@@ -27,9 +27,10 @@
         @foreach (auth()->user()->notifications as $announcement)
         <div class="mt-2" style="margin-left: 30px;">
 
-            <li>Title: {{$announcement->data['title']}} </li>
-            <b><i><li>{{$announcement->type}}</li></i></b>
-            <li>Message: {{$announcement->data['body']}} </li>
+            <p>{{$announcement->data['title']}} </p>
+            <b><i><p>{{$announcement->type}}</p></i></b>
+            <p>{{$announcement->data['body']}} </p>
+            <p>{{$announcement->created_at}}</p>
 
             <br>
             <div class="row">

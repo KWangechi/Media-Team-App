@@ -60,6 +60,9 @@
 
             </div>
             <div class="flex items-center">
+                <x-dropdown>
+                    
+                </x-dropdown>
                 <a data-bs-toggle="modal" data-bs-target="#notificationModal" id="notificationsBellButton">
                     @if (count(auth()->user()->unReadNotifications)> 0)
 
@@ -107,8 +110,6 @@
 
             <!-- Settings Dropdown -->
             <div class="hidden sm:flex sm:items-center sm:ml-6">
-
-
                 <x-dropdown align="right" width="48">
                     <x-slot name="trigger">
                         <button class="flex items-center text-sm font-medium text-gray-500 hover:text-gray-700 hover:border-gray-300 focus:outline-none focus:text-gray-700 focus:border-gray-300 transition duration-150 ease-in-out">
@@ -129,18 +130,6 @@
                             {{ __('My Profile') }}
                         </x-dropdown-link>
 
-                        <x-dropdown-link :href="route('user.announcements')">
-
-                            @if (count(auth()->user()->unReadNotifications) > 0)
-                            <i class="bi bi-app-indicator"></i>
-                            {{ __('Announcements - ') }} {{count(auth()->user()->unReadNotifications)}}
-
-                            @else
-                            <i class="bi bi-bell">
-                                {{ __('Announcements') }}
-                            </i>
-                            @endif
-                        </x-dropdown-link>
 
                         <!-- Authentication -->
                         <form method="POST" action="{{ route('logout') }}">
@@ -152,10 +141,6 @@
                                 {{ __('Log Out') }}
                             </x-dropdown-link>
                         </form>
-
-                        <!-- <x-dropdown-link :href="route('user.profile', auth()->user()->id)">
-                            {{ __('My Leaves') }}
-                        </x-dropdown-link> -->
                     </x-slot>
                 </x-dropdown>
             </div>
