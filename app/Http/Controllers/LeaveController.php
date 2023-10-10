@@ -73,7 +73,8 @@ class LeaveController extends Controller
             // dd($leave);
 
             $message = [
-                'title' => 'Dear '.$user->name,
+                'subject' => 'Leave Request Created Successfully',
+                'greeting' => 'Dear '.$user->name,
                 'body' => 'Your Leave Request has been created successfully. Once the admin approves your request,
                 you will receive a notification on the same. The leave will run from '.$leave->start_date.' to '.$leave->end_date,
                 'salutation' => 'Regards, '.(env('APP_NAME'))

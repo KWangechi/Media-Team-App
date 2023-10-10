@@ -44,10 +44,10 @@ class LeaveCreated extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
-            ->subject('Leave Created')
-            ->line($this->message['title'])
+            ->subject($this->message['subject'])
+            ->greeting($this->message['greeting'])
             ->line($this->message['body'])
-            ->action('Click here to view your leave requests', url('/'))
+            ->action('Click here to view your leave requests', url('/login'))
             ->salutation($this->message['salutation']);
     }
 
@@ -74,7 +74,8 @@ class LeaveCreated extends Notification
     public function toDatabase($notifiable)
     {
         return [
-            'title' => $this->message['title'],
+            'subject' => $this->message['subject'],
+            'greeting' => $this->message['greeting'],
             'body' => $this->message['body'],
             'salutation' => $this->message['salutation']
         ];

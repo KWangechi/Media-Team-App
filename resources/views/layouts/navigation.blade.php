@@ -59,57 +59,39 @@
 
 
             </div>
-            <div class="flex items-center">
-                <x-dropdown>
-                    
+            <div class="hidden sm:flex sm:items-center sm:ml-6">
+                <x-dropdown align="right" class="w-32">
+                    <x-slot name="trigger">
+                        <button class="flex text-sm font-medium text-gray-500 hover:text-gray-700 hover:border-gray-300 focus:outline-none focus:text-gray-700 focus:border-gray-300 transition duration-150 ease-in-out">
+                            <i class="bi bi-bell-fill position-relative">
+                                <span class="position-absolute top-0 start-150 translate-middle badge-rounded-pill badge-danger">
+                                    {{count(auth()->user()->unreadNotifications)}}
+                                </span>
+                            </i>
+                        </button>
+                    </x-slot>
+
+                    <x-slot name="content">
+                        <x-dropdown-link >
+                            <div>
+
+                            @foreach (auth()->user()->unreadNotifications as $notification)
+
+                            <p class="mt-2">
+                                {{ $notification->data['subject']}}
+                                <span class="badge rounded-pill bg-info text-dark">new</span>
+                            </p>
+                            @endforeach
+                            </div>
+
+                        </x-dropdown-link>
+                    </x-slot>
                 </x-dropdown>
-                <a data-bs-toggle="modal" data-bs-target="#notificationModal" id="notificationsBellButton">
-                    @if (count(auth()->user()->unReadNotifications)> 0)
-
-                    <span class="bi bi-bell-fill">
-                        <span class="rounded-pill badge-notification" style="z-index: 100;">{{count(auth()->user()->unReadNotifications)}}</span>
-                    </span>
-                    @else
-                    <i class="bi bi-bell">
-                    </i>
-                    @endif
-                </a>
-
-
-                <!-- Open a small modal for viewing the notification - unread -->
-                <div class="modal fade" id="notificationModal" tabindex="-1" aria-labelledby="notificationModalLabel" aria-hidden="true">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="exampleModalLabel">
-                                    Notifications
-                                </h5>
-
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                            </div>
-                            <div class="modal-body text-wrap-normal">
-                                @foreach (auth()->user()->unreadNotifications as $notification)
-
-                                <p class="mt-3">
-                                    <button type="button" disabled class="btn btn-primary btn-sm rounded-md">New</button>
-                                    <b><i>{{ $notification->type}} : </i></b>
-                                    {{ $notification->data['body']}}
-                                </p>
-                                @endforeach
-                            </div>
-                            <div class="modal-footer">
-                                <x-button type="button" class="btn btn-danger btn-sm" data-bs-dismiss="modal">Close</x-button>
-                                <a href="{{route('user.announcements')}}">
-                                    <x-button class="btn btn-sm">Open in New Window</x-button>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
             </div>
 
             <!-- Settings Dropdown -->
             <div class="hidden sm:flex sm:items-center sm:ml-6">
+
                 <x-dropdown align="right" width="48">
                     <x-slot name="trigger">
                         <button class="flex items-center text-sm font-medium text-gray-500 hover:text-gray-700 hover:border-gray-300 focus:outline-none focus:text-gray-700 focus:border-gray-300 transition duration-150 ease-in-out">
