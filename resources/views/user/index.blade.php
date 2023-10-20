@@ -1,4 +1,5 @@
 <x-app-layout>
+<x-sidebar activePage='user-profile'></x-sidebar>
     <x-slot name="slot">
         <br>
         <div class="container">
