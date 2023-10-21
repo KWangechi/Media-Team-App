@@ -62,26 +62,30 @@
             <div class="hidden sm:flex sm:items-center sm:ml-6">
                 <x-dropdown align="right" class="w-32">
                     <x-slot name="trigger">
-                        <button class="flex text-sm font-medium text-gray-500 hover:text-gray-700 hover:border-gray-300 focus:outline-none focus:text-gray-700 focus:border-gray-300 transition duration-150 ease-in-out">
-                            <i class="bi bi-bell-fill position-relative">
+                        <button class="flex text-sm font-sm text-dark">
+                            <!-- <i class="bi bi-bell-fill position-relative">
                                 <span class="position-absolute top-0 start-150 translate-middle badge-rounded-pill badge-danger">
                                     {{count(auth()->user()->unreadNotifications)}}
                                 </span>
-                            </i>
+                            </i> -->
+                            <i class="fas fa-bell fa-md"></i>
+                            <span class="badge rounded-pill badge-notification bg-danger">
+                                {{count(auth()->user()->unreadNotifications)}}
+                            </span>
                         </button>
                     </x-slot>
 
                     <x-slot name="content">
-                        <x-dropdown-link >
+                        <x-dropdown-link>
                             <div>
 
-                            @foreach (auth()->user()->unreadNotifications as $notification)
+                                @foreach (auth()->user()->unreadNotifications as $notification)
 
-                            <p class="mt-2">
-                                {{ $notification->data['subject']}}
-                                <span class="badge rounded-pill bg-info text-dark">new</span>
-                            </p>
-                            @endforeach
+                                <p class="mt-2">
+                                    {{ $notification->data['subject']}}
+                                    <span class="badge rounded-pill bg-info text-dark">new</span>
+                                </p>
+                                @endforeach
                             </div>
 
                         </x-dropdown-link>

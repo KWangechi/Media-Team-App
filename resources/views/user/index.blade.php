@@ -1,4 +1,4 @@
-<x-app-layout>
+<x-app-layout bodyClass="g-sidenav-show  bg-gray-200">
 <x-sidebar activePage='user-profile'></x-sidebar>
     <x-slot name="slot">
         <br>

@@ -110,7 +110,7 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/announcements', [AnnouncementController::class, 'index'])->name('admin.announcements');
         Route::post('/announcement', [AnnouncementController::class, 'store'])->name('admin.announcement.create');
         Route::get('/readAnnouncement/{id}', [AnnouncementController::class, 'readAnnouncement'])->name('admin.announcement.readAnnouncement');
-        Route::get('/unreadAnnouncement/{id}', [AnnouncementController::class, 'unreadAnnouncement'])->name('admin.announcement.unreadAnnouncement');
+        Route::get('/unreadAnnouncement/{id}', [AnnouncementController::class, 'markAsUnread'])->name('admin.announcement.unreadAnnouncement');
 
         Route::patch('/announcement/{id}', [AnnouncementController::class, 'update'])->name('admin.announcement.update');
         Route::delete('/announcement/{id}', [AnnouncementController::class, 'destroy'])->name('admin.announcement.delete');
@@ -157,7 +157,7 @@ Route::middleware(['auth'])->group(function () {
     });
 
     Route::get('/readAnnouncement/{id}', [AnnouncementController::class, 'readAnnouncement'])->name('announcement.readAnnouncement');
-    Route::get('/unreadAnnouncement/{id}', [AnnouncementController::class, 'unreadAnnouncement'])->name('announcement.unreadAnnouncement');
+    Route::get('/unreadAnnouncement/{id}', [AnnouncementController::class, 'markAsUnread'])->name('announcement.unreadAnnouncement');
 
     Route::patch('/announcement/{id}', [AnnouncementController::class, 'update'])->name('announcement.update');
     Route::delete('/announcement/{id}', [AnnouncementController::class, 'destroy'])->name('announcement.delete');

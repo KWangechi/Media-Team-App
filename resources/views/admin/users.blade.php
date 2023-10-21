@@ -1,6 +1,9 @@
-<x-app-layout>
-    <x-slot name="slot">
+<x-app-layout bodyClass="g-sidenav-show  bg-gray-200">
+    <x-navbars.sidebar activePage="notifications"></x-navbars.sidebar>
+
         <div class="container">
+        <x-navbars.navigation titlePage="Notifications"></x-navbars.navigation>
+
             <br>
             <!-- Display error or success message -->
             @if (session('success_message'))
@@ -201,5 +204,5 @@
                 </div>
             </div>
         </div>
-    </x-slot>
+
 </x-app-layout>

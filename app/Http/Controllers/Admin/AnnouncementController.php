@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Announcement;
+use App\Models\Profile;
 use App\Models\User;
 use App\Notifications\NewAnnouncement;
 use Carbon\Carbon;
@@ -23,6 +24,7 @@ class AnnouncementController extends Controller
     public function index()
     {
         $announcements = DB::table('notifications')->select('*')->get();
+
 
         if(auth()->user()->id === User::ROLE_ADMIN) {
             return view('admin.announcements.index', compact('announcements'));
@@ -54,6 +56,9 @@ class AnnouncementController extends Controller
 
         $users = User::all();
 
+        // get the profile picture of the user
+
+
         $request->validate([
             'title',
             'content',
@@ -70,10 +75,6 @@ class AnnouncementController extends Controller
             'event_location' => $request->event_location
         ]);
 
-        // $message = [
-        //     'title' => $announcement->title,
-        //     'content' => $announcement->content
-        // ];
 
         if (!$announcement) {
             return redirect()->route('admin.announcements.index')->with('error_message', 'Error!! Please try again');
@@ -182,9 +183,9 @@ class AnnouncementController extends Controller
         try {
             $announcement = DB::table('notifications')->where('id', $id)->update(['read_at' => null]);
 
-            return to_route('admin.announcements', compact('success_mesage', 'Notification marked as unread successfully!!'));
+            return to_route('user.announcements')->with('success_mesage', 'Notification marked as read successfully!!');
         } catch (\Throwable $th) {
-            return to_route('admin.announcements', compact('error_mesage', $th->getMessage()));
+            return to_route('user.announcements')->with('error_message', $th->getMessage());
         }
     }
 }
