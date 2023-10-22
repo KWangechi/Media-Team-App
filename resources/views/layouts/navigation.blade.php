@@ -78,9 +78,7 @@
                     <x-slot name="content">
                         <x-dropdown-link>
                             <div>
-
                                 @foreach (auth()->user()->unreadNotifications as $notification)
-
                                 <p class="mt-2">
                                     {{ $notification->data['subject']}}
                                     <span class="badge rounded-pill bg-info text-dark">new</span>

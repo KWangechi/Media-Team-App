@@ -97,7 +97,7 @@ class ProfileController extends Controller
     {
         $profile = Profile::where('user_id', $user_id)->find($profile_id);
 
-        // dd($profile);
+        dd($profile->id);
 
         if (!$profile->update(
             [
