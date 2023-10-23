@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\ServiceProvider;
 
@@ -29,5 +30,7 @@ class AppServiceProvider extends ServiceProvider
             // share announcements with navigation blade file
             view()->share('announcements', DB::table('notifications')->where('read_at', '=', null)->get());
         }
+
+        Paginator::useBootstrap();
     }
 }

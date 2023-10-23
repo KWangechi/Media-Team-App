@@ -1,8 +1,11 @@
-<x-app-layout bodyClass="g-sidenav-show  bg-gray-200">
+<x-layout bodyClass="g-sidenav-show  bg-gray-200 dark-version">
     <x-navbars.sidebar activePage="leaves"></x-navbars.sidebar>
-    <div class="container">
-        <br>
-        <!-- Display error or success message -->
+    <main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg ">
+
+        <!-- Navbar -->
+        <x-navbars.navigation titlePage="Leaves"></x-navbars.navigation>
+
+        <!-- End Navbar -->
         @if (session('success_message'))
         <div class="alert alert-success alert-dismissible fade show">
             {{ session('success_message') }}
@@ -14,9 +17,7 @@
             {{ session('error_message') }}
             <a class="btn-close" data-bs-dismiss="alert" aria-label="Close"></a>
         </div>
-        @endif
 
-        <!-- check if leave is empty -->
         @if ($leaves->isEmpty())
         <div class="alert alert-info alert-dismissible">
             You do not have any leaves
@@ -148,127 +149,71 @@
                 </div>
             </div>
         </div>
+        
 
-        <!-- Table -->
-        <br>
-        <br>
-        <table class="table table-responsive table-bordered table-striped text-center">
-            <thead>
-                <tr>
-                    <th scope="col">Reason</th>
-                    <th scope="col">Start Date</th>
-                    <th scope="col">End Date</th>
-                    <th scope="col">Status</th>
-                    <th scope="col">EDIT</th>
-
-                </tr>
-            </thead>
-            <tbody>
-                @foreach ($leaves as $leave)
-                <tr>
-                    <td>{{$leave->reason}}</td>
-                    <td>{{$leave->start_date}}</td>
-                    <td>{{$leave->end_date}}</td>
-                    <td>
-                        {{$leave->status}}
-                    </td>
-                    <td>
-                        <div>
-                            <a class="btn btn-secondary btn-sm" data-bs-toggle="modal" data-bs-target="#updateProfileModal" id="updateProfileButton" data-id="{{$leave->id}}">EDIT</a>
-                        </div>
-
-                        <!-- Update Leave Request -->
-                        <div class="modal fade" id="updateProfileModal" tabindex="-1" aria-labelledby="updateProfileModalLabel" aria-hidden="true" data-id="{{$leave->id}}">
-                            <div class="modal-dialog">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="updateModalLabel">Update Leave Request</h5>
-                                        <a class="btn-close" data-bs-dismiss="modal" aria-label="Close"></a>
-                                    </div>
-                                    <div class="modal-body">
-                                        <form action="{{ route('user.leave.update', [auth()->user()->id, $leave->id]) }}" method="POST" enctype="multipart/form-data">
-                                            @csrf
-                                            @method('PATCH')
-
-                                            <!-- Reason -->
-                                            <div class="mt-4">
-                                                <x-label for="reason" :value="__('Reason')" />
-                                                <select name="reason">
-                                                    <option value="{{$leave->reason}}">{{$leave->reason}}</option>
-                                                    <option value="Sickness">Sickness</option>
-                                                    <option value="Bereavement">Bereavement</option>
-                                                    <option value="Travelling">Travelling</option>
-                                                    <option value="Personal Reasons">Personal Reasons(Prefer not to say)</option>
-                                                </select>
-                                            </div>
-
-                                            <!-- Start Date -->
-                                            <div class="mt-4">
-                                                <x-label for="start_date" :value="__('Start Date')" />
-
-                                                <x-input id="start_date" class="block mt-1 w-full" type="date" name="start_date" value="{{ $leave->start_date }}" required />
-                                            </div>
-
-                                            <!-- error message for start date and end date -->
-                                            <!-- @if (session('leave_error_message'))
-                                <div class="input">
-                                    {{ session('leave_error_message') }}
-                                </div>
-                                @else
-                                @endif -->
-
-                                            <!-- error leave message -->
-                                            <div class="input" id="input">
-                                            </div>
-
-                                            <!-- End Date -->
-                                            <div class="mt-4">
-                                                <x-label for="end_date" :value="__('End Date')" />
-
-                                                <x-input id="end_date" class="block mt-1 w-full" type="date" name="end_date" value="{{$leave->end_date}}" required />
-                                            </div>
-                                            <br>
-                                            <x-button class="ml-4" id="createLeaveButton">
-                                                {{ __('Update') }}
-                                            </x-button>
-                                    </div>
-                                    </form>
-                                </div>
+        <div class="container-fluid py-4">
+            <div class="row">
+                <div class="col-12">
+                    <div class="card my-4">
+                        <div class="card-body px-0 pb-2">
+                            <div class="table-responsive p-0">
+                                <table class="table align-items-center justify-content-center mb-0">
+                                    <thead>
+                                        <tr>
+                                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                                Reason</th>
+                                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                                                Start Date</th>
+                                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                                                End Date</th>
+                                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder text-center opacity-7 ps-2">
+                                                Status</th>
+                                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder text-center opacity-7 ps-2">
+                                                Action
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach ($leaves as $leave)
+                                        <tr>
+                                            <td>
+                                                <div class="d-flex px-2">
+                                                    <div class="my-auto text-center">
+                                                        <h6 class="mb-0 text-sm">{{$leave->reason}}</h6>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <p class="text-sm font-weight-bold mb-0">{{$leave->start_date}}</p>
+                                            </td>
+                                            <td>
+                                                <span class="text-xs font-weight-bold">{{$leave->end_date}}</span>
+                                            </td>
+                                            <td class="align-middle text-center">
+                                                @if ($leave->status == 'pending')
+                                                <span class="text-xs text-lowercase badge bg-gradient-danger">{{$leave->status}}</span>
+                                                @else
+                                                <span class="text-xs text-lowercase badge bg-gradient-success">{{$leave->status}}</span>
+                                                @endif
+                                            </td>
+                                            <td class="align-middle text-center">
+                                                <button class="btn btn-link text-secondary mb-0">
+                                                    <i class="fa fa-pen text-xs px-2"></i>
+                                                    Edit
+                                                </button>
+                                            </td>
+                                        </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
-
-
-                    </td>
-    </div>
-
-    @endforeach
-    </tr>
-    </tbody>
-    </table>
-
-    <!-- Pagination -->
-    <div class="row">
-        <div class="col offset-md-6">
-            {{$leaves->links()}}
+                        <div class="d-flex pagination justify-content-end pr-3">
+                            {{$leaves->links()}}
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-    </div>
-    @endif
-
-    </div>
-</x-app-layout>
-
-<script>
-    let error_input = document.getElementById("#input");
-    let start_date = document.getElementById("#start_date")
-    let end_date = document.getElementById("#end_date")
-    let createLeaveModal = document.querySelector("#createLeaveModalButton")
-    let editLeaveModalTitle = document.querySelector("#createLeaveModalTitle")
-    let editLeaveModalButton = document.querySelector("#createLeaveButton")
-
-
-    $(document).ready(function() {
-        $("#updateProfileButton").click(function() {
-            $("#updateProfileModal").fadeToggle();
-        })
-    })
-</script>
+    </main>
+</x-layout>

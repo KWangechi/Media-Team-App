@@ -38,14 +38,6 @@
                                     <x-input id="start_date" class="block mt-1 w-full" type="date" name="start_date" required />
                                 </div>
 
-                                <!-- error message for start date and end date -->
-                                <!-- @if (session('leave_error_message'))
-                                <div class="input">
-                                    {{ session('leave_error_message') }}
-                                </div>
-                                @else
-                                @endif -->
-
                                 <!-- End Date -->
                                 <div class="mt-4">
                                     <x-label for="end_date" :value="__('End Date')" />
