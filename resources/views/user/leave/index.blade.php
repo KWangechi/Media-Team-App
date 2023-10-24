@@ -1,4 +1,4 @@
-<x-layout bodyClass="g-sidenav-show  bg-gray-200 dark-version">
+<x-layout bodyClass="g-sidenav-show  bg-gray-200">
     <x-navbars.sidebar activePage="leaves"></x-navbars.sidebar>
     <main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg ">
 
@@ -17,6 +17,7 @@
             {{ session('error_message') }}
             <a class="btn-close" data-bs-dismiss="alert" aria-label="Close"></a>
         </div>
+        @endif
 
         @if ($leaves->isEmpty())
         <div class="alert alert-info alert-dismissible">
@@ -29,129 +30,96 @@
 
 
         <!-- Create Leave Request Modal -->
-        <div class="modal fade" id="createLeaveModal" tabindex="-1" aria-labelledby="createLeaveModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
+        <div class="modal fade" id="createLeaveModal" tabindex="-1" role="dialog" aria-labelledby="modal-form" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
                 <div class="modal-content">
-                    <div class="modal-header ">
-                        <h5 class="modal-title" id="createLeaveModalTitle">Create a New Leave Request</h5>
-                        <a class="btn-close" id="closeModalButton" data-bs-dismiss="modal" aria-label="Close"></a>
-                    </div>
-                    <div class="modal-body">
-                        <form action="{{ route('user.leave.create', auth()->user()->id) }}" method="POST" id="createLeaveForm">
-                            @csrf
-
-                            <!-- Reason -->
-                            <div class="mt-4">
-                                <x-label for="reason" :value="__('Reason')" />
-                                <select name="reason" class="block w-full rounded">
-                                    <option value="">Select the reason</option>
-                                    <option value="Sickness">Sickness</option>
-                                    <option value="Bereavement">Bereavement</option>
-                                    <option value="Travelling">Travelling</option>
-                                    <option value="Personal Reasons">Personal Reasons(Prefer not to say)</option>
-                                </select>
+                    <div class="modal-body p-0">
+                        <div class="card card-plain">
+                            <div class="card-header pb-0 text-left">
+                                <h5 class="">Welcome back</h5>
+                                <p class="mb-0">Enter your email and password to sign in</p>
                             </div>
-
-                            <!-- Start Date -->
-                            <div class="mt-4">
-                                <x-label for="start_date" :value="__('Start Date')" />
-
-                                <x-input id="start_date" class="block mt-1 w-full" type="date" name="start_date" required />
+                            <div class="card-body">
+                                <form role="form text-left">
+                                    <div class="input-group input-group-outline my-3">
+                                        <label class="form-label">Email</label>
+                                        <input type="email" class="form-control" onfocus="focused(this)" onfocusout="defocused(this)">
+                                    </div>
+                                    <div class="input-group input-group-outline my-3">
+                                        <label class="form-label">Password</label>
+                                        <input type="password" class="form-control" onfocus="focused(this)" onfocusout="defocused(this)">
+                                    </div>
+                                    <div class="form-check form-switch d-flex align-items-center">
+                                        <input class="form-check-input" type="checkbox" id="rememberMe" checked="">
+                                        <label class="form-check-label mb-0 ms-3" for="rememberMe">Remember me</label>
+                                    </div>
+                                    <div class="text-center">
+                                        <button type="button" class="btn btn-round bg-gradient-info btn-lg w-100 mt-4 mb-0">Sign in</button>
+                                    </div>
+                                </form>
                             </div>
-
-                            <!-- error message for start date and end date -->
-                            <!-- @if (session('leave_error_message'))
-                                <div class="input">
-                                    {{ session('leave_error_message') }}
-                                </div>
-                                @else
-                                @endif -->
-
-                            <!-- error leave message -->
-                            <div class="input" id="input">
+                            <div class="card-footer text-center pt-0 px-lg-2 px-1">
+                                <p class="mb-4 text-sm mx-auto">
+                                    Don't have an account?
+                                    <a href="javascript:;" class="text-info text-gradient font-weight-bold">Sign up</a>
+                                </p>
                             </div>
-
-                            <!-- End Date -->
-                            <div class="mt-4">
-                                <x-label for="end_date" :value="__('End Date')" />
-
-                                <x-input id="end_date" class="block mt-1 w-full" type="date" name="end_date" required />
-                            </div>
-                            <br>
-                            <x-button class="ml-4" id="createLeaveButton">
-                                {{ __('Save') }}
-                            </x-button>
-                        </form>
-                    </div>
-                    <div class="modal-footer">
-                        <a class="btn btn-secondary" data-bs-dismiss="modal">Close</a>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-
         @else
-        <a class="btn btn-primary btn-sm text-center float-right" data-bs-toggle="modal" data-bs-target="#createLeaveModal" id="createLeaveModalButton">
+        <a class="btn btn-primary btn-sm text-center mt-3 pl-3" data-bs-toggle="modal" data-bs-target="#createLeaveModal" id="createLeaveModalButton">
             <i class="bi bi-plus-circle"></i>
             CREATE NEW LEAVE REQUEST
         </a>
 
         <!-- Create Leave Request Modal -->
-        <div class="modal fade" id="createLeaveModal" tabindex="-1" aria-labelledby="createLeaveModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
+        <div class="modal fade" id="createLeaveModal" tabindex="-1" role="dialog" aria-labelledby="modal-form" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-sm">
                 <div class="modal-content">
-                    <div class="modal-header ">
-                        <h5 class="modal-title" id="createLeaveModalTitle">Create a New Leave Request</h5>
-                        <a class="btn-close" id="closeModalButton" data-bs-dismiss="modal" aria-label="Close"></a>
-                    </div>
-                    <div class="modal-body">
-                        <form action="{{ route('user.leave.create', auth()->user()->id) }}" method="POST" id="createLeaveForm">
-                            @csrf
-
-                            <!-- Reason -->
-                            <div class="mt-4">
-                                <x-label for="reason" :value="__('Reason')" />
-                                <select name="reason">
-                                    <option value="">Select the reason</option>
-                                    <option value="Sickness">Sickness</option>
-                                    <option value="Bereavement">Bereavement</option>
-                                    <option value="Travelling">Travelling</option>
-                                    <option value="Personal Reasons">Personal Reasons(Prefer not to say)</option>
-                                </select>
+                    <div class="modal-body p-0">
+                        <div class="card card-plain">
+                            <div class="card-header pb-0 text-left">
+                                <h5 class="">Create a New Leave Request</h5>
                             </div>
+                            <div class="card-body">
+                                <form action="{{ route('user.leave.create', auth()->user()->id) }}" method="POST" id="createLeaveForm">
+                                    @csrf
 
-                            <!-- Start Date -->
-                            <div class="mt-4">
-                                <x-label for="start_date" :value="__('Start Date')" />
-
-                                <x-input id="start_date" class="block mt-1 w-full" type="date" name="start_date" required />
+                                    <div class="input-group input-group-outline my-3">
+                                        <label class="form-label">Reason</label>
+                                        <select class="form-control" name="reason" id="reason">
+                                            <option value="Bereavement">Bereavement</option>
+                                            <option value="Sickness">Sickness</option>
+                                            <option value="Personal Reasons">Personal Reasons</option>
+                                            <option value="Temporary Absence">Temporary Absence</option>
+                                            <option value="Travelling">Travelling</option>
+                                        </select>
+                                    </div>
+                                    <div class="input-group input-group-outline my-3">
+                                        <label class="form-label">Start Date</label>
+                                        <input type="date" class="form-control" name="start_date" id="start_date">
+                                    </div>
+                                    <div class="input-group input-group-outline my-3">
+                                        <label class="form-label">End Date</label>
+                                        <input type="date" class="form-control" name="end_date" id="end_date">
+                                    </div>
+                                    <div class="text-center">
+                                        <button type="submit" class="btn btn-round btn-sm bg-gradient-info btn-lg w-100 mt-4 mb-0">Save</button>
+                                    </div>
+                                </form>
                             </div>
-
-                            <!-- error leave message -->
-                            <div class="input" id="input">
-                            </div>
-
-                            <!-- End Date -->
-                            <div class="mt-4">
-                                <x-label for="end_date" :value="__('End Date')" />
-
-                                <x-input id="end_date" class="block mt-1 w-full" type="date" name="end_date" required />
-                            </div>
-                            <br>
-                            <x-button class="ml-4" id="createLeaveButton">
-                                {{ __('Save') }}
-                            </x-button>
-                        </form>
-                    </div>
-                    <div class="modal-footer">
-                        <a class="btn btn-secondary" data-bs-dismiss="modal">Close</a>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-        
+        @endif
 
-        <div class="container-fluid py-4">
+
+        <div class="container-fluid">
             <div class="row">
                 <div class="col-12">
                     <div class="card my-4">
@@ -160,15 +128,15 @@
                                 <table class="table align-items-center justify-content-center mb-0">
                                     <thead>
                                         <tr>
-                                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder text-center">
                                                 Reason</th>
-                                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder">
                                                 Start Date</th>
-                                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder">
                                                 End Date</th>
-                                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder text-center opacity-7 ps-2">
+                                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder text-center">
                                                 Status</th>
-                                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder text-center opacity-7 ps-2">
+                                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder text-center">
                                                 Action
                                             </th>
                                         </tr>
@@ -178,7 +146,7 @@
                                         <tr>
                                             <td>
                                                 <div class="d-flex px-2">
-                                                    <div class="my-auto text-center">
+                                                    <div class="mx-auto">
                                                         <h6 class="mb-0 text-sm">{{$leave->reason}}</h6>
                                                     </div>
                                                 </div>
