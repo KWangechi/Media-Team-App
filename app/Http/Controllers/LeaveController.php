@@ -21,7 +21,7 @@ class LeaveController extends Controller
      */
     public function index($id)
     {
-        $leaves = Leave::where('user_id', $id)->paginate(7);
+        $leaves = Leave::where('user_id', $id)->paginate(6);
 
         // $userLeave  = User::with('leaves')->get();
 

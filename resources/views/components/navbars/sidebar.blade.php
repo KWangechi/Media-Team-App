@@ -122,8 +122,9 @@
                         <i class="material-icons opacity-10">notifications</i>
                     </div>
                     <span class="nav-link-text ms-1">Notifications</span>
+                    
                     @if (count(auth()->user()->unreadNotifications) > 0)
-                    <span class="badge rounded-pill badge-notification bg-danger mx-lg">
+                    <span class="badge rounded-pill badge-notification bg-info ml-3">
                         {{ count(auth()->user()->unreadNotifications) }}
                     </span>    
                     @endif

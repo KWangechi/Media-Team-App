@@ -43,7 +43,7 @@
 
                                 <div class="mb-3 col-md-6">
                                     <label class="form-label">Email address</label>
-                                    <input type="email" name="email" class="form-control border border-2 p-2" value='{{ old('email', auth()->user()->email) }}'>
+                                    <input type="email" name="email" class="form-control border-2 p-2" value='{{ old('email', auth()->user()->email) }}'>
                                     @error('email')
                                     <p class='text-danger inputerror'>{{ $message }} </p>
                                     @enderror
@@ -51,7 +51,7 @@
 
                                 <div class="mb-3 col-md-6">
                                     <label class="form-label">Name</label>
-                                    <input type="text" name="name" class="form-control border border-2 p-2" value='{{ old('name', auth()->user()->name) }}'>
+                                    <input type="text" name="name" class="form-control border-2 p-2" value='{{ old('name', auth()->user()->name) }}'>
                                     @error('name')
                                     <p class='text-danger inputerror'>{{ $message }} </p>
                                     @enderror
@@ -59,7 +59,7 @@
 
                                 <div class="mb-3 col-md-6">
                                     <label class="form-label">Phone</label>
-                                    <input type="number" name="phone" class="form-control border border-2 p-2" value='{{ old('phone', auth()->user()->phone_number) }}'>
+                                    <input type="number" name="phone" class="form-control border-2 p-2" value='{{ old('phone', auth()->user()->phone_number) }}'>
                                     @error('phone')
                                     <p class='text-danger inputerror'>{{ $message }} </p>
                                     @enderror
@@ -67,7 +67,7 @@
 
                                 <div class="mb-3 col-md-6">
                                     <label class="form-label">Date of Birth</label>
-                                    <input type="text" name="date_of_birth" class="form-control border border-2 p-2" value='{{ old('date_of_birth', auth()->user()->profile->date_of_birth) }}'>
+                                    <input type="text" name="date_of_birth" class="form-control border-2 p-2" value='{{ old('date_of_birth', auth()->user()->profile->date_of_birth) }}'>
                                     @error('date_of_birth')
                                     <p class='text-danger inputerror'>{{ $message }} </p>
                                     @enderror
@@ -75,7 +75,7 @@
 
                                 <div class="mb-3 col-md-12">
                                     <label for="floatingTextarea2">About</label>
-                                    <textarea class="form-control border border-2 p-2" placeholder=" Say something about yourself" id="floatingTextarea2" name="about" rows="4" cols="50">{{ old('about', auth()->user()->profile->about) }}</textarea>
+                                    <textarea class="form-control border-2 p-2" placeholder=" Say something about yourself" id="floatingTextarea2" name="about" rows="4" cols="50">{{ old('about', auth()->user()->profile->about) }}</textarea>
                                     @error('about')
                                     <p class='text-danger inputerror'>{{ $message }} </p>
                                     @enderror

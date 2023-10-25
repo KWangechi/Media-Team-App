@@ -5,18 +5,72 @@
         <!-- Navbar -->
         <x-navbars.navigation titlePage="Leaves"></x-navbars.navigation>
 
-        <!-- End Navbar -->
+        <!-- Toast notifications -->
         @if (session('success_message'))
-        <div class="alert alert-success alert-dismissible fade show">
-            {{ session('success_message') }}
-            <a class="btn-close" data-bs-dismiss="alert" aria-label="Close"></a>
+        <div class="toast show float-end mr-3" role="alert" aria-live="assertive" aria-atomic="true">
+            <!-- <div class="toast-container position-absolute p-3" id="toastPlacement">
+
+                <div class="d-flex">
+                    <div class="toast-header">
+                        <span class="badge rounded-pill rounded-sm bg-success pr-3">.</span>
+                        <strong class="me-auto">Success</strong>
+                        <button type="button" class="btn-close" data-bs-dismiss="toast"></button>
+                    </div>
+                    <div class="toast-body">
+                        {{session('success_message')}}
+                    </div>
+                    <button type="button" class="btn-close bg-dark me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+                </div>
+            </div> -->
+            <div class="aria-live=" polite" aria-atomic="true" class="bg-dark position-relative bd-example-toasts">
+                <div class="toast-container position-absolute" id="toastPlacement">
+                    <div class="toast show">
+                        <div class="toast-header">
+                            <button class="btn btn-sm btn-success w-2 h-2 my-auto"></button>
+                            <!-- <span class="badge rounded-pill rounded-sm bg-success pr-3"></span> -->
+                            <strong class="me-auto">Success</strong>
+                            <button type="button" class="btn-close bg-dark" data-bs-dismiss="toast"></button>
+                        </div>
+                        <div class="toast-body">
+                            {{session('success_message')}}
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
 
         @elseif (session('error_message'))
-        <div class="alert alert-danger alert-dismissible fade show">
-            {{ session('error_message') }}
-            <a class="btn-close" data-bs-dismiss="alert" aria-label="Close"></a>
+        <div class="toast show float-end mr-3" role="alert" aria-live="assertive" aria-atomic="true">
+            <!-- <div class="toast-container position-absolute p-3" id="toastPlacement">
+
+                <div class="d-flex">
+                    <div class="toast-header">
+                        <span class="badge rounded-pill rounded-sm bg-success pr-3">.</span>
+                        <strong class="me-auto">Success</strong>
+                        <button type="button" class="btn-close" data-bs-dismiss="toast"></button>
+                    </div>
+                    <div class="toast-body">
+                        {{session('success_message')}}
+                    </div>
+                    <button type="button" class="btn-close bg-dark me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+                </div>
+            </div> -->
+            <div aria-live="polite" aria-atomic="true" class="bg-dark h-4">
+                <div class="position-absolute" id="toastPlacement">
+                    <div class="toast show">
+                        <div class="toast-header">
+                            <button class="btn btn-sm btn-danger w-2 h-2 my-auto"></button>
+                            <strong class="me-auto">Error</strong>
+                            <button type="button" class="btn-close bg-dark" data-bs-dismiss="toast"></button>
+                        </div>
+                        <div class="toast-body">
+                            {{session('error_message')}}
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
+
         @endif
 
         @if ($leaves->isEmpty())
@@ -69,15 +123,16 @@
                 </div>
             </div>
         </div>
+
         @else
-        <a class="btn btn-primary btn-sm text-center mt-3 pl-3" data-bs-toggle="modal" data-bs-target="#createLeaveModal" id="createLeaveModalButton">
-            <i class="bi bi-plus-circle"></i>
+        <a class="btn bg-gradient-info text-center" data-bs-toggle="modal" data-bs-target="#createLeaveModal" id="createLeaveModalButton">
+            <i class="material-icons">add</i>
             CREATE NEW LEAVE REQUEST
         </a>
 
         <!-- Create Leave Request Modal -->
-        <div class="modal fade" id="createLeaveModal" tabindex="-1" role="dialog" aria-labelledby="modal-form" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered modal-sm">
+        <div class="modal fade mt-0" id="createLeaveModal" tabindex="-1" role="dialog" aria-labelledby="modal-form" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
                 <div class="modal-content">
                     <div class="modal-body p-0">
                         <div class="card card-plain">
@@ -88,9 +143,10 @@
                                 <form action="{{ route('user.leave.create', auth()->user()->id) }}" method="POST" id="createLeaveForm">
                                     @csrf
 
-                                    <div class="input-group input-group-outline my-3">
-                                        <label class="form-label">Reason</label>
-                                        <select class="form-control" name="reason" id="reason">
+                                    <label class="form-label font-weight-bold">Reason</label>
+                                    <div class="input-group input-group-outline mt-1 mb-3">
+                                        <select class="form-select-md form-control" name="reason" id="reason" placeholder="--Select reason--">
+                                            <!-- <option value="" selected disabled></option> -->
                                             <option value="Bereavement">Bereavement</option>
                                             <option value="Sickness">Sickness</option>
                                             <option value="Personal Reasons">Personal Reasons</option>
@@ -98,12 +154,14 @@
                                             <option value="Travelling">Travelling</option>
                                         </select>
                                     </div>
-                                    <div class="input-group input-group-outline my-3">
-                                        <label class="form-label">Start Date</label>
+
+                                    <label class="form-label font-weight-bold">Start Date</label>
+                                    <div class="input-group input-group-outline mt-1 mb-3">
                                         <input type="date" class="form-control" name="start_date" id="start_date">
                                     </div>
-                                    <div class="input-group input-group-outline my-3">
-                                        <label class="form-label">End Date</label>
+
+                                    <label class="form-label font-weight-bold">End Date</label>
+                                    <div class="input-group input-group-outline mt-1 mb-3">
                                         <input type="date" class="form-control" name="end_date" id="end_date">
                                     </div>
                                     <div class="text-center">
