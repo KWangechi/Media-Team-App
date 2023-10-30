@@ -77,7 +77,7 @@
         <div class="alert alert-info alert-dismissible">
             You do not have any leaves
         </div>
-        <a class="btn btn-primary btn-sm text-center" data-bs-toggle="modal" data-bs-target="#createLeaveModal" id="createLeaveModalButton">
+        <a class="btn btn-primary btn-sm mx-4 mb-0" data-bs-toggle="modal" data-bs-target="#createLeaveModal" id="createLeaveModalButton">
             <i class="bi bi-plus-circle"></i>
             CREATE NEW LEAVE REQUEST
         </a>
@@ -129,7 +129,7 @@
         </div>
 
         @else
-        <a class="btn bg-gradient-info text-center" data-bs-toggle="modal" data-bs-target="#createLeaveModal" id="createLeaveModalButton">
+        <a class="btn bg-gradient-info mx-4 mb-0" data-bs-toggle="modal" data-bs-target="#createLeaveModal" id="createLeaveModalButton">
             <i class="material-icons">add</i>
             CREATE NEW LEAVE REQUEST
         </a>
@@ -255,6 +255,7 @@
                                 </table>
                             </div>
                         </div>
+                        <hr>
                         <div class="d-flex pagination justify-content-end pr-3">
                             <div class="px-5 text-center my-1">
                                 Showing {{count($leaves)}} of {{$leaves->total()}} results
