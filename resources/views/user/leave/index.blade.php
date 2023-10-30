@@ -7,68 +7,35 @@
 
         <!-- Toast notifications -->
         @if (session('success_message'))
-        <div class="toast show float-end mr-3" role="alert" aria-live="assertive" aria-atomic="true">
-            <!-- <div class="toast-container position-absolute p-3" id="toastPlacement">
-
-                <div class="d-flex">
-                    <div class="toast-header">
-                        <span class="badge rounded-pill rounded-sm bg-success pr-3">.</span>
-                        <strong class="me-auto">Success</strong>
-                        <button type="button" class="btn-close" data-bs-dismiss="toast"></button>
-                    </div>
-                    <div class="toast-body">
-                        {{session('success_message')}}
-                    </div>
-                    <button type="button" class="btn-close bg-dark me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+        <div class="toast-container bg-gradient-success" style="position: absolute; top: 30px; right: 40px;" data-bs-animation="true" data-bs-delay="4500">
+            <div class="toast fade show">
+                <div class="toast-header">
+                    <span class="badge bg-gradient-success mx-2">.</span>
+                    <strong class="me-auto"><i class="bi-globe"></i>Success Message</strong>
+                    <small>just now</small>
+                    <button type="button" class="btn-close btn-sm bg-dark" data-bs-dismiss="toast"></button>
                 </div>
-            </div> -->
-            <div class="aria-live=" polite" aria-atomic="true" class="bg-dark position-relative bd-example-toasts">
-                <div class="toast-container position-absolute" id="toastPlacement">
-                    <div class="toast show">
-                        <div class="toast-header">
-                            <button class="btn btn-sm btn-success w-2 h-2 my-auto"></button>
-                            <!-- <span class="badge rounded-pill rounded-sm bg-success pr-3"></span> -->
-                            <strong class="me-auto">Success</strong>
-                            <button type="button" class="btn-close bg-dark" data-bs-dismiss="toast"></button>
-                        </div>
-                        <div class="toast-body">
-                            {{session('success_message')}}
-                        </div>
-                    </div>
+                <div class="toast-body">
+                    {{session('success_message')}}
                 </div>
             </div>
+
         </div>
 
         @elseif (session('error_message'))
-        <div class="toast show float-end mr-3" role="alert" aria-live="assertive" aria-atomic="true">
-            <!-- <div class="toast-container position-absolute p-3" id="toastPlacement">
-
-                <div class="d-flex">
-                    <div class="toast-header">
-                        <span class="badge rounded-pill rounded-sm bg-success pr-3">.</span>
-                        <strong class="me-auto">Success</strong>
-                        <button type="button" class="btn-close" data-bs-dismiss="toast"></button>
-                    </div>
-                    <div class="toast-body">
-                        {{session('success_message')}}
-                    </div>
-                    <button type="button" class="btn-close bg-dark me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+        <div class="toast-container bg-gradient-danger" style="position: absolute; top: 30px; right: 40px;" data-bs-animation="true" data-bs-delay="4000">
+            <div class="toast fade show">
+                <div class="toast-header">
+                    <span class="badge bg-gradient-danger mx-2">.</span>
+                    <strong class="me-auto"><i class="bi-globe"></i>Error Message</strong>
+                    <small>just now</small>
+                    <button type="button" class="btn-close btn-sm bg-dark" data-bs-dismiss="toast"></button>
                 </div>
-            </div> -->
-            <div aria-live="polite" aria-atomic="true" class="bg-dark h-4">
-                <div class="position-absolute" id="toastPlacement">
-                    <div class="toast show">
-                        <div class="toast-header">
-                            <button class="btn btn-sm btn-danger w-2 h-2 my-auto"></button>
-                            <strong class="me-auto">Error</strong>
-                            <button type="button" class="btn-close bg-dark" data-bs-dismiss="toast"></button>
-                        </div>
-                        <div class="toast-body">
-                            {{session('error_message')}}
-                        </div>
-                    </div>
+                <div class="toast-body">
+                    {{session('error_message')}}
                 </div>
             </div>
+
         </div>
 
         @endif
@@ -228,13 +195,13 @@
                                                 @endif
                                             </td>
                                             <td class="align-middle">
-                                                    <div class="row text-center mx-auto p-0">
-                                                        <div class="col-6 mx-auto">
-                                                            <button class="btn btn-link text-secondary mb-0">
-                                                                <i class="fa fa-pen text-xs px-1"></i>
-                                                                Edit
-                                                            </button>
-                                                        </div>
+                                                <div class="row text-center mx-auto p-0">
+                                                    <div class="col-6 mx-auto">
+                                                        <button class="btn btn-link text-secondary mb-0">
+                                                            <i class="fa fa-pen text-xs px-1"></i>
+                                                            Edit
+                                                        </button>
+                                                    </div>
                                                     @if ($leave->status == "pending")
                                                     <div class="col-6">
                                                         <form action="{{ route('user.leave.delete', [auth()->id(), $leave->id]) }}" method="post">
@@ -247,24 +214,32 @@
                                                         </form>
                                                     </div>
                                                     @endif
-                                                </td>
-                                            </div>
-                                        </tr>
-                                        @endforeach
-                                    </tbody>
-                                </table>
+                                            </td>
                             </div>
+                            </tr>
+                            @endforeach
+                            </tbody>
+                            </table>
                         </div>
-                        <hr>
-                        <div class="d-flex pagination justify-content-end pr-3">
-                            <div class="px-5 text-center my-1">
-                                Showing {{count($leaves)}} of {{$leaves->total()}} results
-                            </div>
-                            {{$leaves->links()}}
+                    </div>
+                    <hr>
+                    <div class="d-flex pagination justify-content-end pr-3">
+                        <div class="px-5 text-center my-1">
+                            Showing {{count($leaves)}} of {{$leaves->total()}} results
                         </div>
+                        {{$leaves->links()}}
                     </div>
                 </div>
             </div>
         </div>
+        </div>
     </main>
 </x-layout>
+
+<script>
+    $(document).ready(function() {
+        $("#myBtn").click(function() {
+            $("#myToast").toast("show");
+        });
+    });
+</script>
