@@ -1,4 +1,4 @@
-<x-app-layout bodyClass="g-sidenav-show  bg-gray-200">
+<x-app-layout bodyClass="g-sidenav-show  bg-gray-200 dark-version">
     <x-navbars.sidebar activePage="notifications"></x-navbars.sidebar>
 
     <main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg">
@@ -24,13 +24,20 @@
                         </button>
                     </div>
                     @endif
-                    @if (count($announcements) < 0) <div>
+
+
+                    @if (count($announcements) < 1)
+                    <div>
                         No Announcements Yet
                 </div>
+
                 @else
-                @foreach (auth()->user()->notifications as $announcement)
-                <div class="card-body">
-                    <div class="row mb-3">
+
+                @foreach (auth()->user()->unreadNotifications as $announcement)
+                <!-- <div class="card my-5 ml-5">
+                    <div class="card-body"> -->
+
+                    <div class="row mb-3 mt-5 mx-auto">
                         <div class="col-lg-2">
                             <img src="{{ asset('/storage/'.auth()->user()->profile->photo) }}" alt="" class=" rounded-circle shadow-4-strong" width="70px;" height="70px;">
                         </div>
@@ -43,6 +50,7 @@
                             </div>
                         </div>
                     </div>
+                    <hr>
                     <div class="row">
                         <div class="col">
                             <form action="{{route('announcement.delete', [$announcement->id])}}" method="post">
@@ -62,24 +70,13 @@
                             <a href="{{route('announcement.unreadAnnouncement', [$announcement->id])}}">
                                 <x-button class="btn btn-sm btn-primary hover:bg-red-600">Mark As Unread</x-button>
                             </a>
-
                             @endif
                         </div>
                     </div>
-
-                </div>
-            </div>
-        </div>
-        </div>
-    </main>
-
-
-    <br>
-
-    <br>
-    <hr>
-    <br>
-
+                    <!-- </div>
+                    
+                </div> -->
+                
     @endforeach
     @endif
 

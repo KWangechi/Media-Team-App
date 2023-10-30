@@ -134,7 +134,7 @@ class LeaveController extends Controller
         $leave = Leave::where('user_id', $user_id)->find($leave_id);
 
         if (!$leave->update($request->all())) {
-            return redirect()->route('user.leaves.index', [auth()->user()->id])->with('error_message', 'Error!!Please try again');
+            return redirect()->route('user.leaves.index', [auth()->user()->id])->with('error_message', 'Error!! Please try again');
         }
 
         return redirect()->route('user.leaves.index', [auth()->user()->id])->with('success_message', 'Leave request updated successfully!!');
@@ -155,8 +155,9 @@ class LeaveController extends Controller
         }
 
         else{
-            $leave->delete();
-
+            if(!$leave->delete()) {
+            return redirect()->route('user.leaves.index', [auth()->user()->id])->with('error_message', 'Error Occurred! Please try again...');
+            }
             return redirect()->route('user.leaves.index', [auth()->user()->id])->with('success_message', 'Leave request deleted successfully!!');
         }
 
