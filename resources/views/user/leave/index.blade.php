@@ -227,16 +227,16 @@
                                                 <span class="text-xs text-lowercase badge bg-gradient-success">{{$leave->status}}</span>
                                                 @endif
                                             </td>
-                                            <td class="mx-auto">
-                                                    <div class="row row-cols-auto mx-0">
-                                                        <div class="col-span">
+                                            <td class="align-middle">
+                                                    <div class="row text-center mx-auto p-0">
+                                                        <div class="col-6 mx-auto">
                                                             <button class="btn btn-link text-secondary mb-0">
                                                                 <i class="fa fa-pen text-xs px-1"></i>
                                                                 Edit
                                                             </button>
                                                         </div>
                                                     @if ($leave->status == "pending")
-                                                    <div class="col-span mr-5">
+                                                    <div class="col-6">
                                                         <form action="{{ route('user.leave.delete', [auth()->id(), $leave->id]) }}" method="post">
                                                             @csrf()
                                                             @method('DELETE')
