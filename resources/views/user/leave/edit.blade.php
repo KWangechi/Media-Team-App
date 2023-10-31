@@ -1,5 +1,10 @@
-<x-app-layout>
-    <x-slot name="slot">
+<x-layout bodyClass="g-sidenav-show  bg-gray-200">
+    <x-navbars.sidebar activePage="leaves"></x-navbars.sidebar>
+    <main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg ">
+
+        <!-- Navbar -->
+        <x-navbars.navigation titlePage="Leaves"></x-navbars.navigation>
+
         <div class="container">
             <br>
             <h1 class="text-center">
@@ -24,7 +29,7 @@
                             <form action="{{ route('user.leave.update', [auth()->user()->id, $leave->id]) }}" method="POST" id="createLeaveForm" enctype="multipart/form-data">
                                 @csrf
                                 @method('PATCH')
-                                
+
                                 <!-- Reason -->
                                 <div class="mt-4">
                                     <x-label for="reason" :value="__('Reason')" />
@@ -71,8 +76,8 @@
                             <a class="btn btn-secondary" href="{{ route('user.leaves.index', auth()->user()->id) }}">Cancel</a>
                         </div>
         </div>
-    </x-slot>
-</x-app-layout>
+    </main>
+</x-layout>
 
 <script>
     $(document).ready(function() {
