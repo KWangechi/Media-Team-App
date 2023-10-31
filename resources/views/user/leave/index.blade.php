@@ -1,4 +1,4 @@
-<x-layout bodyClass="g-sidenav-show  bg-gray-200">
+<x-layout bodyClass="g-sidenav-show  bg-gray-200 dark-version">
     <x-navbars.sidebar activePage="leaves"></x-navbars.sidebar>
     <main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg ">
 
