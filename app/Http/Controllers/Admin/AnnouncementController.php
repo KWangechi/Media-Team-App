@@ -23,7 +23,7 @@ class AnnouncementController extends Controller
      */
     public function index()
     {
-        $announcements = DB::table('notifications')->select('*')->get();
+        $announcements = DB::table('notifications')->select('*')->paginate(5);
 
 
         if(auth()->user()->id === User::ROLE_ADMIN) {
@@ -148,10 +148,10 @@ class AnnouncementController extends Controller
         try {
             $announcement->delete();
 
-            return to_route('announcements')->with('success_message', 'Notification deleted successfully!!!');
+            return to_route('user.announcements')->with('success_message', 'Notification deleted successfully!!!');
 
         } catch (\Throwable $th) {
-            return to_route('announcements')->with('error_message', $th->getMessage());
+            return to_route('user.announcements')->with('error_message', $th->getMessage());
 
         }
     }
@@ -167,7 +167,7 @@ class AnnouncementController extends Controller
         try {
             $announcement = DB::table('notifications')->where('id', $id)->update(['read_at' => Carbon::now()]);
 
-            return to_route('user.announcements')->with('success_mesage', 'Notification marked as read successfully!!');
+            return to_route('user.announcements')->with('success_message', 'Notification marked as read!!');
         } catch (\Throwable $th) {
             return to_route('user.announcements')->with('error_message', $th->getMessage());
         }

@@ -59,7 +59,7 @@
                         </div>
                     </div>
                     <div class="text-center">
-                        <button type="submit" class="btn btn-md bg-gradient-info w-10 mt-4 mb-3">Save</button>
+                        <button type="submit" class="btn btn-md bg-gradient-info w-10 mt-4 mb-3">Update</button>
                     </div>
                 </form>
             </div>
