@@ -188,4 +188,17 @@ class AnnouncementController extends Controller
             return to_route('user.announcements')->with('error_message', $th->getMessage());
         }
     }
+
+    public function markAllAsRead($id) {
+        $announcements = DB::table('notifications')->where('read_at', '=', null)->get();
+
+        dd($announcements);
+
+    }
+
+    public function markAllAsUnread() {
+        $announcements = DB::table('notifications')->where('read_at', '!=', null)->get();
+
+        dd($announcements);
+    }
 }
