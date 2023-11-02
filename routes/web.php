@@ -162,6 +162,9 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/readAnnouncement/{id}', [AnnouncementController::class, 'readAnnouncement'])->name('announcement.readAnnouncement');
     Route::get('/unreadAnnouncement/{id}', [AnnouncementController::class, 'markAsUnread'])->name('announcement.unreadAnnouncement');
 
+    Route::get('/markAllAsRead', [AnnouncementController::class, 'markAllAsRead'])->name('announcement.markAllAsRead');
+    Route::get('/markAllAsUnread', [AnnouncementController::class, 'markAllAsUnread'])->name('announcement.markAllAsUnread');
+
 
 });
 require __DIR__ . '/auth.php';
