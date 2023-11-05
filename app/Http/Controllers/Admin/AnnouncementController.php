@@ -40,9 +40,18 @@ class AnnouncementController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function viewAllNotifications()
     {
-        //
+        $announcements = auth()->user()->notifications;
+
+
+        if(auth()->user()->id === User::ROLE_ADMIN) {
+            return view('admin.announcements.index', compact('announcements'));
+
+        }
+
+        // dd($announcements);
+        return view('user.announcements.all.index', compact('announcements'));
     }
 
     /**
