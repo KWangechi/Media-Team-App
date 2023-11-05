@@ -101,7 +101,7 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link text-white {{ $activePage == 'sunday-report' ? ' active bg-gradient-warning' : '' }}  " href="{{ route('user.sunday-report.index', auth()->user()->id) }}">
+                <a class="nav-link text-white {{ $activePage == 'sunday-reports' ? ' active bg-gradient-warning' : '' }}  " href="{{ route('user.sunday-report.index', auth()->user()->id) }}">
                     <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
                         <i class="material-icons opacity-10">description</i>
                     </div>
@@ -122,11 +122,11 @@
                         <i class="material-icons opacity-10">notifications</i>
                     </div>
                     <span class="nav-link-text ms-1">Notifications</span>
-                    
+
                     @if (count(auth()->user()->unreadNotifications) > 0)
                     <span class="badge rounded-pill badge-notification bg-info p-2 mx-2">
                         {{ count(auth()->user()->unreadNotifications) }}
-                    </span>    
+                    </span>
                     @endif
                 </a>
             </li>
