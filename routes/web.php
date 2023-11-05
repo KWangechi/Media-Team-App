@@ -151,16 +151,19 @@ Route::middleware(['auth'])->group(function () {
         //Duty Roster
         Route::get('/{id}/duty', [DutyController::class, 'index'])->name('user.duty.index');
 
-        //Announcements
-        // Route::get('/announcements', [AnnouncementController::class, 'index'])->name('announcements');
+    
+        Route::get('/announcements', [AnnouncementController::class, 'index'])->name('user.announcements');
+        Route::patch('/announcement/{id}', [AnnouncementController::class, 'update'])->name('announcement.update');
+        Route::delete('/announcement/{id}', [AnnouncementController::class, 'destroy'])->name('announcement.delete');
+        Route::get('/readAnnouncement/{id}', [AnnouncementController::class, 'readAnnouncement'])->name('announcement.readAnnouncement');
+        Route::get('/unreadAnnouncement/{id}', [AnnouncementController::class, 'markAsUnread'])->name('announcement.unreadAnnouncement');
 
+        Route::get('/markAllAsRead', [AnnouncementController::class, 'markAllAsRead'])->name('announcement.markAllAsRead');
+        Route::get('/markAllAsUnread', [AnnouncementController::class, 'markAllAsUnread'])->name('announcement.markAllAsUnread');
+
+        Route::get('/allAnnouncements', [AnnouncementController::class, 'viewAllNotifications'])->name('user.announcements.all');
     });
 
-    Route::get('/announcements', [AnnouncementController::class, 'index'])->name('user.announcements');
-    Route::patch('/announcement/{id}', [AnnouncementController::class, 'update'])->name('announcement.update');
-    Route::delete('/announcement/{id}', [AnnouncementController::class, 'destroy'])->name('announcement.delete');
-    Route::get('/readAnnouncement/{id}', [AnnouncementController::class, 'readAnnouncement'])->name('announcement.readAnnouncement');
-    Route::get('/unreadAnnouncement/{id}', [AnnouncementController::class, 'markAsUnread'])->name('announcement.unreadAnnouncement');
 
 
 });

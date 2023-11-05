@@ -23,7 +23,7 @@ class AnnouncementController extends Controller
      */
     public function index()
     {
-        $announcements = DB::table('notifications')->select('*')->paginate(5);
+        $announcements = auth()->user()->notifications;
 
 
         if(auth()->user()->id === User::ROLE_ADMIN) {
@@ -40,9 +40,18 @@ class AnnouncementController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function viewAllNotifications()
     {
-        //
+        $announcements = auth()->user()->notifications;
+
+
+        if(auth()->user()->id === User::ROLE_ADMIN) {
+            return view('admin.announcements.index', compact('announcements'));
+
+        }
+
+        // dd($announcements);
+        return view('user.announcements.all.index', compact('announcements'));
     }
 
     /**
@@ -183,22 +192,45 @@ class AnnouncementController extends Controller
         try {
             $announcement = DB::table('notifications')->where('id', $id)->update(['read_at' => null]);
 
-            return to_route('user.announcements')->with('success_mesage', 'Notification marked as read successfully!!');
+            return to_route('user.announcements')->with('success_message', 'Notification marked as read successfully!!');
         } catch (\Throwable $th) {
             return to_route('user.announcements')->with('error_message', $th->getMessage());
         }
     }
 
-    public function markAllAsRead($id) {
-        $announcements = DB::table('notifications')->where('read_at', '=', null)->get();
+    /**
+     * mark all unread notifications as read
+     */
+    public function markAllAsRead() {
+        // $announcements = DB::table('notifications')->where('read_at', '=', null)->get();
+        $user = auth()->user();
 
-        dd($announcements);
+        try {
+            $user->unreadNotifications->markAsRead();
 
+            return to_route('user.announcements')->with('success_message', 'Notification marked as read successfully!!');
+
+        } catch (\Throwable $th) {
+            return to_route('user.announcements')->with('error_message', $th->getMessage());
+
+        }
     }
 
+    /**
+     * mark all read notifications as unread
+     */
     public function markAllAsUnread() {
-        $announcements = DB::table('notifications')->where('read_at', '!=', null)->get();
+        $user = auth()->user();
 
-        dd($announcements);
+        try {
+            $user->readNotifications->markAsUnRead();
+
+            return to_route('user.announcements')->with('success_message', 'Notification marked as read successfully!!');
+
+        } catch (\Throwable $th) {
+            return to_route('user.announcements')->with('error_message', $th->getMessage());
+
+        }
     }
 }
+
