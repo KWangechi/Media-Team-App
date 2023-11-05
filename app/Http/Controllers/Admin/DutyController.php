@@ -23,8 +23,8 @@ class DutyController extends Controller
      */
     public function index()
     {
-        $duties = Duty::all();
-        $users = User::all();
+        $duties = Duty::orderBy('updated_at')->get();
+        $users = User::orderBy('name')->get();
 
 
         if (auth()->user()->id == User::ROLE_ADMIN) {
@@ -85,7 +85,6 @@ class DutyController extends Controller
         // dd(['Duty' => $duty, 'Member Details: ' => $member_details]);
 
         // send a notification to the user if they have been selected
-
 
         if (!$duty) {
             return redirect()->route('admin.duty.index', auth()->user()->id)->with('error_message', 'Error creating a new duty!!');
