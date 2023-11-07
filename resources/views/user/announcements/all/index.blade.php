@@ -2,7 +2,7 @@
     <x-navbars.sidebar activePage="notifications"></x-navbars.sidebar>
 
     <main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg">
-        <x-navbars.navigation titlePage="Notifications"></x-navbars.navigation>
+        <x-navbars.navigation titlePage="All Notifications"></x-navbars.navigation>
 
         <!-- <h4 class="text-center mt-3">Announcements Page</h4> -->
         <div class="container-fluid py-4">
@@ -48,12 +48,7 @@
                     </svg>
                     <h3 class="mt-5">NO NOTIFICATIONS</h3>
                     <p class="mt-4">Nothing in your notifications</p>
-
-                    <a class="btn bg-gradient-warning mt-3" href="{{ route('announcement.allNotifications') }}">
-                    <!-- <i class="material-icons">drafts</i> -->
-                    View all messages
-                </a>
-
+                    
                 </div>
                 @else
 
