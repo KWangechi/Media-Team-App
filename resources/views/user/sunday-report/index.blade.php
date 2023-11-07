@@ -88,7 +88,7 @@
 
                                     <label class="form-label font-weight-bold">Comments</label>
                                     <div class="input-group input-group-outline mt-1 mb-3">
-                                        <textarea class="form-control" id="report_comments" name="report_comments" rows="3"></textarea>
+                                        <textarea class="form-control" id="comments" name="comments" rows="3"></textarea>
                                     </div>
                                     <div class="text-center ">
                                         <button type="submit" class="text-white btn btn-round btn-md bg-gray-900 w-30 mt-4 mb-0">Save</button>
@@ -143,7 +143,7 @@
 
                                     <label class="form-label font-weight-bold">Comments</label>
                                     <div class="input-group input-group-outline mt-1 mb-3">
-                                        <textarea class="form-control" id="report_comments" name="report_comments" rows="3"></textarea>
+                                        <textarea class="form-control" id="comments" name="comments" rows="3"></textarea>
                                     </div>
                                     <div class="text-center ">
                                         <button type="submit" class="text-white btn btn-round btn-md bg-gradient-info w-30 mt-4 mb-0">Save</button>
@@ -157,6 +157,8 @@
         </div>
         @endif
 
+
+        <!-- Container for the table -->
         <div class="container-fluid">
             <div class="row">
                 <div class="col-12">
@@ -226,9 +228,17 @@
                             </table>
                         </div>
                     </div>
+                    <hr class="mb-2 mt-1">
+                    <div class="d-flex pagination justify-content-end pr-3 mb-3">
+                        <div class="px-5 text-center">
+                            Showing {{count($reports)}} of {{$reports->total()}} results
+                        </div>
+                        {{$reports->links()}}
+                    </div>
                 </div>
             </div>
         </div>
-        </div>
+
+
     </main>
 </x-layout>

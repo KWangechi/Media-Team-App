@@ -65,7 +65,7 @@ class SundayReportController extends Controller
                 'report_date' => $request->report_date,
                 'event_type' => $request->event_type,
                 'workstation' => $request->workstation,
-                'comments' => $request->report_comments
+                'comments' => $request->comments
             ]);
 
             // dd($request);
@@ -105,7 +105,10 @@ class SundayReportController extends Controller
      */
     public function edit($user_id, $report_id)
     {
-        dd(['Report ID:' => $report_id, 'User ID:' => $user_id]);
+        // dd(['Report ID:' => $report_id, 'User ID:' => $user_id]);
+        $report = SundayReport::where('user_id', $user_id)->findOrFail($report_id);
+
+        return view('user.sunday-report.edit', compact('report'));
     }
 
     /**
@@ -115,9 +118,19 @@ class SundayReportController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $user_id, $report_id)
     {
-        //
+        $report = SundayReport::where('user_id', $user_id)->find($report_id);
+        // dd($request->all());
+
+
+        if (!$report->update($request->all())) {
+            return redirect()->route('user.sunday-report.index', [auth()->user()->id])->with('error_message', 'Error!! Please try again');
+        }
+
+
+        return redirect()->route('user.sunday-report.index', [auth()->user()->id])->with('success_message', 'Report updated successfully!!');
+
     }
 
     /**
