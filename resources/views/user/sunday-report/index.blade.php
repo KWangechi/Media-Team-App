@@ -146,7 +146,7 @@
                                         <textarea class="form-control" id="report_comments" name="report_comments" rows="3"></textarea>
                                     </div>
                                     <div class="text-center ">
-                                        <button type="submit" class="text-white btn btn-round btn-md bg-gray-900 w-30 mt-4 mb-0">Save</button>
+                                        <button type="submit" class="text-white btn btn-round btn-md bg-gradient-info w-30 mt-4 mb-0">Save</button>
                                     </div>
                                 </form>
                             </div>

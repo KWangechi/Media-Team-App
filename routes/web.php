@@ -150,8 +150,10 @@ Route::middleware(['auth'])->group(function () {
 
         //Duty Roster
         Route::get('/{id}/duty', [DutyController::class, 'index'])->name('user.duty.index');
+        Route::get('/downloadSchedule', [DutyController::class, 'downloadSchedule'])->name('user.downloadSchedule');
 
-    
+
+
         Route::get('/announcements', [AnnouncementController::class, 'index'])->name('user.announcements');
         Route::patch('/announcement/{id}', [AnnouncementController::class, 'update'])->name('announcement.update');
         Route::delete('/announcement/{id}', [AnnouncementController::class, 'destroy'])->name('announcement.delete');

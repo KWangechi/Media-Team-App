@@ -93,7 +93,7 @@
 
             @else
             <li class="nav-item">
-                <a class="nav-link text-white {{ $activePage == 'duty-roster' ? ' active bg-gradient-warning' : '' }}  " href="{{ route('user.duty.index', auth()->id()) }}">
+                <a class="nav-link text-white {{ $activePage == 'duty-schedule' ? ' active bg-gradient-warning' : '' }}  " href="{{ route('user.duty.index', auth()->id()) }}">
                     <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
                         <i class="material-icons opacity-10">event_note</i>
                     </div>
