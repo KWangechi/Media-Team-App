@@ -1,7 +1,7 @@
 <x-layout bodyClass="g-sidenav-show bg-gray-200 dark-version">
     <x-navbars.sidebar activePage="user-profile"></x-navbars.sidebar>
 
-    <div class="main-content position-relative max-height-vh-100 h-100">
+    <main class="main-content position-relative max-height-vh-100 h-100">
         <!-- Navbar -->
         <x-navbars.navigation titlePage='User Profile'></x-navbars.navigation>
         <!-- End Navbar -->
@@ -37,8 +37,10 @@
                     </div>
                     <div class="card-body p-3">
 
-                        <form method='POST' action='{{ route('user.profile.update', auth()->id()) }}'>
+                        <form method="POST" action="{{ route('user.profile.update', [auth()->id(), $profile->id]) }}">
                             @csrf
+                            @method('PATCH')
+
                             <div class="row">
 
                                 <div class="mb-3 col-md-6">
@@ -88,6 +90,6 @@
                 </div>
             </div>
         </div>
-    </div>
+    </main>
 
 </x-layout>

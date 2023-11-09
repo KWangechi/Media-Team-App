@@ -130,7 +130,7 @@ Route::middleware(['auth'])->group(function () {
         //profile
         Route::get('/{id}/profile', [ProfileController::class, 'index'])->name('user.profile');
         Route::post('/{id}/profile', [ProfileController::class, 'store'])->name('user.profile.create');
-        Route::post('/{user_id}/profile/{id}', [ProfileController::class, 'update'])->name('user.profile.update');
+        Route::patch('/{user_id}/profile/{id}', [ProfileController::class, 'update'])->name('user.profile.update');
         Route::delete('/{user_id}/profile/{id}', [ProfileController::class, 'destroy'])->name('user.profile.delete');
 
         //Leaves
