@@ -1,8 +1,8 @@
 <x-app-layout bodyClass="g-sidenav-show  bg-gray-200 dark-version">
-    <x-navbars.sidebar activePage="duty-roster"></x-navbars.sidebar>
+    <x-navbars.sidebar activePage="duty-schedule"></x-navbars.sidebar>
 
     <main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg">
-        <x-navbars.navigation titlePage="Duty Roster"></x-navbars.navigation>
+        <x-navbars.navigation titlePage="Duty Schedule"></x-navbars.navigation>
 
         <div class="container-fluid py-4">
             <br>
@@ -17,10 +17,10 @@
             @foreach ($duties as $duty)
             <a class="btn bg-gradient-secondary mt-0 mx-4 mb-3">
                 <i class="material-icons px-1">event_note</i>
-                VIEW PREVIOUS TIMETABLES
+                VIEW PREVIOUS TIMETABLES 
             </a>
 
-            <a class="btn bg-gradient-secondary mt-0 mx-12 mb-3">
+            <a class="btn bg-gradient-secondary mt-0 mx-12 mb-3" href="{{ route('user.downloadSchedule') }}">
                 <i class="material-icons px-1 align-middle">cloud_download</i>
                 DOWNLOAD THE DUTY ROSTER
             </a>

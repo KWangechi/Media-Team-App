@@ -74,10 +74,10 @@ class LeaveController extends Controller
 
             $message = [
                 'subject' => 'Leave Request Created Successfully',
-                'greeting' => 'Dear '.$user->name,
+                'greeting' => 'Dear ' . $user->name,
                 'body' => 'Your Leave Request has been created successfully. Once the admin approves your request,
-                you will receive a notification on the same. The leave will run from '.$leave->start_date.' to '.$leave->end_date,
-                'salutation' => 'Regards, '.(env('APP_NAME'))
+                you will receive a notification on the same. The leave will run from ' . $leave->start_date . ' to ' . $leave->end_date,
+                'salutation' => 'Regards, ' . (env('APP_NAME'))
             ];
 
             // send a notification for creating a Leave request
@@ -137,6 +137,7 @@ class LeaveController extends Controller
             return redirect()->route('user.leaves.index', [auth()->user()->id])->with('error_message', 'Error!! Please try again');
         }
 
+
         return redirect()->route('user.leaves.index', [auth()->user()->id])->with('success_message', 'Leave request updated successfully!!');
     }
 
@@ -150,16 +151,13 @@ class LeaveController extends Controller
     {
         $leave = Leave::where('user_id', $user_id)->findOrFail($leave_id);
 
-        if(!$leave){
+        if (!$leave) {
             dd('Error! ID not found');
-        }
-
-        else{
-            if(!$leave->delete()) {
-            return redirect()->route('user.leaves.index', [auth()->user()->id])->with('error_message', 'Error Occurred! Please try again...');
+        } else {
+            if (!$leave->delete()) {
+                return redirect()->route('user.leaves.index', [auth()->user()->id])->with('error_message', 'Error Occurred! Please try again...');
             }
             return redirect()->route('user.leaves.index', [auth()->user()->id])->with('success_message', 'Leave request deleted successfully!!');
         }
-
     }
 }

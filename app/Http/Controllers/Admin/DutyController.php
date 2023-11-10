@@ -13,6 +13,8 @@ use Illuminate\Notifications\Notification;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Notification as FacadesNotification;
 use Illuminate\Support\Facades\Schema;
+use Barryvdh\DomPDF\Facade\Pdf as FacadePdf;
+use Carbon\Carbon;
 
 class DutyController extends Controller
 {
@@ -232,5 +234,21 @@ class DutyController extends Controller
 
     public function createNewEvent(Request $request) {
         // $event = Event
+    }
+
+    /**
+     * download the sunday report as a PDF
+     */
+    public function downloadSchedule() {
+        $sundaySchedules = Duty::all();
+        // dd($request);
+
+        // load the PDF file
+        view()->share('duties', $sundaySchedules);
+        $pdf = FacadePdf::loadView('user.duty.download');
+
+        // dd($pdf);
+        // store these PDF'S in a table, with the name, doc_type, path, text, etc
+        return $pdf->download(Carbon::now() . '-sunday-duty-roster.pdf');
     }
 }

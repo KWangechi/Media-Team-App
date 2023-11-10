@@ -130,7 +130,7 @@ Route::middleware(['auth'])->group(function () {
         //profile
         Route::get('/{id}/profile', [ProfileController::class, 'index'])->name('user.profile');
         Route::post('/{id}/profile', [ProfileController::class, 'store'])->name('user.profile.create');
-        Route::post('/{user_id}/profile/{id}', [ProfileController::class, 'update'])->name('user.profile.update');
+        Route::patch('/{user_id}/profile/{id}', [ProfileController::class, 'update'])->name('user.profile.update');
         Route::delete('/{user_id}/profile/{id}', [ProfileController::class, 'destroy'])->name('user.profile.delete');
 
         //Leaves
@@ -150,8 +150,10 @@ Route::middleware(['auth'])->group(function () {
 
         //Duty Roster
         Route::get('/{id}/duty', [DutyController::class, 'index'])->name('user.duty.index');
+        Route::get('/downloadSchedule', [DutyController::class, 'downloadSchedule'])->name('user.downloadSchedule');
 
-    
+
+
         Route::get('/announcements', [AnnouncementController::class, 'index'])->name('user.announcements');
         Route::patch('/announcement/{id}', [AnnouncementController::class, 'update'])->name('announcement.update');
         Route::delete('/announcement/{id}', [AnnouncementController::class, 'destroy'])->name('announcement.delete');

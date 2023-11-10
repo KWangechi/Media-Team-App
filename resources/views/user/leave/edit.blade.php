@@ -3,7 +3,7 @@
     <main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg ">
 
         <!-- Navbar -->
-        <x-navbars.navigation titlePage="Edit Leaves"></x-navbars.navigation>
+        <x-navbars.navigation titlePage="Edit Leave"></x-navbars.navigation>
         <div class="container">
             <h3 class="text-center">
                 <strong>

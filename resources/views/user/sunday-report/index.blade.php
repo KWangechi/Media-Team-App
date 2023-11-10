@@ -1,205 +1,247 @@
-<x-app-layout>
-    <x-slot name="slot">
-        <div class="container">
-            <br>
+<x-layout bodyClass="g-sidenav-show  bg-gray-200 dark-version">
 
-            <!-- Display error or success message -->
-            @if (session('success_message'))
-            <div class="alert alert-success alert-dismissible fade show mx-auto text-center" style="max-width: 700px;">
-                {{ session('success_message') }}
-                <a class="btn-close" data-bs-dismiss="alert" aria-label="Close"></a>
-            </div>
+    <x-navbars.sidebar activePage="sunday-reports"></x-navbars.sidebar>
 
-            @elseif (session('error_message'))
-            <div class="alert alert-danger alert-dismissible fade show">
-                {{ session('error_message') }}
-                <a class="btn-close" data-bs-dismiss="alert" aria-label="Close"></a>
-            </div>
-            @endif
+    <main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg ">
 
-            <!-- check if there are any reports -->
-            @if ($reports->count() < 1)
-            <div class="alert alert-info alert-dismissible">
-                No report uploaded yet
-            </div>
+        <!-- Navbar -->
+        <x-navbars.navigation titlePage="Sunday Reports"></x-navbars.navigation>
 
-            <a class="btn btn-primary btn-sm float-right" data-bs-toggle="modal" data-bs-target="#createReportModal" id="createReportModalButton">
-                <i class="bi bi-plus-circle"></i>
-                CREATE A NEW REPORT</a>
-
-            <!-- Create a Report Modal -->
-            <div class="modal" id="createReportModal" tabindex="-1" aria-labelledby="createReportModalLabel" aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="createReportModalTitle">Create a new Report</h5>
-                            <a class="btn-close" id="closeModalButton" data-bs-dismiss="modal" aria-label="Close"></a>
-                        </div>
-                        <div class="modal-body">
-                            <form method="POST" id="createReportForm" action="{{ route('user.sunday-report.create', auth()->user()->id )}}">
-                                @csrf
-
-                                <!-- Report Date -->
-                                <div class="mt-4">
-                                    <x-label for="report_date" :value="__('Report Date')" />
-
-                                    <x-input class="block mt-1 w-full" id="report_date" name="report_date" type="date" autofocus placeholder="eg. 2022-01-01" />
-                                </div>
-
-                                <!-- Event Title -->
-                                <div class="mt-4">
-                                    <x-label for="event_type" :value="__('Event Type')" />
-
-                                    <x-input id="event_type" class="block mt-1 w-full" type="text" name="event_type" required placeholder="eg. Second Service" />
-                                </div>
-
-                                <!-- WorkStation -->
-                                <div class="mt-4">
-                                    <x-label for="workstation" :value="__('Workstation')" />
-
-                                    <x-input id="workstation" class="block mt-1 w-full" type="text" name="workstation" required placeholder="eg. VMix" />
-                                </div>
-
-                                <!-- Comments -->
-                                <div class="mt-4">
-                                    <x-label for="report_comments" :value="__('Report Comments')" />
-
-                                    <x-textarea id="report_comments" class="block mt-1 w-full" type="text" name="report_comments" required placeholder="eg. Microphones were making noises during the second service and we need to replace the wires" />
-                                </div>
-
-                                <br>
-                                <x-button class="ml-4 btn-primary">
-                                    {{ __('Save') }}
-                                </x-button>
-                            </form>
-                        </div>
-                        <div class="modal-footer">
-                            <a class="btn btn-secondary" data-bs-dismiss="modal">Close</a>
-                        </div>
-                    </div>
+        <!-- Toast notifications -->
+        @if (session('success_message'))
+        <div class="toast-container" style="position: absolute; top: 30px; right: 40px;" data-bs-animation="true" data-bs-delay="3000">
+            <div class="toast fade show">
+                <div class="toast-header">
+                    <span class="badge bg-gradient-success mx-2">.</span>
+                    <strong class="me-auto"><i class="bi-globe"></i>Success Message</strong>
+                    <small>just now</small>
+                    <button type="button" class="btn-close btn-sm bg-dark" data-bs-dismiss="toast"></button>
+                </div>
+                <div class="toast-body">
+                    {{ session('success_message') }}
                 </div>
             </div>
+        </div>
 
-            @else
-            <a class="btn btn-primary btn-sm float-right" data-bs-toggle="modal" data-bs-target="#createReportModal" id="createReportModalButton">
-                <i class="bi bi-plus-circle"></i>
-                CREATE A NEW REPORT</a>
-
-            <div class="modal" id="createReportModal" tabindex="-1" aria-labelledby="createReportModalLabel" aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="createReportModalTitle">Create a new Report</h5>
-                            <a class="btn-close" id="closeModalButton" data-bs-dismiss="modal" aria-label="Close"></a>
-                        </div>
-                        <div class="modal-body">
-                            <form method="POST" id="createReportForm" action="{{ route('user.sunday-report.create', auth()->user()->id )}}">
-                                @csrf
-
-                                <!-- Report Date -->
-                                <div class="mt-4">
-                                    <x-label for="report_date" :value="__('Report Date')" />
-
-                                    <x-input class="block mt-1 w-full" id="report_date" name="report_date" type="date" autofocus placeholder="eg. 2022-01-01" />
-                                </div>
-
-                                <!-- Event Title -->
-                                <div class="mt-4">
-                                    <x-label for="event_type" :value="__('Event Type')" />
-
-                                    <x-input id="event_type" class="block mt-1 w-full" type="text" name="event_type" required placeholder="eg. Second Service" />
-                                </div>
-
-                                <!-- WorkStation -->
-                                <div class="mt-4">
-                                    <x-label for="workstation" :value="__('Workstation')" />
-
-                                    <x-input id="workstation" class="block mt-1 w-full" type="text" name="workstation" required placeholder="eg. VMix" />
-                                </div>
-
-                                <!-- Comments -->
-                                <div class="mt-4">
-                                    <x-label for="comments" :value="__('Report Comments')" />
-
-                                    <x-textarea id="report_comments" class="block mt-1 w-full" type="text" name="report_comments" required placeholder="eg. Microphones were making noises during the second service and we need to replace the wires" />
-                                </div>
-
-                                <br>
-                                <x-button class="ml-4 btn-primary">
-                                    {{ __('Save') }}
-                                </x-button>
-                            </form>
-                        </div>
-                        <div class="modal-footer">
-                            <a class="btn btn-secondary" data-bs-dismiss="modal">Close</a>
-                        </div>
-                    </div>
+        @elseif (session('error_message'))
+        <div class="toast-container" style="position: absolute; top: 30px; right: 40px;" data-bs-animation="true" data-bs-delay="3000">
+            <div class="toast fade show">
+                <div class="toast-header">
+                    <span class="badge bg-gradient-danger mx-2">.</span>
+                    <strong class="me-auto"><i class="bi-globe"></i>Error Message</strong>
+                    <small>just now</small>
+                    <button type="button" class="btn-close btn-sm bg-dark" data-bs-dismiss="toast"></button>
                 </div>
-            </div>
-
-
-            <!-- card for displaying the summary roster -->
-            <div class="row row-cols-1 row-cols-md-2 g-4" style="margin-top: 40px;">
-            @foreach ($reports as $report)
-                <div class="col">
-                    <div class="card border-primary mb-2">
-                        <div class="card-header">
-                            <b>{{$report->report_date}}: </b>{{$report->event_type}}
-                        </div>
-                        <div class="card-body">
-                            <p class="card-text mb-4"><b>Report Comments: </b></p>
-                            <p class="mt-0 mb-1">{{$report->comments}}</p>
-
-
-                        </div>
-
-                        <div class="card-footer col-12">
-                            <a href="{{ route('user.sunday-report.edit', [auth()->user()->id, $report->id]) }}" class="btn btn-secondary btn-sm col float-left my-auto">EDIT</a>
-
-                        </div>
-                    </div>
-                </div>
-                @endforeach
-            </div>
-            @endif
-
-            <!-- Pagination -->
-            <div class="row">
-                <div class="col offset-md-6 mb-3">
-                    {{$reports->links()}}
+                <div class="toast-body">
+                    {{session('error_message')}}
                 </div>
             </div>
 
         </div>
-    </x-slot>
-</x-app-layout>
+        @endif
 
-<script>
-    let createsummaryRosterModal = document.querySelector("#createReportModal")
+        @if ($reports->isEmpty())
+        <div class="text-center mt-6">
+            <svg xmlns="http://www.w3.org/2000/svg" width="160" height="160" fill="currentColor" class="bi bi-file-earmark-text" viewBox="0 0 16 16">
+                <path d="M5.5 7a.5.5 0 0 0 0 1h5a.5.5 0 0 0 0-1h-5zM5 9.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5zm0 2a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1h-2a.5.5 0 0 1-.5-.5z" />
+                <path d="M9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V4.5L9.5 0zm0 1v2A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h5.5z" />
+            </svg>
+            <h3 class="mt-5">NO REPORTS YET</h3>
+            <p class="mt-4 mx-auto">You have no reports. Click the link below to create</p>
 
-    let editMemberDetails = document.querySelector("#editMemberDetails")
-    let createMemberDetails = document.querySelector('#createMemberDetails')
+            <a class="btn bg-gradient-warning mt-3" data-bs-toggle="modal" data-bs-target="#createLeaveModal" id="createLeaveModalButton">
+                <i class="material-icons">drafts</i>
+                Create a New Report
+            </a>
+        </div>
 
-    // createsummaryRosterModalButton.addEventListener('click', function(){
-    //     $("#createsummaryRosterModal").fadeToggle();
-    // })
+        <!-- Create Leave Request Modal -->
+        <div class="modal fade" id="createLeaveModal" tabindex="-1" role="dialog" aria-labelledby="modal-form" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-md">
+                <div class="modal-content">
+                    <div class="modal-body p-0">
+                        <div class="card card-plain">
+                            <div class="card-header pb-0 text-left">
+                                <h5 class="">Create a New Report</h5>
+                            </div>
+                            <div class="card-body">
+                                <form action="{{ route('user.sunday-report.create', auth()->user()->id )}}" method="POST" id="createReportForm">
+                                    @csrf
 
-    // editMemberDetails.addEventListener('click', function(e) {
-    //     // console.log(editMemberDetails.innerText);
-    //     $("#staticBackdrop").modal('toggle');
-    // })
+                                    <label class="form-label font-weight-bold">WorkStation</label>
+                                    <div class="input-group input-group-outline mt-1 mb-3">
+                                        <select class="form-select-md form-control" name="workstation" id="workstation">
+                                            <option value="" disabled selected>--Select an Option--</option>
+                                            <option value="VMix">VMix</option>
+                                            <option value="Sound">Sound</option>
+                                            <option value="Stage Management">Stage Management</option>
+                                            <option value="Video">Video</option>
+                                        </select>
+                                    </div>
+
+                                    <label class="form-label font-weight-bold">Report Date</label>
+                                    <div class="input-group input-group-outline mt-1 mb-3">
+                                        <input type="date" class="form-control" name="report_date" id="report_date">
+                                    </div>
+
+                                    <label class="form-label font-weight-bold">Event Type</label>
+                                    <div class="input-group input-group-outline mt-1 mb-3">
+                                        <input type="text" class="form-control" name="event_type" id="event_type">
+                                    </div>
+
+                                    <label class="form-label font-weight-bold">Comments</label>
+                                    <div class="input-group input-group-outline mt-1 mb-3">
+                                        <textarea class="form-control" id="comments" name="comments" rows="3"></textarea>
+                                    </div>
+                                    <div class="text-center ">
+                                        <button type="submit" class=" btn btn-round btn-md bg-gradient-info w-30 mt-2 mb-0">Save</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        @else
+        <a class="btn bg-gradient-secondary mx-4 mb-0" data-bs-toggle="modal" data-bs-target="#createLeaveModal" id="createLeaveModalButton">
+            <i class="material-icons">add</i>
+            CREATE NEW REPORT
+        </a>
+
+        <!-- Create Leave Request Modal -->
+        <div class="modal fade" id="createLeaveModal" tabindex="-1" role="dialog" aria-labelledby="modal-form" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-md">
+                <div class="modal-content">
+                    <div class="modal-body p-0">
+                        <div class="card card-plain">
+                            <div class="card-header pb-0 text-left">
+                                <h5 class="">Create a New Report</h5>
+                            </div>
+                            <div class="card-body">
+                                <form action="{{ route('user.sunday-report.create', auth()->user()->id )}}" method="POST" id="createReportForm">
+                                    @csrf
+
+                                    <label class="form-label font-weight-bold">WorkStation</label>
+                                    <div class="input-group input-group-outline mt-1 mb-3">
+                                        <select class="form-select-md form-control" name="workstation" id="workstation">
+                                            <option value="" disabled selected>--Select an Option--</option>
+                                            <option value="VMix">VMix</option>
+                                            <option value="Sound">Sound</option>
+                                            <option value="Stage Management">Stage Management</option>
+                                            <option value="Video">Video</option>
+                                        </select>
+                                    </div>
+
+                                    <label class="form-label font-weight-bold">Report Date</label>
+                                    <div class="input-group input-group-outline mt-1 mb-3">
+                                        <input type="date" class="form-control" name="report_date" id="report_date">
+                                    </div>
+
+                                    <label class="form-label font-weight-bold">Event Type</label>
+                                    <div class="input-group input-group-outline mt-1 mb-3">
+                                        <input type="text" class="form-control" name="event_type" id="event_type">
+                                    </div>
+
+                                    <label class="form-label font-weight-bold">Comments</label>
+                                    <div class="input-group input-group-outline mt-1 mb-3">
+                                        <textarea class="form-control" id="comments" name="comments" rows="3"></textarea>
+                                    </div>
+                                    <div class="text-center ">
+                                        <button type="submit" class="text-white btn btn-round btn-md bg-gradient-info w-30 mt-4 mb-0">Save</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
 
-    $(document).ready(function() {
-        $("#createsummaryRosterModalButton").on('click', function() {
-            $("#createsummaryRosterModal").modal('toggle');
+        <!-- Container for the table -->
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12">
+                    <div class="card my-4">
+                        <div class="card-body px-0 pb-2">
+                            <div class="table-responsive p-0">
+                                <table class="table align-items-center justify-content-center mb-0">
+                                    <thead>
+                                        <tr>
+                                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder text-center">
+                                                Workstation</th>
+                                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder">
+                                                Report Date</th>
+                                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder">
+                                                Event Type</th>
+                                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder text-center">
+                                                Comments</th>
+                                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder text-center">
+                                                Actions
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach ($reports as $report)
+                                        <tr>
+                                            <td>
+                                                <div class="d-flex px-2">
+                                                    <div class="mx-auto">
+                                                        <h6 class="mb-0 text-sm">{{$report->workstation}}</h6>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <p class="text-sm font-weight-bold mb-0">{{$report->report_date}}</p>
+                                            </td>
+                                            <td>
+                                                <span class="text-sm font-weight-bold mb-0">{{$report->event_type}}</span>
+                                            </td>
+                                            <td>
+                                                <span class="text-sm font-weight-bold mb-0">{{$report->comments}}</span>
+                                            </td>
+                                            <td class="align-middle">
+                                                <div class="row text-center mx-auto p-0">
+                                                    <div class="col-6 mx-auto">
+                                                        <a href="{{ route('user.sunday-report.edit', [auth()->id(), $report->id]) }}" rel="noopener noreferrer">
+                                                            <button class="btn btn-link text-secondary mb-0">
+                                                                <i class="fa fa-pen text-xs px-1"></i>
+                                                                Edit
+                                                            </button>
+                                                        </a>
+                                                    </div>
+                                                    <div class="col-6">
+                                                        <form action="{{ route('user.sunday-report.delete', [auth()->id(), $report->id]) }}" method="post">
+                                                            @csrf()
+                                                            @method('DELETE')
+                                                            <button class="btn btn-link text-secondary mb-0 ">
+                                                                <i class="fa fa-trash px-1" aria-hidden="true"></i>
+                                                                Delete
+                                                            </button>
+                                                        </form>
+                                                    </div>
+                                            </td>
+                            </div>
+                            </tr>
+                            @endforeach
+                            </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <hr class="mb-2 mt-1">
+                    <div class="d-flex pagination justify-content-end pr-3 mb-3">
+                        <div class="px-5 text-center">
+                            Showing {{count($reports)}} of {{$reports->total()}} results
+                        </div>
+                        {{$reports->links()}}
+                    </div>
+                </div>
+            </div>
+        </div>
 
+        @endif
 
-
-        })
-
-    })
-</script>
-<style>
-
-</style>
+    </main>
+</x-layout>
