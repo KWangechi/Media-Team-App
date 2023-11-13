@@ -15,11 +15,10 @@ class ProfileController extends Controller
      */
     public function index($id)
     {
-        $profiles = Profile::where('user_id', $id)->get();
+        $profile = Profile::where('user_id', auth()->id())->first();
 
-        // dd($id);
-
-        return view('user.index', compact('profiles'));
+        // dd($profile->id);
+        return view('user.index', compact('profile'));
     }
 
     /**
@@ -41,15 +40,12 @@ class ProfileController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'user_id',
             'about',
             'date_of_birth',
             'photo' => 'image|mimes:png,jpg,svg,jpeg|max:2048',
         ]);
 
-        // $imageName = time().'.'.$request->photo->extension();  
-
-
+        // $imageName = time().'.'.$request->photo->extension();
 
         $profile =  Profile::create([
             'user_id' => auth()->user()->id,
@@ -97,21 +93,23 @@ class ProfileController extends Controller
     {
         $profile = Profile::where('user_id', $user_id)->find($profile_id);
 
-        dd($profile->id);
+        // dd($profile);
 
         if (!$profile->update(
             [
-                'user_id' => auth()->user()->id,
                 'about' => $request->about,
-                'date_of_birth' => $request->date_of_birth,
-                'photo' => $request->photo->store('images', 'public')
+                'phone' => $request->phone,
+                'date_of_birth' => $request->date_of_birth
             ]
-        )) 
+        ))
         {
-            return redirect()->route('user.profile', [auth()->user()->id])->with('error_message', 'Error!Please try again');
+            // dd($profile);
+
+            return redirect()->route('user.profile', [auth()->user()->id])->with('error_message', 'Error! Please try again');
         };
 
         return redirect()->route('user.profile', [auth()->user()->id])->with('success_message', 'Profile updated successfully');
+
     }
 
     /**
