@@ -44,7 +44,7 @@
             </div>
             <div class="card card-body mx-3 mx-md-4 mt-n6">
                 <div class="row gx-4 mb-2">
-                    <div class="col-auto">
+                    <div class="col-auto px-4">
                         <div class="avatar avatar-xl position-relative">
                             <img src="{{ asset('/storage/'.auth()->user()->profile->photo) }}" alt="profile_image" class="w-100 border-radius-lg shadow-sm mt-2" height="80px;">
                         </div>
@@ -70,7 +70,7 @@
                     </div>
                     <div class="card-body p-3">
 
-                        <form method="POST" action="{{ route('user.profile.update', [auth()->id(), $profile->id]) }}">
+                        <form method="POST" action="{{ route('user.profile.update', [auth()->id(), $profile->id]) }}" enctype="multipart/form-data">
                             @csrf
                             @method('PATCH')
 
@@ -117,6 +117,15 @@
                                     </div>
                                 </div>
 
+                            </div>
+
+                            <div class="row mt-3 mb-3">
+                                <div class="col-md-6">
+                                    <label for="profilePhoto" class="form-label">Profile Photo</label>
+                                    <div class="input-group input-group-outline mt-2 mb-3 col-md-6">
+                                        <input class="form-control border px-3" type="file" id="photo" name="photo">
+                                    </div>
+                                </div>
                             </div>
                             <div class="mb-4">
                                 <label for="about">About</label>

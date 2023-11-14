@@ -51,7 +51,7 @@ class ProfileController extends Controller
             'user_id' => auth()->user()->id,
             'about' => $request->about,
             'date_of_birth' => $request->date_of_birth,
-            'photo' => $request->photo->store('images', 'public')
+            'photo' => $request->file('photo')->store('images')
         ]);
 
         if (!$profile) {
@@ -93,13 +93,15 @@ class ProfileController extends Controller
     {
         $profile = Profile::where('user_id', $user_id)->find($profile_id);
 
+        // dd($request);
         // dd($profile);
 
         if (!$profile->update(
             [
                 'about' => $request->about,
                 'phone' => $request->phone,
-                'date_of_birth' => $request->date_of_birth
+                'date_of_birth' => $request->date_of_birth,
+                'photo' => $request->photo->store('images', 'public')
             ]
         ))
         {
