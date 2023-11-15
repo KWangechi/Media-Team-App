@@ -2,7 +2,7 @@
 
     <x-navbars.sidebar activePage="sunday-reports"></x-navbars.sidebar>
 
-    <main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg ">
+    <main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg">
 
         <!-- Navbar -->
         <x-navbars.navigation titlePage="Sunday Reports"></x-navbars.navigation>

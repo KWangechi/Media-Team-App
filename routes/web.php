@@ -46,7 +46,7 @@ Route::middleware(['auth'])->group(function () {
         //users
         Route::get('/users', [Admin\UserController::class, 'index'])->name('admin.users.index');
         Route::post('/users', [Admin\UserController::class, 'store'])->name('admin.users.create');
-        Route::delete('/users/{id}', [Admin\UserController::class, 'destroy'])->name('admin.users.destroy');
+        Route::delete('/users/{id}', [Admin\UserController::class, 'destroy'])->name('admin.users.delete');
 
         Route::get('users/{id}/approve', [Admin\UserController::class, 'approve'])->name('admin.users.approve');
         Route::get('users/{id}', [Admin\UserController::class, 'edit'])->name('admin.users.edit');

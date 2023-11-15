@@ -22,10 +22,10 @@
             <ul class="navbar-nav  justify-content-end">
                 <li class="nav-item d-flex align-items-center">
                     <a href="javascript:;" class="nav-link text-body font-weight-bold px-0">
-                        @if (auth()->user()->profile->photo == null)
-                        <img src="" alt="">
-                        @else
+                        @if (auth()->user()->profile)
                         <img src="{{ asset('/storage/'.auth()->user()->profile->photo) }}" alt="" class=" rounded-circle shadow-4-strong" width="30px;" height="30px;">
+                        @else
+                        <img src="" alt="">
                         @endif
 
                         <span class="d-sm-inline d-none" onclick="event.preventDefault();document.getElementById('logout-form').submit();">Sign

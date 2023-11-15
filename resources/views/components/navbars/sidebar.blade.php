@@ -80,17 +80,19 @@
             </li>
 
             <li class="nav-item">
-                <a class="nav-link text-white {{ $activePage == 'notifications' ? ' active bg-gradient-warning' : '' }}  " href="{{ route('admin.announcements') }}">
+                <a class="nav-link text-white {{ $activePage == 'notifications' ? ' active bg-gradient-warning' : '' }}  " href="{{ route('user.announcements') }}">
                     <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
                         <i class="material-icons opacity-10">notifications</i>
                     </div>
                     <span class="nav-link-text ms-1">Notifications</span>
-                    <span class="badge rounded-pill badge-notification bg-danger">
-                        {{count(auth()->user()->unreadNotifications)}}
+
+                    @if (count(auth()->user()->unreadNotifications) > 0)
+                    <span class="badge rounded-pill badge-notification bg-info p-2 mx-2">
+                        {{ count(auth()->user()->unreadNotifications) }}
                     </span>
+                    @endif
                 </a>
             </li>
-
             @else
             <li class="nav-item">
                 <a class="nav-link text-white {{ $activePage == 'duty-schedule' ? ' active bg-gradient-warning' : '' }}  " href="{{ route('user.duty.index', auth()->id()) }}">
