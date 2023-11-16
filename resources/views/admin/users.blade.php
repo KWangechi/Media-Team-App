@@ -82,14 +82,14 @@
                                 <table class="table align-items-center justify-content-center mb-0">
                                     <thead>
                                         <tr>
-                                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder text-center">
-                                                #Ref</th>
                                             <th class="text-uppercase text-secondary text-xxs font-weight-bolder">
                                                 Name</th>
                                             <th class="text-uppercase text-secondary text-xxs font-weight-bolder">
                                                 Email</th>
                                             <th class="text-uppercase text-secondary text-xxs font-weight-bolder text-center">
                                                 Phone Number</th>
+                                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder text-center">
+                                                Role</th>
                                             <th class="text-uppercase text-secondary text-xxs font-weight-bolder text-center">
                                                 Date Joined</th>
                                             <th class="text-uppercase text-secondary text-xxs font-weight-bolder text-center">
@@ -106,14 +106,7 @@
                                     <tbody>
                                         @foreach ($users as $user)
                                         <tr>
-                                            <td>
-                                                <div class="d-flex px-2">
-                                                    <div class="mx-auto">
-                                                        <h6 class="mb-0 text-sm">{{$user->id}}</h6>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td>
+                                            <td class="text-center">
                                                 <p class="text-sm font-weight-bold mb-0">{{$user->name}}</p>
                                             </td>
                                             <td>
@@ -122,6 +115,11 @@
                                             <td>
                                                 <span class="text-sm font-weight-bold mb-0">{{$user->phone_number}}</span>
                                             </td>
+
+                                            <td>
+                                                <span class="text-sm font-weight-bold mb-0">{{$user->role->name}}</span>
+                                            </td>
+
                                             <td>
                                                 <span class="text-sm font-weight-bold mb-0">{{$user->date_joined}}</span>
                                             </td>

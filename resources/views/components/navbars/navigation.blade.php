@@ -25,10 +25,10 @@
                         @if (auth()->user()->profile)
                         <img src="{{ asset('/storage/'.auth()->user()->profile->photo) }}" alt="" class=" rounded-circle shadow-4-strong" width="30px;" height="30px;">
                         @else
-                        <img src="" alt="">
+                        <i style="font-size: 2.0rem;" class="fas fa-user-circle ps-2 pe-2 text-center"></i>
                         @endif
 
-                        <span class="d-sm-inline d-none" onclick="event.preventDefault();document.getElementById('logout-form').submit();">Sign
+                        <span class="d-sm-inline my-2 d-none" onclick="event.preventDefault();document.getElementById('logout-form').submit();">Sign
                             Out</span>
                     </a>
                 </li>
