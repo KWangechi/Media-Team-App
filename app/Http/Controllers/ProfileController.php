@@ -51,7 +51,7 @@ class ProfileController extends Controller
             'user_id' => auth()->user()->id,
             'about' => $request->about,
             'date_of_birth' => $request->date_of_birth,
-            'photo' => $request->file('photo')->store('images')
+            'photo' => $request->photo->store('images', 'public')
         ]);
 
         if (!$profile) {

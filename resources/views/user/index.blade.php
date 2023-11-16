@@ -34,20 +34,23 @@
                     {{session('error_message')}}
                 </div>
             </div>
-
         </div>
         @endif
 
         <div class="container-fluid px-2 px-md-4">
             <div class="page-header min-height-300 border-radius-xl mt-4" style="background-image: url('https://images.unsplash.com/photo-1531512073830-ba890ca4eba2?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1920&q=80');">
-                <span class="mask  bg-gradient-primary  opacity-6"></span>
+                <span class="mask bg-gradient-primary  opacity-6"></span>
             </div>
             <div class="card card-body mx-3 mx-md-4 mt-n6">
                 <div class="row gx-4 mb-2">
                     <div class="col-auto px-4">
+                        @if (auth()->user()->profile)
                         <div class="avatar avatar-xl position-relative">
                             <img src="{{ asset('/storage/'.auth()->user()->profile->photo) }}" alt="profile_image" class="w-100 border-radius-lg shadow-sm mt-2" height="80px;">
                         </div>
+                        @else
+                        <i style="font-size: 5.0rem;" class="fas fa-user-circle ps-2 pe-2 text-center"></i>
+                        @endif
                     </div>
                     <div class="col-auto my-auto">
                         <div class="h-100">
@@ -68,8 +71,9 @@
                             </div>
                         </div>
                     </div>
-                    <div class="card-body p-3">
 
+                    @if ($profile)
+                    <div class="card-body p-3">
                         <form method="POST" action="{{ route('user.profile.update', [auth()->id(), $profile->id]) }}" enctype="multipart/form-data">
                             @csrf
                             @method('PATCH')
@@ -116,7 +120,6 @@
                                         @enderror
                                     </div>
                                 </div>
-
                             </div>
 
                             <div class="row mt-3 mb-3">
@@ -134,12 +137,73 @@
                                 <p class='text-danger inputerror'>{{ $message }} </p>
                                 @enderror
                             </div>
-                            <button type="submit" class="btn btn-sm bg-gradient-info text-center">Submit</button>
+                            <button type="submit" class="btn btn-sm bg-gradient-warning text-center mx-auto">Save Changes</button>
                         </form>
                     </div>
-                </div>
-            </div>
+                    @else
+                    <div class="text-center mt-3">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16">
+                            <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" />
+                            <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z" />
+                        </svg>
+                        <h5 class="mt-3">NO PROFILE YET</h5>
+                        <p class="mt-4 mx-auto">You have no profile</p>
+
+                        <a class="btn bg-gradient-warning mt-3 mb-6" data-bs-toggle="modal" data-bs-target="#createProfileModal" id="createProfileModalButton">
+                            <i class="material-icons">person</i>
+                            Create a Profile
+                        </a>
+                    </div>
+
+                    <div class="modal fade" id="createProfileModal" tabindex="-1" role="dialog" aria-labelledby="modal-form" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered modal-md">
+                            <div class="modal-content">
+                                <div class="modal-body p-0">
+                                    <div class="card card-plain">
+                                        <div class="card-header pb-0 text-left">
+                                            <h5 class="">Create a Profile</h5>
+                                        </div>
+                                        <div class="card-body">
+                                            <!-- Modal for creating a profile -->
+                                            <form method="POST" action="{{ route('user.profile.create', auth()->id()) }}" enctype="multipart/form-data">
+                                                @csrf
+
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <label class="form-label">Date of Birth</label>
+                                                        <div class="input-group input-group-outline mt-1 mb-3 col-md-6">
+                                                            <input type="date" name="date_of_birth" class="form-control border-2 p-2">
+                                                            @error('date_of_birth')
+                                                            <p class='text-danger inputerror'>{{ $message }} </p>
+                                                            @enderror
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <label for="profilePhoto" class="form-label">Profile Photo</label>
+                                                        <div class="input-group input-group-outline mt-2 mb-3 col-md-6">
+                                                            <input class="form-control border px-3" type="file" id="photo" name="photo">
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="mb-4">
+                                                    <label for="about">About</label>
+                                                    <textarea class="form-control border p-3" id="about" name="about" rows="4" cols="50"></textarea>
+                                                    @error('about')
+                                                    <p class='text-danger inputerror'>{{ $message }} </p>
+                                                    @enderror
+                                                </div>
+                                                <button type="submit" class="btn btn-sm bg-gradient-info text-center">Save</button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+        @endif
+        </div>
+        </div>
         </div>
     </main>
-
 </x-layout>

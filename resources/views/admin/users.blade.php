@@ -160,7 +160,7 @@
                                                         </form>
                                                     </div>
                                                 </div>
-                                                </td>
+                                            </td>
                             </div>
                             </tr>
                             @endforeach
@@ -180,104 +180,82 @@
         </div>
 
         @endif
+
         <!-- Create Modal -->
-        <div class="modal fade" id="createModal" tabindex="-1" aria-labelledby="createModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
+        <div class="modal fade" id="createUserModal" tabindex="-1" aria-labelledby="createUserModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-md">
                 <div class="modal-content">
-                    <div class="modal-header ">
-                        <h5 class="modal-title" id="createModalLabel">Create a New User</h5>
-                        <a class="btn-close" data-bs-dismiss="modal" aria-label="Close"></a>
-                    </div>
-                    <div class="modal-body">
-                        <form action="{{route('admin.users.create')}}" method="POST" name="myForm" id="myForm">
-                            @csrf
-
-                            <!-- Name -->
-                            <div>
-                                <x-label for="name" :value="__('Name')" />
-
-                                <x-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')" required autofocus />
+                    <div class="modal-body p-0">
+                        <div class="card card-plain">
+                            <div class="card-header pb-0 text-left">
+                                <h5 class="">Create a New User</h5>
                             </div>
+                            <div class="card-body">
+                                <form action="{{ route('admin.users.create') }}" method="POST" id="createUserForm">
+                                    @csrf
 
-                            <!-- Email Address -->
-                            <div class="mt-4">
-                                <x-label for="email" :value="__('Email')" />
+                                    <label class="form-label font-weight-bold">Name</label>
+                                    <div class="input-group input-group-outline mt-1 mb-3">
+                                        <input type="text" class="form-control" name="name" id="name" required autofocus>
+                                    </div>
 
-                                <x-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required />
+                                    <label class="form-label font-weight-bold">Email</label>
+                                    <div class="input-group input-group-outline mt-1 mb-3">
+                                        <input type="email" class="form-control" name="email" id="email" required>
+                                    </div>
+
+                                    <label class="form-label font-weight-bold">Phone Number</label>
+                                    <div class="input-group input-group-outline mt-1 mb-3">
+                                        <input type="number" class="form-control" name="phone_number" id="phone_number" required>
+                                    </div>
+
+                                    <label class="form-label font-weight-bold">Date Joined</label>
+                                    <div class="input-group input-group-outline mt-1 mb-3">
+                                        <input type="date" class="form-control" name="date_joined" id="date_joined">
+                                    </div>
+
+                                    <label class="form-label font-weight-bold">Department</label>
+                                    <div class="input-group input-group-outline mt-1 mb-3">
+                                        <select class="form-select-md form-control" name="department" id="department" placeholder="--Select department--">
+                                            <option value="" disabled selected>--Select an Option--</option>
+                                            <option value="Video">Video</option>
+                                            <option value="Sound">Sound</option>
+                                            <option value="Computer">Computer</option>
+                                            <option value="Vmix">VMix</option>
+                                        </select>
+                                    </div>
+
+                                    <label class="form-label font-weight-bold">Role</label>
+                                    <div class="input-group input-group-outline mt-1 mb-3">
+                                        <select class="form-select-md form-control" name="role_id" id="department" placeholder="--Select department--">
+                                            <option value="" disabled selected>--Select an Option--</option>
+                                            @foreach ($roles as $role)
+                                            <option value="{{$role->id}}">{{$role->name}}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+
+                                    <label class="form-label font-weight-bold">Password</label>
+                                    <div class="input-group input-group-outline mt-1 mb-3">
+                                        <input type="password" class="form-control" name="password" id="password">
+                                    </div>
+
+                                    <label class="form-label font-weight-bold">Confirm Password</label>
+                                    <div class="input-group input-group-outline mt-1 mb-3">
+                                        <input type="password" class="form-control" name="password_confirmation" id="password_confirmation">
+                                    </div>
+
+                                    <div class="text-center">
+                                        <button type="submit" class="btn btn-round btn-md bg-gradient-info w-30 mt-4 mb-0">Save</button>
+                                    </div>
+                                </form>
                             </div>
-
-                            <!-- Phone Number -->
-                            <div class="mt-4">
-                                <x-label for="phone" :value="__('Phone Number')" />
-
-                                <x-input id="phone_number" class="block mt-1 w-full" type="number" name="phone_number" :value="old('phone_number')" required />
-                            </div>
-
-                            <!-- Date Joined -->
-                            <div class="mt-4">
-                                <x-label for="date_joined" :value="__('Date Joined')" />
-
-                                <x-input id="date_joined" class="block mt-1 w-full" type="date" name="date_joined" :value="old('date_joined')" required />
-                            </div>
-
-                            <!-- Department -->
-                            <div class="mt-4">
-                                <x-label for="deparment" :value="__('Department')" />
-                                <select name="department" class="block mt-1 w-full rounded shadow-sm">
-                                    <option value="" selected disabled>---Select the department---</option>
-                                    <option value="Video">Video</option>
-                                    <option value="Sound">Sound</option>
-                                    <option value="Computer">Computer</option>
-                                    <option value="VMix">VMix</option>
-                                </select>
-                            </div>
-
-                            <!-- Role -->
-                            <div class="mt-4">
-                                <x-label for="role" :value="__('Usertype')" />
-
-                                <select name="role_id" class="block mt-1 w-full rounded shadow-sm">
-                                    <option value="" selected disabled>---Select the usertype---</option>
-                                    @foreach($roles as $role)
-                                    <option value="{{$role->id}}">{{$role->name}}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-
-                            <!-- Password -->
-                            <div class="mt-4">
-                                <x-label for="password" :value="__('Password')" />
-
-                                <x-input id="password" class="block mt-1 w-full" type="password" name="password" required autocomplete="new-password" />
-                            </div>
-
-                            <!-- Confirm Password -->
-                            <div class="mt-4">
-                                <x-label for="password_confirmation" :value="__('Confirm Password')" />
-
-                                <x-input id="password_confirmation" class="block mt-1 w-full" type="password" name="password_confirmation" required />
-                            </div>
-                            <br>
-                            <x-button class="ml-4" id="create">
-                                {{ __('Create') }}
-                            </x-button>
-                        </form>
-                    </div>
-                    <div class="modal-footer">
-                        <a class="btn btn-secondary" data-bs-dismiss="modal">Close</a>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
 
-
-
-        <!-- Pagination -->
-        <!-- <div class="row">
-            <div class="col offset-md-6">
-                {{$users->links()}}
-            </div>
-        </div> -->
     </main>
 
-</x-app-layout>
+    </x-app-layout>
