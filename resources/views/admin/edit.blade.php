@@ -1,94 +1,115 @@
-<x-layout>
-    <!-- <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Users') }}
-        </h2>
-    </x-slot> -->
-    <x-slot name="slot">
-        <div class="container">
-            <br>
-            <!-- Display error or success message -->
-            @if (session('success_message'))
-            <div class="alert alert-success alert-dismissible fade show">
-                {{ session('success_message') }}
-                <a class="btn-close" data-bs-dismiss="alert" aria-label="Close"></a>
+<x-layout bodyClass="g-sidenav-show bg-gray-200 dark-version">
+    <x-navbars.sidebar activePage="users"></x-navbars.sidebar>
+
+    <main class="main-content position-relative max-height-vh-100 h-100">
+
+        <!-- Navbar -->
+        <x-navbars.navigation titlePage='Edit User: {{$user->id}}'></x-navbars.navigation>
+
+        <!-- Display error or success message -->
+        @if (session('success_message'))
+        <div class="toast-container" style="position: absolute; top: 30px; right: 40px;" data-bs-animation="true" data-bs-delay="3000">
+            <div class="toast fade show">
+                <div class="toast-header">
+                    <span class="badge bg-gradient-success mx-2">.</span>
+                    <strong class="me-auto"><i class="bi-globe"></i>Success Message</strong>
+                    <small>just now</small>
+                    <button type="button" class="btn-close btn-sm bg-dark" data-bs-dismiss="toast"></button>
+                </div>
+                <div class="toast-body">
+                    {{ session('success_message') }}
+                </div>
             </div>
-
-            @elseif (session('error_message'))
-            <div class="alert alert-danger alert-dismissible fade show">
-                {{ session('error_message') }}
-                <a class="btn-close" data-bs-dismiss="alert" aria-label="Close"></a>
-            </div>
-            @endif
-            <h3 class="text-center">EDIT USER</h3>
-            <form method="POST" action="{{ route('admin.users.update', $user->id) }}">
-                @csrf
-
-                <!-- Name -->
-                <div class="mt-4">
-                    <x-label for="name" :value="__('Name')" />
-
-                    <x-input id="name" class="block mt-1 w-full" type="text" name="name" value="{{$user->name}}" required autofocus />
-                </div>
-
-                <!-- Email Address -->
-                <div class="mt-4">
-                    <x-label for="email" :value="__('Email')" />
-
-                    <x-input id="email" class="block mt-1 w-full" type="email" name="email" value="{{$user->email}}" required />
-                </div>
-
-                <!-- Phone Number -->
-                <div class="mt-4">
-                    <x-label for="phone" :value="__('Phone Number')" />
-
-                    <x-input id="phone_number" class="block mt-1 w-full" type="number" name="phone_number" value="{{$user->phone_number}}" required />
-                </div>
-
-                <!-- Date Joined -->
-                <div class="mt-4">
-                    <x-label for="date_joined" :value="__('Date Joined')" />
-
-                    <x-input id="date_joined" class="block mt-1 w-full" type="date" name="date_joined" value="{{$user->date_joined}}" required />
-                </div>
-
-                <!-- Department -->
-                <div class="mt-4">
-                    <x-label for="deparment" :value="__('Department')" />
-                    <select name="department">
-                        <option value="">Select the department</option>
-                        <option value="Video">Video</option>
-                        <option value="Sound">Sound</option>
-                        <option value="Computer">Computer</option>
-                        <option value="VMix">VMix</option>
-                    </select>
-                </div>
-
-                <!-- Role -->
-                <div class="mt-4">
-                    <x-label for="role" :value="__('Usertype')" />
-
-                    <select name="role_id">
-                        <option value="">Select the usertype</option>
-                        @foreach($roles as $role)
-                        <option value="{{$role->id}}">{{$role->name}}</option>
-                        @endforeach
-                    </select>
-                </div>
-
-                <br>
-                <div class="ml-4">
-                    <x-button class="ml-4">
-                        {{ __('Update') }}
-                    </x-button>
-                </div>
-
-                <div class="mt-3 mb-150">
-                    <a class="btn btn-secondary float-right" href="{{ route('admin.users.index') }}">Cancel</a>
-                </div>
-                <!-- <br>
-                <br> -->
         </div>
+
+        @elseif (session('error_message'))
+        <div class="toast-container" style="position: absolute; top: 30px; right: 40px;" data-bs-animation="true" data-bs-delay="3000">
+            <div class="toast fade show">
+                <div class="toast-header">
+                    <span class="badge bg-gradient-danger mx-2">.</span>
+                    <strong class="me-auto"><i class="bi-globe"></i>Error Message</strong>
+                    <small>just now</small>
+                    <button type="button" class="btn-close btn-sm bg-dark" data-bs-dismiss="toast"></button>
+                </div>
+                <div class="toast-body">
+                    {{session('error_message')}}
+                </div>
+            </div>
+        </div>
+        @endif
+
+        <h4 class="text-center">EDIT USER</h4>
+
+        <div class="card-body p-3">
+        <form method="POST" action="{{ route('admin.users.update', $user->id) }}">
+            @csrf
+            @method('PATCH')
+
+            <div class="row">
+                <div class="col-md-6">
+                    <label class="form-label font-weight-bold">Name</label>
+                    <div class="input-group input-group-outline mt-1 mb-3">
+                        <input type="text" class="form-control" name="name" id="name" required autofocus value="{{$user->name}}">
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+
+                    <label class="form-label font-weight-bold">Email</label>
+                    <div class="input-group input-group-outline mt-1 mb-3">
+                        <input type="email" class="form-control" name="email" id="email" required value="{{$user->email}}">
+                    </div>
+                </div>
+            </div>
+
+            <div class="row mt-4">
+                <div class="col-md-6">
+                    <label class="form-label font-weight-bold">Phone Number</label>
+                    <div class="input-group input-group-outline mt-1 mb-3">
+                        <input type="number" class="form-control" name="phone_number" id="phone_number" required value="{{$user->phone_number}}">
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <label class="form-label font-weight-bold">Date Joined</label>
+                    <div class="input-group input-group-outline mt-1 mb-3">
+                        <input type="date" class="form-control" name="date_joined" id="date_joined" value="{{$user->date_joined}}">
+                    </div>
+                </div>
+            </div>
+
+            <div class="row mt-4">
+                <div class="col-md-6">
+                    <label class="form-label font-weight-bold">Department</label>
+                    <div class="input-group input-group-outline mt-1 mb-3">
+                        <select class="form-select-md form-control" name="department" id="department" placeholder="--Select department--">
+                            <option value="" disabled selected>--{{$user->department}}--</option>
+                            <option value="Video">Video</option>
+                            <option value="Sound">Sound</option>
+                            <option value="Computer">Computer</option>
+                            <option value="Vmix">VMix</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <label class="form-label font-weight-bold">Role</label>
+                    <div class="input-group input-group-outline mt-1 mb-3">
+                        <select class="form-select-md form-control" name="role_id" id="department" placeholder="--Select department--">
+                            <option value="" disabled selected>{{$user->role->name}}</option>
+                            @foreach ($roles as $role)
+                            <option value="{{$user->role->id}}">{{$role->name}}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="text-center">
+                <button type="submit" class="btn btn-sm btn-round bg-gradient-primary mt-4 mb-0">Save Changes</button>
+            </div>
+
         </form>
-    </x-slot>
-</x-app-layout>
+        </div>
+    </main>
+</x-layout>

@@ -88,7 +88,7 @@
                                                 Email</th>
                                             <th class="text-uppercase text-secondary text-xxs font-weight-bolder text-center">
                                                 Phone Number</th>
-                                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder text-center">
+                                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder text-center">
                                                 Role</th>
                                             <th class="text-uppercase text-secondary text-xxs font-weight-bolder text-center">
                                                 Date Joined</th>
@@ -132,6 +132,9 @@
                                             <td class="align-middle text-center">
                                                 @if ($user->account_status == 'pending')
                                                 <span class="text-xs text-lowercase badge bg-gradient-warning">{{$user->account_status}}</span>
+                                                <a href="{{route('admin.users.approve', $user->id)}}" class="my-auto" data-bs-toggle="tooltip" data-bs-placement="top" title="Approve user" data-container="body" data-animation="true">
+                                                    <i style="font-size: 1.3rem;" class="fa fa-check-circle-o ps-2 pe-2" aria-hidden="true"></i>
+                                                </a>
                                                 @else
                                                 <span class="text-xs text-lowercase badge bg-gradient-success">{{$user->account_status}}</span>
                                                 @endif
