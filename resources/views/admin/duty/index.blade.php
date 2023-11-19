@@ -128,7 +128,7 @@
 
                                             <div class="modal-footer">
                                                 <a class="btn btn-secondary btn-sm" id="cancelDutyRosterModalButton" data-bs-dismiss="modal">Cancel</a>
-                                                <button class="btn btn-primary btn-sm">Save</button>
+                                                <button class="btn btn-primary btn-sm">Save Changes</button>
 
                                             </div>
                                         </form>
@@ -192,7 +192,7 @@
             <div class="row">
                 <div class="col-md-6">
                     <!-- <a href="{{ route('admin.duty.roster.edit', $duty->id) }}" class="btn btn-secondary mx-4 mb-3">EDIT DUTY ROSTER</a> -->
-                    <a class="btn btn-secondary mx-4 mb-3" id="editDutyRosterModalButton" data-bs-toggle="modal" data-bs-target="#editDutyRoster-{{$duty->id}}">
+                    <a class="btn btn-secondary mx-4 mb-3 pr-3" id="editDutyRosterModalButton" data-bs-toggle="modal" data-bs-target="#editDutyRoster-{{$duty->id}}">
                         <i class="material-icons">edit</i>
                         EDIT DUTY ROSTER
                     </a>
@@ -202,7 +202,10 @@
                         @csrf
                         @method('DELETE')
 
-                        <button class="btn btn-danger ml-12">DELETE DUTY ROSTER</button>
+                        <button class="btn btn-danger ml-12 pl-3">
+                            <i class="material-icons">delete</i>
+                            DELETE DUTY ROSTER
+                        </button>
                     </form>
                 </div>
                 <!-- </div> -->
@@ -330,7 +333,6 @@
                     </div>
                 </div>
             </div>
-
 
     </main>
 </x-layout>
