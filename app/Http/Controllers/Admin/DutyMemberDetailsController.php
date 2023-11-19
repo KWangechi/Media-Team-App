@@ -64,13 +64,23 @@ class DutyMemberDetailsController extends Controller
             'event_type' => $request->event_type
         ]);
 
+
         if($member_details) {
 
         try {
             $user = User::where('name', $member_details->member_name)->first();
 
+            $message = [
+                'subject' => 'Leave Request Created Successfully',
+                'greeting' => 'Dear ' . $user->name, ',: Welcome to Kahawa Sukari Media Team App',
+                'body' => 'This is to notify you that you have been selected to lead the service next Sunday.
+                Click the link below to see the message in the app. Please make sure you confirm your availability before Saturday 2:00pm.
+                See you on Sunday!!!',
+                'salutation' => 'Regards, ' .auth()->user()->name. ' - ' . (env('APP_NAME')) . 'Admin'
+            ];
+
             // send a notification to the users/member names(user_id should be a foreign id in the table duty)
-            Notification::send($user, new DutyRosterCreated());
+            Notification::send($user, new DutyRosterCreated($message));
 
             return redirect()->route('admin.duty.index', auth()->user()->id)->with('success_message', 'Notification sent successfully!!');
 

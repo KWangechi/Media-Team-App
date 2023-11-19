@@ -53,8 +53,14 @@ Route::middleware(['auth'])->group(function () {
 
         Route::get('users/{id}/approve', [Admin\UserController::class, 'approve'])->name('admin.users.approve');
 
-
         Route::get('search/', [Admin\UserController::class, 'search'])->name('admin.users.search');
+
+        // admin profile
+        //profile
+        Route::get('/{id}/profile', [ProfileController::class, 'index'])->name('admin.profile');
+        Route::post('/{id}/profile', [ProfileController::class, 'store'])->name('admin.profile.create');
+        Route::patch('/{user_id}/profile/{id}', [ProfileController::class, 'update'])->name('admin.profile.update');
+        Route::delete('/{user_id}/profile/{id}', [ProfileController::class, 'destroy'])->name('admin.profile.delete');
 
         //leaves
         Route::get('/leaves', [Admin\LeaveController::class, 'index'])->name('admin.leaves.index');
@@ -75,7 +81,7 @@ Route::middleware(['auth'])->group(function () {
         Route::patch('/duty/{id}', [DutyController::class, 'update'])->name('admin.duty.roster.update');
         Route::delete('/duty/{id}', [DutyController::class, 'destroy'])->name('admin.duty.roster.delete');
 
-    
+
         //duty roster personel details
         Route::post('createDutyPersonelDetails/{id}', [DutyMemberDetailsController::class, 'store'])
             ->name('admin.duty.createDutyPersonelDetails');

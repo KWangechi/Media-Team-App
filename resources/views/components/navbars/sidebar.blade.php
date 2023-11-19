@@ -12,12 +12,22 @@
     <div class="collapse navbar-collapse  w-auto  max-height-vh-100" id="sidenav-collapse-main">
         <ul class="navbar-nav">
             <li class="nav-item">
-                <a class="nav-link text-white {{ $activePage == 'user-profile' ? 'active bg-gradient-warning' : '' }} " href="{{ route('user.profile', auth()->id()) }}">
+                @if (auth()->user()->role_id == 1)
+                <a class="nav-link text-white {{ $activePage == 'profile' ? 'active bg-gradient-primary' : '' }} " href="{{ route('admin.profile', auth()->id()) }}">
                     <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
                         <i style="font-size: 1.2rem;" class="fas fa-user-circle ps-2 pe-2 text-center"></i>
                     </div>
                     <span class="nav-link-text ms-1">My Profile</span>
                 </a>
+
+                @else
+                <a class="nav-link text-white {{ $activePage == 'profile' ? 'active bg-gradient-warning' : '' }} " href="{{ route('user.profile', auth()->id()) }}">
+                    <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+                        <i style="font-size: 1.2rem;" class="fas fa-user-circle ps-2 pe-2 text-center"></i>
+                    </div>
+                    <span class="nav-link-text ms-1">My Profile</span>
+                </a>
+                @endif
             </li>
 
             <li class="nav-item">

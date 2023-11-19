@@ -6,13 +6,15 @@ use App\Http\Controllers\Controller;
 use App\Models\Duty;
 use App\Models\DutyMemberDetails;
 use App\Models\User;
+use App\Notifications\DutyRosterCreated;
 use Faker\Core\Uuid;
 use Illuminate\Container\RewindableGenerator;
 use Illuminate\Http\Request;
-use Illuminate\Notifications\Notification;
+use Illuminate\Support\Facades\Notification;
+// use Illuminate\Notifications\Notification;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Notification as FacadesNotification;
-use Illuminate\Support\Facades\Schema;
+// use Illuminate\Support\Facades\Notification as FacadesNotification;
+// use Illuminate\Support\Facades\Schema;
 use Barryvdh\DomPDF\Facade\Pdf as FacadePdf;
 use Carbon\Carbon;
 
@@ -39,7 +41,6 @@ class DutyController extends Controller
 
             return view('user.duty.index', compact('duties'));
         }
-
     }
 
     /**
@@ -89,8 +90,21 @@ class DutyController extends Controller
         ]);
 
         // dd(['Duty' => $duty, 'Member Details: ' => $member_details]);
+        $user = User::where('name', $member_details->member_name)->first();
+
+        $message = [
+            'subject' => 'Leave Request Created Successfully',
+            'greeting' => 'Dear ' .$user->name. ',:'. 'Welcome to Kahawa Sukari Media Team App',
+            'body' => 'This is to notify you that you have been selected to lead the service next Sunday.
+            Click the link below to see the message in the app. Please make sure you confirm your availability before Saturday 2:00pm.
+            See you on Sunday!!!',
+            'salutation' => 'Regards, ' .auth()->user()->name. ' - ' .(env('APP_NAME')). ' Admin'
+        ];
 
         // send a notification to the user if they have been selected
+
+        // send a notification to the users/member names(user_id should be a foreign id in the table duty)
+        Notification::send($user, new DutyRosterCreated($message));
 
         if (!$duty) {
             return redirect()->route('admin.duty.index', auth()->user()->id)->with('error_message', 'Error creating a new duty!!');
@@ -101,7 +115,6 @@ class DutyController extends Controller
                 return redirect()->route('admin.duty.index', auth()->user()->id)->with('success_message', 'Duty Roster created successfully!!');
             }
         }
-
     }
 
     /**
@@ -136,11 +149,9 @@ class DutyController extends Controller
             $duty->update($request->all());
 
             return to_route('admin.duty.index', auth()->user()->id)->with('success_message', 'Duty Roster details updated successfully!!');
-
         } catch (\Throwable $th) {
             return to_route('admin.duty.index', auth()->user()->id)->with('error_message', $th->getMessage());
         }
-
     }
 
     /**
@@ -162,7 +173,6 @@ class DutyController extends Controller
                 return redirect()->route('admin.duty.index', auth()->user()->id)->with('success_message', 'Duty Roster Deleted successfully!!');
             }
         }
-
     }
 
     /**
@@ -219,7 +229,6 @@ class DutyController extends Controller
     }
     public function deleteDutyPersonelDetails($id)
     {
-
     }
 
     /**
@@ -236,14 +245,16 @@ class DutyController extends Controller
         // dd($member_details);
     }
 
-    public function createNewEvent(Request $request) {
+    public function createNewEvent(Request $request)
+    {
         // $event = Event
     }
 
     /**
      * download the sunday report as a PDF
      */
-    public function downloadSchedule() {
+    public function downloadSchedule()
+    {
         $sundaySchedules = Duty::all();
         // dd($request);
 

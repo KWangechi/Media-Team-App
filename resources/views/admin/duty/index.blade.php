@@ -53,80 +53,7 @@
             </a>
         </div>
 
-        <!-- Create Duty Roster Modal -->
-        <div class="modal fade" id="createDutyRosterModal" tabindex="-1" aria-labelledby="createDutyRosterModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered modal-md">
-                <div class="modal-content">
-                    <div class="modal-body p-0">
-                        <div class="card card-plain">
-                            <div class="card-header pb-0 text-left">
-                                <h5 class="">Create a New Duty Roster</h5>
-                            </div>
-                            <div class="card-body">
-                                <form action="{{ route('admin.duty.create', auth()->user()->id )}}" method="POST" id="createLeaveForm">
-                                    @csrf
 
-                                    <input type="number" name="duty_id" id="duty_id" hidden>
-
-                                    <label class="form-label font-weight-bold">Week</label>
-                                    <div class="input-group input-group-outline mt-1 mb-3">
-                                        <input type="week" class="form-control" name="week" id="week" autofocus placeholder="e.g Week 13">
-                                    </div>
-
-                                    <label class="form-label font-weight-bold">Member Name</label>
-                                    <div class="input-group input-group-outline mt-1 mb-3">
-                                        <select class="form-select-md form-control" name="meber_name" id="member_name">
-                                            <option value="" disabled selected>--Select an Option--</option>
-                                            @foreach ($users as $user)
-                                            <option value="{{$user->name}}">{{$user->name}}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-
-                                    <label class="form-label font-weight-bold">Workstation</label>
-                                    <div class="input-group input-group-outline mt-1 mb-3">
-                                        <select class="form-select-md form-control" name="workstation" id="workstation" placeholder="--Select department--">
-                                            <option value="" disabled selected>
-                                                < --Select a workstation-->
-                                            </option>
-                                            <option value="Video">Video</option>
-                                            <option value="Sound">Sound</option>
-                                            <option value="Computer">Computer</option>
-                                            <option value="Vmix">VMix</option>
-                                        </select>
-                                    </div>
-
-                                    <label class="form-label font-weight-bold">Duty Assigned</label>
-                                    <div class="input-group input-group-outline mt-1 mb-3">
-                                        <input type="text" class="form-control" name="duty_assigned" id="duty_assigned">
-                                    </div>
-
-                                    <label class="form-label font-weight-bold">Event Type</label>
-                                    <div class="input-group input-group-outline mt-1 mb-3">
-                                        <input type="text" class="form-control" name="event_type" id="event_type">
-                                    </div>
-
-                                    <label class="form-label font-weight-bold">Setup Time</label>
-                                    <div class="input-group input-group-outline mt-1 mb-3">
-                                        <input type="time" class="form-control" name="setup_time" id="setup_time">
-                                    </div>
-
-
-                                    <label class="form-label font-weight-bold">Date Assigned</label>
-                                    <div class="input-group input-group-outline mt-1 mb-3">
-                                        <input type="date" class="form-control" name="date_assigned" id="date_assigned">
-                                    </div>
-
-                                    <div class="text-center ">
-                                        <button type="submit" class=" btn btn-round btn-md bg-gradient-info w-30 mt-4 mb-0">Save</button>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
 
         @else
         <a class="btn bg-gradient-secondary mx-4 py-2 px-3 mb-4" id="createDutyRosterModalButton" data-bs-toggle="modal" data-bs-target="#createDutyRosterModal">
@@ -154,15 +81,13 @@
                 </button>
 
                 <!-- Modal for creating new duties for a media team member  -->
-
-                <!-- Add new member details -->
                 <div class="modal fade" id="staticBackdrop{{$duty->id}}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="false" data-id="{{$duty->id}}">
                     <div class="modal-dialog modal-dialog-centered modal-md">
                         <div class="modal-content">
                             <div class="modal-body p-0">
                                 <div class="card card-plain">
                                     <div class="card-header pb-0 text-left">
-                                        <h5 class="">Create a New Duty Roster</h5>
+                                        <h5 class="">Add a user to the roster</h5>
                                     </div>
                                     <div class="card-body">
                                         <form method="POST" id="createDutyPersonel" action="{{ route('admin.duty.createDutyPersonelDetails',[$duty->id])}}">
@@ -182,7 +107,7 @@
                                             <div class="input-group input-group-outline mt-1 mb-3">
                                                 <select class="form-select-md form-control" name="workstation" id="workstation" placeholder="--Select department--">
                                                     <option value="" disabled selected>
-                                                        < --Select a workstation-->
+                                                        < -- Select a workstation -- >
                                                     </option>
                                                     <option value="Video">Video</option>
                                                     <option value="Sound">Sound</option>
@@ -203,8 +128,7 @@
 
 
                                             <div class="modal-footer">
-                                                <a class="btn btn-danger btn-sm" id="cancelDutyRosterModalButton" data-bs-dismiss="modal">Cancel</a>
-
+                                                <a class="btn btn-secondary btn-sm" id="cancelDutyRosterModalButton" data-bs-dismiss="modal">Cancel</a>
                                                 <button class="btn btn-primary btn-sm">Save</button>
 
                                             </div>
@@ -227,8 +151,8 @@
                                 <th scope="col">Workstation</th>
                                 <th scope="col">Duty Assigned</th>
                                 <th scope="col">Type of Event</th>
-                                <th scope="col">EDIT</th>
-                                <th scope="col">DELETE</th>
+                                <th scope="col">Edit</th>
+                                <th scope="col">Delete</th>
 
                             </tr>
                         </thead>
@@ -241,17 +165,20 @@
                                 <td>{{$new_duty->duty_assigned}}</td>
                                 <td>{{$new_duty->event_type}}</td>
 
-                                <td>
+                                <td class="text-center">
                                     <a href="{{route('admin.duty.editDutyPersonelDetails', $new_duty->id)}}">
-                                        <button class="btn btn-secondary btn-sm" id="editMemberDetails">EDIT</button>
+                                        <i class="fa fa-pen text-xs px-1"></i>
                                     </a>
                                 </td>
 
-                                <td>
+                                <td class="text-center">
                                     <form action="{{route('admin.duty.deleteDutyPersonelDetails', [$new_duty->id])}}">
                                         @csrf
                                         @method('DELETE')
-                                        <button class="btn btn-sm btn-danger"> DELETE</button>
+                                        <button class="btn btn-link text-secondary mb-0">
+                                            <i class="fa fa-trash px-1 submit" aria-hidden="true"></i>
+                                        </button>
+
                                     </form>
                                 </td>
 
@@ -262,25 +189,149 @@
                 </div>
             </div>
 
-            <div class="card-footer text-center flex justify-content-between">
-                <div class="col-4 align-items-start">
-
-                    <a href="{{ route('admin.duty.roster.edit', $duty->id) }}" class="btn btn-secondary">EDIT DUTY ROSTER</a>
+            <!-- <div class="card-footer text-center flex justify-content-between"> -->
+            <div class="row">
+                <div class="col-md-6">
+                    <!-- <a href="{{ route('admin.duty.roster.edit', $duty->id) }}" class="btn btn-secondary mx-4 mb-3">EDIT DUTY ROSTER</a> -->
+                    <a class="btn btn-secondary mx-4 mb-3" id="editDutyRosterModalButton" data-bs-toggle="modal" data-bs-target="#editDutyRoster-{{$duty->id}}">
+                        <i class="material-icons">edit</i>
+                        EDIT DUTY ROSTER
+                    </a>
                 </div>
-
-                <div class="col-6">
-                    <form action="{{ route('admin.duty.roster.delete', $duty->id) }}" method="POST" class="float-right col">
+                <div class="col-md-6">
+                    <form action="{{ route('admin.duty.roster.delete', $duty->id) }}" method="POST">
                         @csrf
                         @method('DELETE')
 
                         <button class="btn btn-danger ml-12">DELETE DUTY ROSTER</button>
                     </form>
                 </div>
+                <!-- </div> -->
             </div>
-        </div>
-        @endforeach
-        @endif
 
-        </div>
+            <!-- Edit the duty Roster -->
+            @if ($duty)
+            <div class="modal fade" id="editDutyRoster-{{$duty->id}}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="false" data-id="{{$duty->id}}">
+                <div class="modal-dialog modal-dialog-centered modal-md">
+                    <div class="modal-content">
+                        <div class="modal-body p-0">
+                            <div class="card card-plain">
+                                <div class="card-header pb-0 text-left">
+                                    <h5 class="">Edit Duty Roster</h5>
+                                </div>
+                                <div class="card-body">
+                                    <form method="POST" id="editDutyRsoter" action="{{ route('admin.duty.roster.edit',[$duty->id])}}">
+                                        @csrf
+                                        @method('PATCH')
+
+                                        <label class="form-label font-weight-bold">Week</label>
+                                        <div class="input-group input-group-outline mt-1 mb-3">
+                                            <input type="week" class="form-control" name="week" id="week" autofocus value="{{$duty->week}}">
+                                        </div>
+
+                                        <label class="form-label font-weight-bold">Setup Time</label>
+                                        <div class="input-group input-group-outline mt-1 mb-3">
+                                            <input type="time" class="form-control" name="setup_time" id="setup_time" value="{{$duty->setup_time}}">
+                                        </div>
+
+
+                                        <label class="form-label font-weight-bold">Date Assigned</label>
+                                        <div class="input-group input-group-outline mt-1 mb-3">
+                                            <input type="date" class="form-control" name="date_assigned" id="date_assigned" value="{{$duty->date_assigned}}">
+                                        </div>
+
+
+                                        <div class="modal-footer">
+                                            <a class="btn btn-secondary btn-sm" id="cancelEditDutyRosterModalButton" data-bs-dismiss="modal">Cancel</a>
+                                            <button class="btn btn-primary btn-sm">Save Changes</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            @endif
+
+            @endforeach
+            @endif
+
+            <!-- Create Duty Roster Modal -->
+            <div class="modal fade" id="createDutyRosterModal" tabindex="-1" aria-labelledby="createDutyRosterModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered modal-md">
+                    <div class="modal-content">
+                        <div class="modal-body p-0">
+                            <div class="card card-plain">
+                                <div class="card-header pb-0 text-left">
+                                    <h5 class="">Create a New Duty Roster</h5>
+                                </div>
+                                <div class="card-body">
+                                    <form action="{{ route('admin.duty.create', auth()->user()->id )}}" method="POST" id="createLeaveForm">
+                                        @csrf
+
+                                        <input type="number" name="duty_id" id="duty_id" hidden>
+
+                                        <label class="form-label font-weight-bold">Week</label>
+                                        <div class="input-group input-group-outline mt-1 mb-3">
+                                            <input type="week" class="form-control" name="week" id="week" autofocus placeholder="e.g Week 13">
+                                        </div>
+
+                                        <label class="form-label font-weight-bold">Member Name</label>
+                                        <div class="input-group input-group-outline mt-1 mb-3">
+                                            <select class="form-select-md form-control" name="member_name" id="member_name">
+                                                <option value="" disabled selected>--Select an Option--</option>
+                                                @foreach ($users as $user)
+                                                <option value="{{$user->name}}">{{$user->name}}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+
+                                        <label class="form-label font-weight-bold">Workstation</label>
+                                        <div class="input-group input-group-outline mt-1 mb-3">
+                                            <select class="form-select-md form-control" name="workstation" id="workstation" placeholder="--Select department--">
+                                                <option value="" disabled selected>
+                                                    < --Select a workstation-->
+                                                </option>
+                                                <option value="Video">Video</option>
+                                                <option value="Sound">Sound</option>
+                                                <option value="Computer">Computer</option>
+                                                <option value="Vmix">VMix</option>
+                                            </select>
+                                        </div>
+
+                                        <label class="form-label font-weight-bold">Duty Assigned</label>
+                                        <div class="input-group input-group-outline mt-1 mb-3">
+                                            <input type="text" class="form-control" name="duty_assigned" id="duty_assigned">
+                                        </div>
+
+                                        <label class="form-label font-weight-bold">Event Type</label>
+                                        <div class="input-group input-group-outline mt-1 mb-3">
+                                            <input type="text" class="form-control" name="event_type" id="event_type">
+                                        </div>
+
+                                        <label class="form-label font-weight-bold">Setup Time</label>
+                                        <div class="input-group input-group-outline mt-1 mb-3">
+                                            <input type="time" class="form-control" name="setup_time" id="setup_time">
+                                        </div>
+
+
+                                        <label class="form-label font-weight-bold">Date Assigned</label>
+                                        <div class="input-group input-group-outline mt-1 mb-3">
+                                            <input type="date" class="form-control" name="date_assigned" id="date_assigned">
+                                        </div>
+
+                                        <div class="text-center ">
+                                            <button type="submit" class=" btn btn-round btn-md bg-gradient-info w-30 mt-4 mb-0">Save</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
     </main>
 </x-layout>

@@ -11,16 +11,16 @@ class DutyRosterCreated extends Notification
 {
     use Queueable;
 
-    // public $message;
+    public $message;
 
     /**
      * Create a new notification instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct($message)
     {
-        // $this->message = $message;
+        $this->message = $message;
     }
 
     /**
@@ -43,13 +43,11 @@ class DutyRosterCreated extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
-            ->greeting('Welcome to Kahawa Sukari Media Team App')
-            ->line('This is to notify you that you have been selected to lead the service next Saturday.')
-            ->line('Click the link below to see the message in the app')
-            ->action('Go to My announcements', url('/admin/announcements'))
-            ->line('Please make sure you confirm your availability before Saturday 2:00pm.')
-            ->line('See you on Sunday!!!')
-            ->salutation('Kind regards: Admin.');
+        ->subject($this->message['subject'])
+        ->greeting($this->message['greeting'])
+        ->line($this->message['body'])
+        ->action('Click here to view your leave requests', url('/login'))
+        ->salutation($this->message['salutation']);
     }
 
     /**
