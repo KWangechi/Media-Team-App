@@ -71,8 +71,6 @@
                 <hr>
                 <p class="card-text mb-3 mt-2">Setup Time: {{$duty->setup_time}}</p>
                 <hr>
-
-                <br>
                 <!-- Button trigger modal -->
                 <button type="button" class="btn btn-primary float-left pl-20" data-bs-toggle="modal" data-bs-target="#staticBackdrop{{$duty->id}}" id="createMemberDetails" data-id="{{$duty->id}}">
                     <i class="material-icons">add</i>

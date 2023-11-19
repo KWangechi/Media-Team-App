@@ -31,11 +31,11 @@
                 DOWNLOAD THE DUTY ROSTER
             </a>
 
-            <div class="card border-primary pt-0 mb-3 mx-3 w-max h-max">
+            <div class="card border-primary pt-0 mb-3">
                 <!-- <span class="badge badge-primary pt-3 font-medium justify-end">Posted on: {{$duty->updated_at}}</span> -->
                 <span class="badge bg-gradient-info my-auto mt-3 mx-auto text-right">Posted on: {{$duty->updated_at}}</span>
                 <div class="card-body">
-                    <h2 class="card-title mb-3"><b>Week: {{$duty->week}} {{$duty->id}}</b></h2>
+                    <h2 class="card-title mb-3"><b>Week: {{$duty->week}}</b></h2>
                     <hr>
                     <div class="card-item">
                         <p class="card-text mb-3 mt-2">Date assigned: {{$duty->date_assigned}}</p>
@@ -89,24 +89,3 @@
 
     </div>
 </x-app-layout>
-
-<script>
-    let createDutyRosterModal = document.querySelector("#createDutyRosterModal")
-    let createDutyRosterModalButton = document.querySelector("#createDutyRosterModalButton")
-
-    // createDutyRosterModalButton.addEventListener('click', function(){
-    //     $("#createDutyRosterModal").fadeToggle();
-    // })
-
-    $(document).ready(function() {
-        $("#createDutyRosterModalButton").on('click', function() {
-            $("#createDutyRosterModal").modal('toggle');
-
-            // console.log('Clicked the create duty roster modal');
-        })
-
-        // $("#closeModalButton").on('click', function(){
-        //     $("#createDutyRosterModal").remove();
-        // })
-    })
-</script>

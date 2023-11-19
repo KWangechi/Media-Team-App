@@ -23,7 +23,10 @@ class SundayReportController extends Controller
      */
     public function index($id)
     {
-        $reports = SundayReport::paginate(6);
+        // $reports = SundayReport::paginate(6);
+        $reports = SundayReport::where('user_id', $id)->paginate(10);
+        // dd($report);
+
 
         // if (auth()->user()->role_id == User::ROLE_ADMIN) {
         // }
@@ -37,7 +40,7 @@ class SundayReportController extends Controller
 
     public function getAllReports()
     {
-        $allReports = SundayReport::paginate(10);
+        $allReports = SundayReport::paginate(6);
 
         return view('admin.sunday-reports.index', compact('allReports'));
     }
@@ -74,17 +77,24 @@ class SundayReportController extends Controller
                 'comments' => $request->comments
             ]);
 
-            // dd($request);
-            $data = [
-                'subject' => 'Sunday Report Submission',
-                'body' => 'This is to notify you that ' . auth()->user()->name . ' has submitted their report!!',
-                'salutation' => 'Kind regards, ' . auth()->user()->name
-            ];
+            if (auth()->user()->role_id == User::ROLE_ADMIN) {
+                return redirect()->route('admin.users.sunday-reports.index')->with('success_message', 'Report created successfully!!');
+            }
+            else {
 
-            // send a notification to admin to notify that a report has been submitted
-            Notification::send($user, new SundayReportSubmissions(auth()->user()->name, $data));
+                // dd($request);
 
-            return redirect()->route('user.sunday-report.index', [auth()->user()->id])->with('success_message', 'Report created successfully!!');
+                $data = [
+                    'subject' => 'Sunday Report Submission',
+                    'body' => 'This is to notify you that ' . auth()->user()->name . ' has submitted their report!!',
+                    'salutation' => 'Kind regards, ' . auth()->user()->name
+                ];
+
+                // send a notification to admin to notify that a report has been submitted
+                Notification::send($user, new SundayReportSubmissions(auth()->user()->name, $data));
+
+                return redirect()->route('user.sunday-report.index', [auth()->user()->id])->with('success_message', 'Report created successfully!!');
+            }
         } catch (\Throwable $th) {
             return redirect()->route('user.sunday-report.index', [auth()->user()->id])->with('error_message', $th->getMessage());
         }
@@ -113,6 +123,7 @@ class SundayReportController extends Controller
     {
         // dd(['Report ID:' => $report_id, 'User ID:' => $user_id]);
         $report = SundayReport::where('user_id', $user_id)->findOrFail($report_id);
+        // dd($report);
 
         return view('user.sunday-report.edit', compact('report'));
     }
@@ -136,7 +147,6 @@ class SundayReportController extends Controller
 
 
         return redirect()->route('user.sunday-report.index', [auth()->user()->id])->with('success_message', 'Report updated successfully!!');
-
     }
 
     /**

@@ -20,6 +20,15 @@
                     <span class="nav-link-text ms-1">My Profile</span>
                 </a>
 
+                <li class="nav-item">
+                <a class="nav-link text-white {{ $activePage == 'users' ? ' active bg-gradient-primary' : '' }}  " href="{{ route('admin.users.index') }}">
+                    <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+                        <i class="material-icons opacity-10">group</i>
+                    </div>
+                    <span class="nav-link-text ms-1">User Management</span>
+                </a>
+            </li>
+
                 @else
                 <a class="nav-link text-white {{ $activePage == 'profile' ? 'active bg-gradient-warning' : '' }} " href="{{ route('user.profile', auth()->id()) }}">
                     <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
@@ -30,14 +39,6 @@
                 @endif
             </li>
 
-            <li class="nav-item">
-                <a class="nav-link text-white {{ $activePage == 'users' ? ' active bg-gradient-primary' : '' }}  " href="{{ route('admin.users.index') }}">
-                    <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-                        <i class="material-icons opacity-10">group</i>
-                    </div>
-                    <span class="nav-link-text ms-1">User Management</span>
-                </a>
-            </li>
 
             <li class="nav-item mt-3">
                 <h6 class="ps-4 ms-2 text-uppercase text-xs text-white font-weight-bolder opacity-8">Navigation Pages</h6>
@@ -72,7 +73,7 @@
             </li>
 
             <li class="nav-item">
-                <a class="nav-link text-white {{ $activePage == 'leaves' ? ' active bg-gradient-warning' : '' }}  " href="{{ route('admin.leaves.index') }}">
+                <a class="nav-link text-white {{ $activePage == 'admin-leaves' ? 'active bg-gradient-primary' : '' }}  " href="{{ route('admin.leaves.index') }}">
                     <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
                         <i class="material-icons opacity-10">flight</i>
                     </div>
@@ -81,7 +82,7 @@
             </li>
 
             <li class="nav-item">
-                <a class="nav-link text-white {{ $activePage == 'contributions' ? ' active bg-gradient-warning' : '' }}  " href="{{ route('user.leaves.index', auth()->user()->id) }}">
+                <a class="nav-link text-white {{ $activePage == 'contributions' ? ' active bg-gradient-primary' : '' }}  " href="{{ route('user.leaves.index', auth()->user()->id) }}">
                     <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
                         <i class="material-icons opacity-10">payments</i>
                     </div>
@@ -90,7 +91,7 @@
             </li>
 
             <li class="nav-item">
-                <a class="nav-link text-white {{ $activePage == 'notifications' ? ' active bg-gradient-warning' : '' }}  " href="{{ route('user.announcements') }}">
+                <a class="nav-link text-white {{ $activePage == 'notifications' ? ' active bg-gradient-primary' : '' }}  " href="{{ route('user.announcements') }}">
                     <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
                         <i class="material-icons opacity-10">notifications</i>
                     </div>

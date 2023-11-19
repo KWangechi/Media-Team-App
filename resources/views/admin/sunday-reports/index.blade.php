@@ -1,4 +1,4 @@
-<x-layout bodyClass="g-sidenav-show  bg-gray-200 dark-version">
+<x-app-layout bodyClass="g-sidenav-show  bg-gray-200 dark-version">
 
     <x-navbars.sidebar activePage="admin-sunday-allReports"></x-navbars.sidebar>
 
@@ -78,7 +78,7 @@
                                     <thead>
                                         <tr>
                                             <th class="text-uppercase text-secondary text-xxs font-weight-bolder text-center">
-                                                Reported By</th>
+                                                Submitted By</th>
                                             <th class="text-uppercase text-secondary text-xxs font-weight-bolder text-center">
                                                 Workstation</th>
                                             <th class="text-uppercase text-secondary text-xxs font-weight-bolder">
@@ -92,10 +92,10 @@
                                     <tbody>
                                         @foreach ($allReports as $report)
                                         <tr>
-                                            <td class="text-center">
-                                                <div class="d-flex px-2 py-1">
+                                            <td>
+                                                <div class="d-flex px-2 py-1 mx-4">
                                                     <div>
-                                                        <img src="{{ asset('/storage/'.auth()->user()->profile->photo) }}" class="avatar avatar-sm me-3">
+                                                        <img src="{{ asset('/storage/'.$report->user->profile->photo) }}" class="avatar avatar-sm me-3">
                                                     </div>
                                                     <div class="d-flex flex-column justify-content-center">
                                                         <h6 class="mb-0 text-xs">{{$report->user->name}}</h6>
@@ -104,7 +104,7 @@
                                             </td>
 
                                             <td>
-                                                <div class="d-flex px-2">
+                                                <div class="d-flex m-0">
                                                     <div class="mx-auto">
                                                         <h6 class="mb-0 text-sm">{{$report->workstation}}</h6>
                                                     </div>
@@ -126,9 +126,10 @@
                             </tbody>
                             </table>
                         </div>
+                        <hr class="mb-4 mt-2">
                     </div>
 
-                    <hr class="mb-2 mt-2">
+
                     <div class="d-flex pagination justify-content-end pr-3 mb-3">
                         <div class="px-5 text-center">
                             Showing {{count($allReports)}} of {{$allReports->total()}} results
@@ -190,4 +191,4 @@
             </div>
         </div>
     </main>
-</x-layout>
+</x-app-layout>

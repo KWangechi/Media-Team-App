@@ -74,7 +74,9 @@ class SundayReportSubmissions extends Notification
     public function toDatabase($notifiable)
     {
         return [
-            'message' => $this->data['subject'] .' '. $this->data['body'].' '. $this->data['salutation']
+            "subject" => $this->data['subject'],
+            'body' => $this->data['body'],
+            'salutation' => $this->data['salutation']
         ];
     }
 }

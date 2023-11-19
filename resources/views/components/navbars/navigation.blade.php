@@ -16,7 +16,7 @@
                     <input type="text" class="form-control">
                 </div>
             </div>
-            <form method="POST" action="{{ route('logout') }}" class="d-none" id="logout-form">
+            <form method="GET" action="{{ route('logout') }}" class="d-none" id="logout-form">
                 @csrf
             </form>
             <ul class="navbar-nav  justify-content-end">
@@ -28,8 +28,11 @@
                         <i style="font-size: 2.0rem;" class="fas fa-user-circle ps-2 pe-2 text-center"></i>
                         @endif
 
-                        <span class="d-sm-inline my-2 d-none" onclick="event.preventDefault();document.getElementById('logout-form').submit();">Sign
-                            Out</span>
+                        {{auth()->user()->name}}
+
+                        <span class="d-sm-inline my-2 d-none px-1" onclick="event.preventDefault();document.getElementById('logout-form').submit();">
+                        <i size="font-size: 2.2rem;" class="fa fa-sign-out" aria-hidden="true"></i>
+                        </span>
                     </a>
                 </li>
 

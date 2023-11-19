@@ -20,7 +20,6 @@ class LeaveApproved extends Notification
     public function __construct($message)
     {
         $this->message = $message;
-
     }
 
     /**
@@ -43,9 +42,11 @@ class LeaveApproved extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
-                    ->line($this->message['title'])
-                    ->line($this->message['body'])
-                    ->action('Click here to view your status', route('user.leaves.index', auth()->user()->id));
+            ->line($this->message['subject'])
+            ->greeting($this->message['greeting'])
+            ->line($this->message['body'])
+            ->action('Click here to view your status', route('user.leaves.index', auth()->user()->id))
+            ->salutation($this->message['salutation']);
     }
 
     /**
@@ -56,8 +57,22 @@ class LeaveApproved extends Notification
      */
     public function toArray($notifiable)
     {
-        return [
+        return [];
+    }
 
+    /**
+     * Enable Database Notifications
+     *
+     * @param  mixed  $notifiable
+     * @return array
+     */
+    public function toDatabase($notifiable)
+    {
+        return [
+            'subject' => $this->message['subject'],
+            'greeting' => $this->message['greeting'],
+            'body' => $this->message['body'],
+            'salutation' => $this->message['salutation']
         ];
     }
 }

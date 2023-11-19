@@ -19,10 +19,10 @@ class LeaveController extends Controller
      */
     public function index()
     {
-        // dd($id);
+        // dd('Leaves');
         $leaves = Leave::paginate(10);
 
-        return view('admin.leave.leaves', compact(['leaves']));
+        return view('admin.leave.index', compact('leaves'));
     }
 
     /**
@@ -150,12 +150,15 @@ class LeaveController extends Controller
             'status' => 'approved'
         ]);
 
-        $user = User::where('id', $user_id)->get();
+        $user = User::where('id', $user_id)->first();
+        // dd($user);
 
         $message = [
-            'title' => 'Leave Request Approval Status',
+            'subject' => 'Leave Request Approval Status',
+            'greeting' => 'Dear '.$user->name. ',',
             'body' => 'Your Leave requested has been approved. Please contact the admin incase of any changes
-            that may occur during your leave days! We hope to see you soon'
+            that may occur during your leave days! We hope to see you soon',
+            'salutation' => 'Regards, Media Team App Admin'
         ];
 
         Notification::send($user, new LeaveApproved($message));

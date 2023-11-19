@@ -137,6 +137,7 @@
                                                 </a>
                                                 @else
                                                 <span class="text-xs text-lowercase badge bg-gradient-success">{{$user->account_status}}</span>
+
                                                 @endif
                                             </td>
                                             <td class="align-middle">

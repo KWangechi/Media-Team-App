@@ -25,7 +25,7 @@ class AccountApproved
                 return redirect('login')->with('message', 'Your account needs to be approved by the admin');
             }
         }
-        
+
         return $next($request);
     }
 }

@@ -4,7 +4,7 @@
     <main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg">
         <x-navbars.navigation titlePage="Unread Notifications"></x-navbars.navigation>
 
-        <!-- <h4 class="text-center mt-3">Announcements Page</h4> -->
+
         <div class="container-fluid py-4">
 
             <!-- Toast notifications -->
@@ -67,9 +67,13 @@
 
                 <div class="card my-3">
                     <div class="row mb-3 mt-5 mx-auto">
+                        @if (auth()->user()->profile)
                         <div class="col-lg-2">
                             <img src="{{ asset('/storage/'.auth()->user()->profile->photo) }}" alt="" class=" rounded-circle shadow-4-strong" width="70px;" height="70px;">
                         </div>
+                        @else
+                        <i style="font-size: 2.0rem;" class="fas fa-user-circle ps-2 pe-2 text-center"></i>
+                        @endif
 
                         <div class="col">
                             <div class="row">

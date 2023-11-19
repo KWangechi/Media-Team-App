@@ -1,4 +1,4 @@
-<x-layout bodyClass="g-sidenav-show bg-gray-200 dark-version">
+<x-app-layout bodyClass="g-sidenav-show bg-gray-200 dark-version">
     <x-navbars.sidebar activePage="profile"></x-navbars.sidebar>
 
     <main class="main-content position-relative max-height-vh-100 h-100">
@@ -100,7 +100,7 @@
                                 </div>
                             </div>
 
-                            <div class="row">
+                            <div class="row mt-4">
                                 <div class="col-md-6">
                                     <label class="form-label">Phone</label>
                                     <div class="input-group input-group-outline mt-1 mb-3 col-md-6">
@@ -122,7 +122,7 @@
                                 </div>
                             </div>
 
-                            <div class="row mt-3 mb-3">
+                            <div class="row mt-4 mb-3">
                                 <div class="col-md-6">
                                     <label for="profilePhoto" class="form-label">Profile Photo</label>
                                     <div class="input-group input-group-outline mt-2 mb-3 col-md-6">
@@ -206,4 +206,4 @@
         </div>
         </div>
     </main>
-</x-layout>
+</x-app-layout>
