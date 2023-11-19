@@ -25,15 +25,21 @@ class SundayReportController extends Controller
     {
         $reports = SundayReport::paginate(6);
 
+        // if (auth()->user()->role_id == User::ROLE_ADMIN) {
+        // }
 
+        // else {
+        // return view('user.sunday-report.index', compact('reports'));
+
+        // }
         return view('user.sunday-report.index', compact('reports'));
     }
 
     public function getAllReports()
     {
-        $all_reports = SundayReport::paginate(10);
+        $allReports = SundayReport::paginate(10);
 
-        return view('admin.sunday-reports.index', compact('all_reports'));
+        return view('admin.sunday-reports.index', compact('allReports'));
     }
 
 
@@ -71,7 +77,7 @@ class SundayReportController extends Controller
             // dd($request);
             $data = [
                 'subject' => 'Sunday Report Submission',
-                'message' => 'This is to notify you that ' . auth()->user()->name . ' has submitted their report!!',
+                'body' => 'This is to notify you that ' . auth()->user()->name . ' has submitted their report!!',
                 'salutation' => 'Kind regards, ' . auth()->user()->name
             ];
 

@@ -52,7 +52,7 @@ class SundayReportSubmissions extends Notification
             ->from(auth()->user()->email, auth()->user()->name)
             ->subject($this->data['subject'])
             ->greeting($greeting)
-            ->line($this->data['message'])
+            ->line($this->data['body'])
             ->action('View the reports', $url)
             ->salutation($this->data['salutation']);
     }
@@ -66,7 +66,7 @@ class SundayReportSubmissions extends Notification
     public function toArray($notifiable)
     {
         return [
-            'message' => $this->data['subject'] .' '. $this->data['message'].' '. $this->data['salutation']
+            'message' => $this->data['subject'] .' '. $this->data['body'].' '. $this->data['salutation']
 
         ];
     }
@@ -74,7 +74,7 @@ class SundayReportSubmissions extends Notification
     public function toDatabase($notifiable)
     {
         return [
-            'message' => $this->data['subject'] .' '. $this->data['message'].' '. $this->data['salutation']
+            'message' => $this->data['subject'] .' '. $this->data['body'].' '. $this->data['salutation']
         ];
     }
 }

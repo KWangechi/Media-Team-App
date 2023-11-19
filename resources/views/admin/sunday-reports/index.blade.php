@@ -1,127 +1,193 @@
-<x-app-layout>
-    <x-slot name="slot">
-        <div class="container">
-            <br>
+<x-layout bodyClass="g-sidenav-show  bg-gray-200 dark-version">
 
-            <!-- Display error or success message -->
-            @if (session('success_message'))
-            <div class="alert alert-success alert-dismissible fade show mx-auto text-center" style="max-width: 700px;">
-                {{ session('success_message') }}
-                <a class="btn-close" data-bs-dismiss="alert" aria-label="Close"></a>
+    <x-navbars.sidebar activePage="admin-sunday-allReports"></x-navbars.sidebar>
+
+    <main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg">
+
+        <!-- Navbar -->
+        <x-navbars.navigation titlePage="Sunday Reports"></x-navbars.navigation>
+
+        <!-- Toast notifications -->
+        @if (session('success_message'))
+        <div class="toast-container" style="position: absolute; top: 30px; right: 40px;" data-bs-animation="true" data-bs-delay="3000">
+            <div class="toast fade show">
+                <div class="toast-header">
+                    <span class="badge bg-gradient-success mx-2">.</span>
+                    <strong class="me-auto"><i class="bi-globe"></i>Success Message</strong>
+                    <small>just now</small>
+                    <button type="button" class="btn-close btn-sm bg-dark" data-bs-dismiss="toast"></button>
+                </div>
+                <div class="toast-body">
+                    {{ session('success_message') }}
+                </div>
             </div>
+        </div>
 
-            @elseif (session('error_message'))
-            <div class="alert alert-danger alert-dismissible fade show">
-                {{ session('error_message') }}
-                <a class="btn-close" data-bs-dismiss="alert" aria-label="Close"></a>
-            </div>
-            @endif
-
-            <!-- check if leave is empty -->
-            @if ($all_reports->isEmpty())
-            <div class="alert alert-info alert-dismissible">
-                No reports uploaded yet
-            </div>
-
-            @else
-            <div class="row">
-                <div class="col float-right">
-                    <x-input id="dateFilter" class="block mt-1 w-12" type="date" name="dateFilter" placeholder="Filter By date" />
+        @elseif (session('error_message'))
+        <div class="toast-container" style="position: absolute; top: 30px; right: 40px;" data-bs-animation="true" data-bs-delay="3000">
+            <div class="toast fade show">
+                <div class="toast-header">
+                    <span class="badge bg-gradient-danger mx-2">.</span>
+                    <strong class="me-auto"><i class="bi-globe"></i>Error Message</strong>
+                    <small>just now</small>
+                    <button type="button" class="btn-close btn-sm bg-dark" data-bs-dismiss="toast"></button>
                 </div>
-                <div class="col float-right">
-
-                    <x-input id="nameFilter" class="block mt-1 w-12" type="text" name="nameFilter" placeholder="Filter By name" />
-                </div>
-                <div class="col float-right">
-
-                    <x-input id="workstationFilter" class="block mt-1 w-12" type="text" name="workstationFilter" placeholder="Filter By workstation" />
-
-                    <!-- <select name="filter" id="filter" for="member_name" style="border-radius: 10px;">
-                        <option value="" selected disabled>Filter By Name</option>
-                        <option value="member_name">Member Name</option>
-                        <option value="event_type">Event Title</option>
-                        <option value="report_date">Report Date</option>
-                        <option value="workstation">Workstation</option>
-
-                    </select> -->
-                </div>
-
-                <div class="col">
-                    <a href="/#" class="btn btn-secondary btn-sm float-right mt-2">
-                        <i class="bi bi-files"></i>
-                        View Previous Reports
-                    </a>
-                </div>
-
-                <div class="col">
-                    <a href="{{route('admin.users.sunday-reports.downloadAsPDF')}}" class="btn btn-primary btn-sm mt-2">
-                        <i class="bi bi-file-earmark-arrow-down"></i>
-                        DOWNLOAD FULL REPORT</a>
-                </div>
-
-
-            </div>
-
-            <table class="table table-responsive table-bordered table-striped align-middle mt-3 p-5">
-                <thead class="align-middle h-1">
-                    <tr>
-                        <th scope="col">ID</th>
-                        <th scope="col">Member Name</th>
-                        <th scope="col">Last Login Time</th>
-                        <th scope="col">Event Title</th>
-                        <th scope="col">Phone Number</th>
-                        <th scope="col">Workstation</th>
-                        <th scope="col">Report Date</th>
-                        <th scope="col">Comments</th>
-                    </tr>
-                </thead>
-                <tbody style="word-wrap: break-word;">
-                    @foreach ($all_reports as $report)
-                    <tr>
-                        <td>{{$report->id}}</td>
-                        <td>{{$report->user->name}}</td>
-                        <td>{{$report->user->login_time}}</td>
-                        <td>{{$report->event_type}}</td>
-                        <td>{{$report->user->phone_number}}</td>
-                        <td>{{$report->workstation}}</td>
-                        <td>{{$report->report_date}}</td>
-                        <td style="word-wrap: break-word;min-width: 160px;max-width: 190px;">{{$report->comments}}</td>
-
-                        @endforeach
-                    </tr>
-                </tbody>
-            </table>
-
-
-            <!-- card for displaying the summary roster for each staff member -->
-
-            @endif
-            <!-- Pagination -->
-            <div class="row">
-                <div class="col offset-md-6 mb-3 mt-4">
-                    {{$all_reports->links()}}
+                <div class="toast-body">
+                    {{session('error_message')}}
                 </div>
             </div>
 
         </div>
-    </x-slot>
-</x-app-layout>
+        @endif
 
-<script>
-    let createsummaryRosterModal = document.querySelector("#createReportModal")
+        @if ($allReports->isEmpty())
+        <div class="text-center mt-6">
+            <svg xmlns="http://www.w3.org/2000/svg" width="160" height="160" fill="currentColor" class="bi bi-file-earmark-text" viewBox="0 0 16 16">
+                <path d="M5.5 7a.5.5 0 0 0 0 1h5a.5.5 0 0 0 0-1h-5zM5 9.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5zm0 2a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1h-2a.5.5 0 0 1-.5-.5z" />
+                <path d="M9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V4.5L9.5 0zm0 1v2A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h5.5z" />
+            </svg>
+            <h3 class="mt-5">NO REPORTS YET</h3>
+            <p class="mt-4 mx-auto">No reports have been submitted yet. Click the link below to create</p>
 
-    let editMemberDetails = document.querySelector("#editMemberDetails")
-    let createMemberDetails = document.querySelector('#createMemberDetails')
+            <a class="btn bg-gradient-warning mt-3" data-bs-toggle="modal" data-bs-target="#createReportModal" id="createReportModalButton">
+                <i class="material-icons">drafts</i>
+                Create a New Report
+            </a>
+        </div>
 
 
-    $(document).ready(function() {
-        $("#createsummaryRosterModalButton").on('click', function() {
-            $("#createsummaryRosterModal").modal('toggle');
+        @else
+        <a class="btn bg-gradient-secondary mx-4 mb-0" data-bs-toggle="modal" data-bs-target="#createLeaveModal" id="createLeaveModalButton">
+            <i class="material-icons">add</i>
+            CREATE NEW REPORT
+        </a>
 
-        })
+        <a href="{{route('admin.users.sunday-reports.downloadAsPDF')}}" class="btn btn-info mt-3">
+            <i class="material-icons px-1 align-middle">cloud_download</i>
+            DOWNLOAD REPORTS TO PDF
+        </a>
 
-    })
-</script>
-<style>
+        <!-- Container for the table -->
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12">
+                    <div class="card my-4">
+                        <div class="card-body px-0 pb-2">
+                            <div class="table-responsive p-0">
+                                <table class="table align-items-center justify-content-center mb-0">
+                                    <thead>
+                                        <tr>
+                                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder text-center">
+                                                Reported By</th>
+                                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder text-center">
+                                                Workstation</th>
+                                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder">
+                                                Report Date</th>
+                                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder">
+                                                Event Type</th>
+                                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder text-center">
+                                                Comments</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach ($allReports as $report)
+                                        <tr>
+                                            <td class="text-center">
+                                                <div class="d-flex px-2 py-1">
+                                                    <div>
+                                                        <img src="{{ asset('/storage/'.auth()->user()->profile->photo) }}" class="avatar avatar-sm me-3">
+                                                    </div>
+                                                    <div class="d-flex flex-column justify-content-center">
+                                                        <h6 class="mb-0 text-xs">{{$report->user->name}}</h6>
+                                                    </div>
+                                                </div>
+                                            </td>
 
-</style>
+                                            <td>
+                                                <div class="d-flex px-2">
+                                                    <div class="mx-auto">
+                                                        <h6 class="mb-0 text-sm">{{$report->workstation}}</h6>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <p class="text-sm font-weight-bold mb-0">{{$report->report_date}}</p>
+                                            </td>
+                                            <td>
+                                                <span class="text-sm font-weight-bold mb-0">{{$report->event_type}}</span>
+                                            </td>
+                                            <td class="text-center px-2">
+                                                <span class="text-sm font-weight-bold mb-0">{{$report->comments}}</span>
+                                            </td>
+
+                            </div>
+                            </tr>
+                            @endforeach
+                            </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <hr class="mb-2 mt-2">
+                    <div class="d-flex pagination justify-content-end pr-3 mb-3">
+                        <div class="px-5 text-center">
+                            Showing {{count($allReports)}} of {{$allReports->total()}} results
+                        </div>
+                        {{$allReports->links()}}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        @endif
+
+        <!-- Sunday Report Creation Modal -->
+        <div class="modal fade" id="createLeaveModal" tabindex="-1" role="dialog" aria-labelledby="modal-form" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-md">
+                <div class="modal-content">
+                    <div class="modal-body p-0">
+                        <div class="card card-plain">
+                            <div class="card-header pb-0 text-left">
+                                <h5 class="">Create a New Report</h5>
+                            </div>
+                            <div class="card-body">
+                                <form action="{{ route('admin.sunday-report.create', auth()->user()->id )}}" method="POST" id="createReportForm">
+                                    @csrf
+
+                                    <label class="form-label font-weight-bold">WorkStation</label>
+                                    <div class="input-group input-group-outline mt-1 mb-3">
+                                        <select class="form-select-md form-control" name="workstation" id="workstation">
+                                            <option value="" disabled selected>--Select an Option--</option>
+                                            <option value="VMix">VMix</option>
+                                            <option value="Sound">Sound</option>
+                                            <option value="Stage Management">Stage Management</option>
+                                            <option value="Video">Video</option>
+                                        </select>
+                                    </div>
+
+                                    <label class="form-label font-weight-bold">Report Date</label>
+                                    <div class="input-group input-group-outline mt-1 mb-3">
+                                        <input type="date" class="form-control" name="report_date" id="report_date">
+                                    </div>
+
+                                    <label class="form-label font-weight-bold">Event Type</label>
+                                    <div class="input-group input-group-outline mt-1 mb-3">
+                                        <input type="text" class="form-control" name="event_type" id="event_type">
+                                    </div>
+
+                                    <label class="form-label font-weight-bold">Comments</label>
+                                    <div class="input-group input-group-outline mt-1 mb-3">
+                                        <textarea class="form-control" id="comments" name="comments" rows="3"></textarea>
+                                    </div>
+                                    <div class="text-center ">
+                                        <button type="submit" class="text-white btn btn-round btn-md bg-gradient-info w-30 mt-4 mb-0">Save</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+</x-layout>

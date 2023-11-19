@@ -37,7 +37,6 @@
         </div>
         @endif
 
-        <!-- check if leave is empty -->
         @if ($duties->isEmpty())
         <div class="text-center mt-6">
             <svg xmlns="http://www.w3.org/2000/svg" width="160" height="160" fill="currentColor" class="bi bi-calendar3" viewBox="0 0 16 16">
