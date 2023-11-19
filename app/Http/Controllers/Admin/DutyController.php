@@ -98,7 +98,7 @@ class DutyController extends Controller
             'body' => 'This is to notify you that you have been selected to lead the service next Sunday.
             Click the link below to see the message in the app. Please make sure you confirm your availability before Saturday 2:00pm.
             See you on Sunday!!!',
-            'salutation' => 'Regards, ' .auth()->user()->name. ' - ' .(env('APP_NAME')). ' Admin'
+            'salutation' => 'Regards, ' .auth()->user()->name. '- Media Team Admin'
         ];
 
         // send a notification to the user if they have been selected
