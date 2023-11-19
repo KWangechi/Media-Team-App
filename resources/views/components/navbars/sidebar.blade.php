@@ -44,11 +44,11 @@
             </li>
 
             <li class="nav-item">
-                <a class="nav-link text-white {{ $activePage == 'admin-duty-roster' ? ' active bg-gradient-primary' : '' }}  " href="{{ route('admin.duty.index', auth()->user()->id) }}">
+                <a class="nav-link text-white {{ $activePage == 'admin-schedule-management' ? ' active bg-gradient-primary' : '' }}  " href="{{ route('admin.duty.index', auth()->user()->id) }}">
                     <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
                         <i class="material-icons opacity-10">event_note</i>
                     </div>
-                    <span class="nav-link-text ms-1">Duty Roster</span>
+                    <span class="nav-link-text ms-1">Schedule Management</span>
                 </a>
             </li>
 

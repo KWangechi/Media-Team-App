@@ -234,6 +234,5 @@
                 </div>
             </div>
         </div>
-        </div>
     </main>
 </x-layout>

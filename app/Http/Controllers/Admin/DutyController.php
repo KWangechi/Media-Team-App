@@ -29,10 +29,14 @@ class DutyController extends Controller
         $users = User::orderBy('name')->get();
 
 
-        if (auth()->user()->id == User::ROLE_ADMIN) {
+        if (auth()->user()->role->id == User::ROLE_ADMIN) {
+
+            // dd('User is an Admin');
 
             return view('admin.duty.index', compact('duties', 'users'));
         } else {
+            // dd('User is a Team Member');
+
             return view('user.duty.index', compact('duties'));
         }
 

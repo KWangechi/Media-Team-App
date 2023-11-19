@@ -48,7 +48,7 @@
                     </svg>
                     <h3 class="mt-5">NO NOTIFICATIONS</h3>
                     <p class="mt-4">Nothing in your notifications</p>
-                    
+
                 </div>
                 @else
 

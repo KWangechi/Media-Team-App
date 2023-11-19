@@ -69,7 +69,7 @@ class DutyMemberDetailsController extends Controller
         try {
             $user = User::where('name', $member_details->member_name)->first();
 
-            // send a notification to the users/member names(user_id should be a foreig id in the table duty)
+            // send a notification to the users/member names(user_id should be a foreign id in the table duty)
             Notification::send($user, new DutyRosterCreated());
 
             return redirect()->route('admin.duty.index', auth()->user()->id)->with('success_message', 'Notification sent successfully!!');

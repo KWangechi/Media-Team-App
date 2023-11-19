@@ -75,9 +75,7 @@ Route::middleware(['auth'])->group(function () {
         Route::patch('/duty/{id}', [DutyController::class, 'update'])->name('admin.duty.roster.update');
         Route::delete('/duty/{id}', [DutyController::class, 'destroy'])->name('admin.duty.roster.delete');
 
-         // create a new event in a dropdown
-        // Route::post('/duty/event-create', [DutyController::class, 'createNewEvent'])->name('admin.duty.event.create');
-
+    
         //duty roster personel details
         Route::post('createDutyPersonelDetails/{id}', [DutyMemberDetailsController::class, 'store'])
             ->name('admin.duty.createDutyPersonelDetails');
