@@ -20,9 +20,9 @@ class LeaveController extends Controller
     public function index()
     {
         // dd('Leaves');
-        $leaves = Leave::paginate(10);
+        $leaves = Leave::where('user_id', '!=', auth()->id())->paginate(10);
 
-        return view('admin.leave.index', compact('leaves'));
+        return view('admin.leave.leaves', compact('leaves'));
     }
 
     /**
@@ -46,32 +46,32 @@ class LeaveController extends Controller
 
 
         if ($request->start_date > $request->end_date) {
-            return redirect()->route('admin.leaves.index', [auth()->user()->id])->with('error_message', 'Start date should not be later than the end date!!');
+            return redirect()->route('admin.leave.show', [auth()->user()->id])->with('error_message', 'Start date should not be later than the end date!!');
         } else {
             $leave = Leave::create([
                 'user_id' => auth()->user()->id,
                 'reason' => $request->reason,
                 'start_date' => $request->start_date,
-                'end_date' => $request->end_date
+                'end_date' => $request->end_date,
+                'status' => 'approved'
             ]);
 
             $message = [
-                'title' => 'Hello'.$user->name,
-                'body' => 'Your Leave Request has been created successfully. Once the admin approves your request,
-                you will receive a notification on the same. The leave will run from '.$leave->start_date.' to '.$leave->end_date,
-                'salutation' => 'Regards, '.(env('APP_NAME'))
+                'subject' => 'Leave Request Creation',
+                'greeting' => 'Hello '.auth()->user()->name,
+                'body' => 'Your Leave Request has been created successfully. You will be notified once the admin approves your Leave.Please check back later',
+                'salutation' => 'Regards, Media Team App Admin'
             ];
 
             // send a notification for creating a Leave request
             Notification::send($user, new LeaveCreated($message));
 
             if (!$leave) {
-                return redirect()->route('admin.leaves.index', [auth()->user()->id])->with('error_message', 'Error! Please try again');
+                return redirect()->route('admin.leave.show', [auth()->user()->id])->with('error_message', 'Error! Please try again');
             }
 
-            return redirect()->route('admin.leaves.index', [auth()->user()->id])->with('success_message', 'Leave request created successfully!!');
+            return redirect()->route('admin.leave.show', [auth()->user()->id])->with('success_message', 'Leave request created successfully!!');
 
-            // dd($leave);
 
         }
     }
@@ -82,11 +82,11 @@ class LeaveController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($leave_id)
+    public function show($user_id)
     {
-        $leave = Leave::where('user_id', auth()->user()->id)->find($leave_id);
+        $leaves = Leave::where('user_id', $user_id)->paginate(7);
 
-        return redirect()->route('admin.leave.show', [auth()->user()->id])->with('leave', $leave);
+        return view('admin.leave.index', compact('leaves'));
         // dd($leave->reason);
     }
 
@@ -103,9 +103,11 @@ class LeaveController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $leave_id)
+    public function update(Request $request, $user_id, $leave_id)
     {
-        $leave = Leave::where('user_id', auth()->user()->id)->find($leave_id);
+        // dd(['User ID: ' => $user_id, 'Leave ID: ' => $leave_id]);
+
+        $leave = Leave::where('user_id', $user_id)->find($leave_id);
 
         // dd($request->all());
 
@@ -118,7 +120,7 @@ class LeaveController extends Controller
                 if (!$leave->update($request->all())) {
                     return redirect()->route('admin.leave.edit', $leave_id)->with('error_message', 'Error! Please try again');
                 } else {
-                    return redirect()->route('admin.leaves.index', auth()->user()->id)->with('success_message', 'Leave request updated successfully');
+                    return redirect()->route('admin.leave.show', auth()->user()->id)->with('success_message', 'Leave request updated successfully');
                 }
             }
         }
@@ -130,40 +132,50 @@ class LeaveController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function delete($user_id, $leave_id)
     {
-        $leave = Leave::where('user_id', auth()->user()->id)->findOrFail($id);
+        $leave = Leave::where('user_id', $user_id)->findOrFail($leave_id);
 
         if(!$leave->delete()){
-            return redirect()->route('admin.leaves.index', auth()->user()->id)->with('error_message', 'Error! Please try agaain');
+            return redirect()->route('admin.leave.show', auth()->user()->id)->with('error_message', 'Error! Please try agaain');
         }
 
         else{
-            return redirect()->route('admin.leaves.index', auth()->user()->id)->with('success_message', 'Leave request deleted successfully!!');
+            return redirect()->route('admin.leave.show', auth()->user()->id)->with('success_message', 'Leave request deleted successfully!!');
         }
     }
 
     public function approveLeaveRequest($user_id, $leave_id)
     {
 
-        Leave::where(['user_id' => $user_id, 'id' => $leave_id])->update([
+        $leave = Leave::where(['user_id' => $user_id, 'id' => $leave_id])->update([
             'status' => 'approved'
         ]);
 
+        // dd($leave);
+
         $user = User::where('id', $user_id)->first();
-        // dd($user);
 
         $message = [
             'subject' => 'Leave Request Approval Status',
             'greeting' => 'Dear '.$user->name. ',',
             'body' => 'Your Leave requested has been approved. Please contact the admin incase of any changes
             that may occur during your leave days! We hope to see you soon',
-            'salutation' => 'Regards, Media Team App Admin'
+            'salutation' => 'Regards, Media Team App Admin.'
         ];
+
 
         Notification::send($user, new LeaveApproved($message));
 
-        return redirect()->route('admin.leaves.index', auth()->user()->id)->with('success_message', 'Leave request has been approved!!');
+        if(auth()->user()->role->id == User::ROLE_ADMIN) {
+
+            return redirect()->route('admin.leave.show', auth()->user()->id)->with('success_message', 'Leave request has been approved!!');
+        }
+
+        return redirect()->route('admin.leaves.index')->with('success_message', 'Leave request has been approved!!');
+
+
+
 
         // dd([
         //     'User ID' => $user_id,
@@ -187,6 +199,6 @@ class LeaveController extends Controller
 
         Notification::send($user, new LeaveApproved($message));
 
-        return redirect()->route('admin.leaves.index', auth()->user()->id)->with('error_message', 'Leave request has been rejected!');
+        return redirect()->route('admin.leave.show', auth()->user()->id)->with('error_message', 'Leave request has been rejected!');
     }
 }

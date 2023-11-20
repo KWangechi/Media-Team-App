@@ -3,7 +3,7 @@
     <main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg ">
 
         <!-- Navbar -->
-        <x-navbars.navigation titlePage="All Leaves"></x-navbars.navigation>
+        <x-navbars.navigation titlePage="My Leaves"></x-navbars.navigation>
 
         <!-- Toast notifications -->
         @if (session('success_message'))
@@ -46,56 +46,17 @@
             <h3 class="mt-5">NO LEAVES YET</h3>
             <p class="mt-4 mx-auto">You have no leaves. Click the link below to create</p>
 
-            <a class="btn bg-gradient-warning mt-3" data-bs-toggle="modal" data-bs-target="#createLeaveModal" id="createLeaveModalButton">
+            <a class="btn bg-gradient-primary mt-3" data-bs-toggle="modal" data-bs-target="#createLeaveModal" id="createLeaveModalButton">
                 <i class="material-icons">flight</i>
                 Create a New Leave Request
             </a>
+
+            <a class="btn bg-gradient-primary mt-3" href="{{route('admin.leaves.index')}}">
+                <i class="material-icons">flight</i>
+                View All Leaves
+            </a>
         </div>
 
-        <!-- Create Leave Request Modal -->
-        <div class="modal fade" id="createLeaveModal" tabindex="-1" role="dialog" aria-labelledby="modal-form" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered modal-md">
-                <div class="modal-content">
-                    <div class="modal-body p-0">
-                        <div class="card card-plain">
-                            <div class="card-header pb-0 text-left">
-                                <h5 class="">Create a New Leave Request</h5>
-                            </div>
-                            <div class="card-body">
-                                <form action="{{ route('user.leave.create', auth()->user()->id) }}" method="POST" id="createLeaveForm">
-                                    @csrf
-
-                                    <label class="form-label font-weight-bold">Reason</label>
-                                    <div class="input-group input-group-outline mt-1 mb-3">
-                                        <select class="form-select-md form-control" name="reason" id="reason" placeholder="--Select reason--">
-                                            <option value="" disabled selected>--Select an Option--</option>
-                                            <option value="Bereavement">Bereavement</option>
-                                            <option value="Sickness">Sickness</option>
-                                            <option value="Personal Reasons">Personal Reasons</option>
-                                            <option value="Temporary Absence">Temporary Absence</option>
-                                            <option value="Travelling">Travelling</option>
-                                        </select>
-                                    </div>
-
-                                    <label class="form-label font-weight-bold">Start Date</label>
-                                    <div class="input-group input-group-outline mt-1 mb-3">
-                                        <input type="date" class="form-control" name="start_date" id="start_date">
-                                    </div>
-
-                                    <label class="form-label font-weight-bold">End Date</label>
-                                    <div class="input-group input-group-outline mt-1 mb-3">
-                                        <input type="date" class="form-control" name="end_date" id="end_date">
-                                    </div>
-                                    <div class="text-center">
-                                        <button type="submit" class="text-white btn btn-round btn-md bg-gray-900 w-30 mt-4 mb-0">Save</button>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
 
         @else
         <a class="btn bg-gradient-secondary mx-4 mb-0" data-bs-toggle="modal" data-bs-target="#createLeaveModal" id="createLeaveModalButton">
@@ -103,6 +64,12 @@
             CREATE NEW LEAVE REQUEST
         </a>
 
+        <a class="btn bg-gradient-primary mt-3" href="{{route('admin.leaves.index')}}">
+                <i class="material-icons">flight</i>
+                View All Leaves
+            </a>
+        @endif
+
         <!-- Create Leave Request Modal -->
         <div class="modal fade" id="createLeaveModal" tabindex="-1" role="dialog" aria-labelledby="modal-form" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered modal-md">
@@ -113,7 +80,7 @@
                                 <h5 class="">Create a New Leave Request</h5>
                             </div>
                             <div class="card-body">
-                                <form action="{{ route('user.leave.create', auth()->user()->id) }}" method="POST" id="createLeaveForm">
+                                <form action="{{ route('admin.leave.create', auth()->user()->id) }}" method="POST" id="createLeaveForm">
                                     @csrf
 
                                     <label class="form-label font-weight-bold">Reason</label>
@@ -147,7 +114,7 @@
                 </div>
             </div>
         </div>
-        @endif
+
 
         <div class="container-fluid">
             <div class="row">
@@ -214,7 +181,7 @@
                                             <td class="align-middle">
                                                 <div class="row text-center mx-auto p-0">
                                                     <div class="col-6 mx-auto">
-                                                        <a href="{{ route('user.leave.edit', [auth()->id(), $leave->id]) }}" rel="noopener noreferrer">
+                                                        <a href="{{ route('admin.leave.edit', $leave->id) }}" rel="noopener noreferrer">
                                                             <button class="btn btn-link text-secondary mb-0">
                                                                 <i class="fa fa-pen text-xs px-1"></i>
                                                                 Edit
@@ -223,7 +190,7 @@
                                                     </div>
 
                                                     <div class="col-6">
-                                                        <form action="{{ route('user.leave.delete', [auth()->id(), $leave->id]) }}" method="post">
+                                                        <form action="{{ route('admin.leave.delete', [auth()->id(), $leave->id]) }}" method="post">
                                                             @csrf()
                                                             @method('DELETE')
                                                             <button class="btn btn-link text-secondary mb-0 ">
