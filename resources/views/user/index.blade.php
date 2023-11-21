@@ -137,7 +137,7 @@
                                 <p class='text-danger inputerror'>{{ $message }} </p>
                                 @enderror
                             </div>
-                            <button type="submit" class="btn btn-sm bg-gradient-warning text-center mx-auto">Save Changes</button>
+                            <button type="submit" class="btn btn-sm bg-gradient-info text-center mx-auto">Save Changes</button>
                         </form>
                     </div>
                     @else
