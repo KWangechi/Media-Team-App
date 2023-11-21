@@ -116,7 +116,7 @@
                                             <td>
                                                 <span class="text-sm font-weight-bold mb-0">{{$report->event_type}}</span>
                                             </td>
-                                            <td class="text-center px-2">
+                                            <td class="text-center px-2 text-wrap">
                                                 <span class="text-sm font-weight-bold mb-0">{{$report->comments}}</span>
                                             </td>
 

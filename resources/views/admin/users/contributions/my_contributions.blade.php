@@ -3,7 +3,7 @@
     <main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg ">
 
         <!-- Navbar -->
-        <x-navbars.navigation titlePage="Contributions"></x-navbars.navigation>
+        <x-navbars.navigation titlePage="My Contributions"></x-navbars.navigation>
 
         <!-- Toast notifications -->
         @if (session('success_message'))
@@ -45,47 +45,40 @@
                 <path d="M0 4a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H1a1 1 0 0 1-1-1V4zm3 0a2 2 0 0 1-2 2v4a2 2 0 0 1 2 2h10a2 2 0 0 1 2-2V6a2 2 0 0 1-2-2H3z" />
             </svg>
             <h3 class="mt-5">NO CONTRIBUTIONS YET</h3>
-            <p class="mt-4 mx-auto">Contributions not yet made. Add a Contribution</p>
+            <p class="mt-4 mx-auto">You have not contributions yet. Click below to add</p>
 
             <a class="btn bg-gradient-primary mt-3" data-bs-toggle="modal" data-bs-target="#createContributionModal" id="createContributionModalButton">
                 <i class="material-icons">payments</i>
                 Add a New Contribution
             </a>
 
-            <a class="btn bg-gradient-primary mt-3" href="{{route('admin.contributions.show', auth()->id())}}">
+            <a class="btn bg-gradient-primary mt-3" href="{{ route('admin.users.contributions') }}">
                 <i class="material-icons">payments</i>
-                View My Contributions
+                View All Contributions
             </a>
         </div>
 
 
         @else
-        <a class="btn bg-gradient-secondary mx-4 mb-0" data-bs-toggle="modal" data-bs-target="#createContributionModal" id="createContributionModalButton">
-            <i class="material-icons">add</i>
-            ADD A NEW CONTRIBUTION
-        </a>
-
-        <a class="btn bg-gradient-primary mt-3" href="{{route('admin.contributions.show', auth()->id())}}">
+        <a class="btn bg-gradient-primary mt-4 mx-4" href="{{ route('admin.users.contributions') }}">
             <i class="material-icons">payments</i>
-            View My Contributions
+            View All Contributions
         </a>
 
         <div class="container-fluid">
             <div class="row">
                 <div class="col-12">
-                    <div class="card my-4">
+                    <div class="card my-2">
                         <div class="card-body px-0 pb-2">
                             <div class="table-responsive p-0">
                                 <table class="table align-items-center justify-content-center mb-0">
                                     <thead>
                                         <tr>
-                                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder text-center">
+                                        <th class="text-uppercase text-secondary text-xxs font-weight-bolder text-center">
                                                 #Ref</th>
                                             <th class="text-uppercase text-secondary text-xxs font-weight-bolder text-center">
-                                                Contributed By</th>
-                                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder">
                                                 Date Contributed</th>
-                                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder">
+                                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder text-center">
                                                 Amount Contributed(Kshs.)</th>
                                             <th class="text-uppercase text-secondary text-xxs font-weight-bolder text-center">
                                                 Comments</th>
@@ -97,32 +90,22 @@
                                     <tbody>
                                         @foreach ($contributions as $contribution)
                                         <tr>
-                                            <td class="text-center">
+                                        <td class="text-center">
                                                 <p class="text-sm font-weight-bold mb-0">{{$contribution->id}}</p>
                                             </td>
-                                            <td>
-                                                <div class="d-flex px-2 py-1 mx-4">
-                                                    <div>
-                                                        <img src="{{ asset('/storage/'.$contribution->user->profile->photo) }}" class="avatar avatar-sm me-3">
-                                                    </div>
-                                                    <div class="d-flex flex-column justify-content-center">
-                                                        <h6 class="mb-0 text-xs">{{$contribution->user->name}}</h6>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <p class="text-sm font-weight-bold mb-0 text-center">{{$contribution->date_contributed}}</p>
+                                            <td class="text-center">
+                                                <p class="text-sm font-weight-bold mb-0">{{$contribution->date_contributed}}</p>
                                             </td>
                                             <td class="text-center">
                                                 <span class="text-sm font-weight-bold mb-0">{{$contribution->amount_contributed}}</span>
                                             </td>
-                                            <td class="text-wrap">
+                                            <td class="text-wrap text-center">
                                                 <span class="text-sm font-weight-bold mb-0">{{$contribution->comment}}</span>
                                             </td>
 
                                             <td class="align-middle">
                                                 <div class="row text-center mx-auto p-0">
-                                                    <div class="col-6 mx-auto">
+                                                    <div class="col-md-6">
                                                         <a href="{{ route('admin.users.contributions.edit', $contribution->id) }}" rel="noopener noreferrer">
                                                             <button class="btn btn-link text-secondary mb-0">
                                                                 <i class="material-icons px-1">edit</i>
@@ -131,7 +114,7 @@
                                                         </a>
                                                     </div>
 
-                                                    <div class="col-6">
+                                                    <div class="col-md-6">
                                                         <form action="{{ route('admin.users.contributions.delete', $contribution->id) }}" method="post">
                                                             @csrf()
                                                             @method('DELETE')

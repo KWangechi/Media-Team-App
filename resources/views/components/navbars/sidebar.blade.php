@@ -15,12 +15,12 @@
                 @if (auth()->user()->role_id == 1)
                 <a class="nav-link text-white {{ $activePage == 'profile' ? 'active bg-gradient-primary' : '' }} " href="{{ route('admin.profile', auth()->id()) }}">
                     <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-                        <i style="font-size: 1.2rem;" class="fas fa-user-circle ps-2 pe-2 text-center"></i>
+                        <i class="material-icons opacity-10">account_circle</i>
                     </div>
                     <span class="nav-link-text ms-1">My Profile</span>
                 </a>
 
-                <li class="nav-item">
+            <li class="nav-item">
                 <a class="nav-link text-white {{ $activePage == 'users' ? ' active bg-gradient-primary' : '' }}  " href="{{ route('admin.users.index') }}">
                     <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
                         <i class="material-icons opacity-10">group</i>
@@ -29,14 +29,14 @@
                 </a>
             </li>
 
-                @else
-                <a class="nav-link text-white {{ $activePage == 'profile' ? 'active bg-gradient-warning' : '' }} " href="{{ route('user.profile', auth()->id()) }}">
-                    <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-                        <i style="font-size: 1.2rem;" class="fas fa-user-circle ps-2 pe-2 text-center"></i>
-                    </div>
-                    <span class="nav-link-text ms-1">My Profile</span>
-                </a>
-                @endif
+            @else
+            <a class="nav-link text-white {{ $activePage == 'profile' ? 'active bg-gradient-warning' : '' }} " href="{{ route('user.profile', auth()->id()) }}">
+                <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+                    <i style="font-size: 1.2rem;" class="fas fa-user-circle ps-2 pe-2 text-center"></i>
+                </div>
+                <span class="nav-link-text ms-1">My Profile</span>
+            </a>
+            @endif
             </li>
 
 
@@ -82,7 +82,7 @@
             </li>
 
             <li class="nav-item">
-                <a class="nav-link text-white {{ $activePage == 'contributions' ? ' active bg-gradient-primary' : '' }}  " href="{{ route('user.leaves.index', auth()->user()->id) }}">
+                <a class="nav-link text-white {{ $activePage == 'admin-contributions' ? ' active bg-gradient-primary' : '' }}  " href="{{ route('admin.users.contributions')}}">
                     <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
                         <i class="material-icons opacity-10">payments</i>
                     </div>

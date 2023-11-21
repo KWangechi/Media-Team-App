@@ -23,27 +23,27 @@
                 <li class="nav-item d-flex align-items-center">
                     <a href="javascript:;" class="nav-link text-body font-weight-bold px-0">
                         @if (auth()->user()->profile)
-                        <img src="{{ asset('/storage/'.auth()->user()->profile->photo) }}" alt="" class=" rounded-circle shadow-4-strong" width="30px;" height="30px;">
+                        <img src="{{ asset('/storage/'.auth()->user()->profile->photo) }}" alt="" class="rounded-circle shadow-4-strong mx-2" width="30px;" height="30px;">
                         @else
-                        <i style="font-size: 2.0rem;" class="fas fa-user-circle ps-2 pe-2 text-center"></i>
+                        <i class="material-icons opacity-10 mx-2">account_circle</i>
                         @endif
 
                         {{auth()->user()->name}}
 
                         <span class="d-sm-inline my-2 d-none px-1" onclick="event.preventDefault();document.getElementById('logout-form').submit();">
-                        <i size="font-size: 2.2rem;" class="fa fa-sign-out" aria-hidden="true"></i>
+                            <i style="font-size: 1.7rem" class="material-icons opacity-30 mt-0">logout</i>
                         </span>
                     </a>
                 </li>
 
-                <li class="nav-item px-3 d-flex align-items-center">
+                <li class="nav-item d-flex align-items-center">
                     <a href="javascript:;" class="nav-link text-body p-0">
-                        <i class="fa fa-cog fixed-plugin-button-nav cursor-pointer"></i>
+                        <i class="material-icons opacity-10 mx-2">settings</i>
                     </a>
                 </li>
                 <li class="nav-item dropdown pe-2 d-flex align-items-center">
                     <a href="javascript:;" class="nav-link text-body p-0" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
-                        <i class="fa fa-bell cursor-pointer fa-lg"></i>
+                        <i class="material-icons opacity-10 mx-2">notifications</i>
                         @if (count(auth()->user()->unreadNotifications) > 0)
                         <span class="badge bg-danger rounded-circle p-1 translate-middle position-absolute start-100">
                             {{ count(auth()->user()->unreadNotifications) }}
@@ -53,6 +53,7 @@
                     </a>
 
                     <ul class="dropdown-menu  dropdown-menu-end  px-2 py-3 me-sm-n4" aria-labelledby="dropdownMenuButton">
+                        @if (count(auth()->user()->unreadNotifications) > 0)
                         @foreach (auth()->user()->unreadNotifications as $notification)
                         <li class="mb-2">
                             <a class="dropdown-item border-radius-md" href="{{route('user.announcements')}}">
@@ -66,8 +67,6 @@
                                             <span class="badge bg-info rounded-pill ml-3"> </span>
                                             <p class="mt-1 mb-0">{{$notification->created_at}}</p>
 
-                                            @else
-                                            <p>No New Notifications</p>
                                             @endif
                                         </h6>
                                     </div>
@@ -75,6 +74,19 @@
                             </a>
                         </li>
                         @endforeach
+
+                        @else
+                        <li class="mb-2">
+                            <div class="d-flex py-1">
+                                <div class="d-flex flex-column justify-content-center">
+                                    <span class="font-weight-bold text-center">
+                                        No New Notifications!
+                                    </span>
+                                </div>
+                            </div>
+                        </li>
+                        @endif
+
                     </ul>
                 </li>
             </ul>

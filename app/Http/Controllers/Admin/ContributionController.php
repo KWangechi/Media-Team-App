@@ -18,7 +18,7 @@ class ContributionController extends Controller
      */
     public function index()
     {
-        $contributions = Contribution::paginate(10);
+        $contributions = Contribution::paginate(6);
         $users = User::all();
 
 
@@ -99,13 +99,12 @@ class ContributionController extends Controller
         ]);
 
         if(!$contribution){
-            return redirect()->route('admin.users.contributions')->with('error_message', 'Error! Something went wrong. Please try again');
+            return redirect()->route('admin.users.contributions')->with('error_message', 'Error! Something Went Wrong. Please try again');
         }
         else{
-            return redirect()->route('admin.users.contributions')->with('success_message', 'Contribution recorded successfully!!');
+            return redirect()->route('admin.users.contributions')->with('success_message', 'Contribution Added successfully!!');
 
         }
-        // dd($contribution);
     }
 
     /**
@@ -114,17 +113,13 @@ class ContributionController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($user_id)
     {
-        $contribution = Contribution::findOrFail($id);
+        $contributions = Contribution::where('user_id', $user_id)->paginate(6);
+        $users = User::all();
+        // dd($contributions);
 
-        if(!$contribution){
-            return redirect()->route('admin.users.contributions.index')->with('error_message', 'Contribution found!');
-        }
-
-        else{
-            return redirect()->route('admin.users.contributions.show', compact('contribution'))->with('success_message', 'Contribution record found!!!!');
-        }
+            return view('admin.users.contributions.my_contributions', compact('contributions', 'users'));
     }
 
     /**
@@ -187,7 +182,7 @@ class ContributionController extends Controller
         }
 
         else{
-            return redirect()->route('admin.users.conrtibutions')->with('success_message', 'Contribution deleted successfully!!!');
+            return redirect()->route('admin.users.contributions')->with('success_message', 'Contribution deleted successfully!!!');
         }
     }
 }

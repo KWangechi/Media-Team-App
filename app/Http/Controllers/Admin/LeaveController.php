@@ -20,7 +20,7 @@ class LeaveController extends Controller
     public function index()
     {
         // dd('Leaves');
-        $leaves = Leave::where('user_id', '!=', auth()->id())->paginate(10);
+        $leaves = Leave::where('user_id', '!=', auth()->id())->paginate(6);
 
         return view('admin.leave.leaves', compact('leaves'));
     }
