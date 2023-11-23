@@ -199,7 +199,7 @@
                                                     <div class="col-6 mx-auto">
                                                         <a href="{{ route('user.leave.edit', [auth()->id(), $leave->id]) }}" rel="noopener noreferrer">
                                                             <button class="btn btn-link text-secondary mb-0">
-                                                                <i class="fa fa-pen text-xs px-1"></i>
+                                                            <i class="material-icons px-1">edit</i>
                                                                 Edit
                                                             </button>
                                                         </a>
@@ -210,7 +210,7 @@
                                                             @csrf()
                                                             @method('DELETE')
                                                             <button class="btn btn-link text-secondary mb-0 ">
-                                                                <i class="fa fa-trash px-1" aria-hidden="true"></i>
+                                                            <i class="material-icons px-1">delete</i>
                                                                 Delete
                                                             </button>
                                                         </form>

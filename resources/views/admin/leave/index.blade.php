@@ -65,9 +65,9 @@
         </a>
 
         <a class="btn bg-gradient-primary mt-3" href="{{route('admin.leaves.index')}}">
-                <i class="material-icons">flight</i>
-                View All Leaves
-            </a>
+            <i class="material-icons">flight</i>
+            View All Leaves
+        </a>
         @endif
 
         <!-- Create Leave Request Modal -->
@@ -125,7 +125,7 @@
                                 <table class="table align-items-center justify-content-center mb-0">
                                     <thead>
                                         <tr>
-                                        <th class="text-uppercase text-secondary text-xxs font-weight-bolder text-center">
+                                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder text-center">
                                                 Requested By</th>
                                             <th class="text-uppercase text-secondary text-xxs font-weight-bolder text-center">
                                                 Reason</th>
@@ -143,11 +143,15 @@
                                     <tbody>
                                         @foreach ($leaves as $leave)
                                         <tr>
-                                        <td>
+                                            <td>
                                                 <div class="d-flex px-2 py-1 mx-4">
+                                                    @if ($leave->user->profile)
                                                     <div>
                                                         <img src="{{ asset('/storage/'.$leave->user->profile->photo) }}" class="avatar avatar-sm me-3">
                                                     </div>
+                                                    @else
+                                                    <i style="font-size: 3.0rem;" class="material-icons opacity-10 me-2">account_circle</i>
+                                                    @endif
                                                     <div class="d-flex flex-column justify-content-center">
                                                         <h6 class="mb-0 text-xs">{{$leave->user->name}}</h6>
                                                     </div>
@@ -183,7 +187,7 @@
                                                     <div class="col-6 mx-auto">
                                                         <a href="{{ route('admin.leave.edit', $leave->id) }}" rel="noopener noreferrer">
                                                             <button class="btn btn-link text-secondary mb-0">
-                                                                <i class="fa fa-pen text-xs px-1"></i>
+                                                                <i class="material-icons px-1">edit</i>
                                                                 Edit
                                                             </button>
                                                         </a>
@@ -194,7 +198,7 @@
                                                             @csrf()
                                                             @method('DELETE')
                                                             <button class="btn btn-link text-secondary mb-0 ">
-                                                                <i class="fa fa-trash px-1" aria-hidden="true"></i>
+                                                                <i class="material-icons px-1">delete</i>
                                                                 Delete
                                                             </button>
                                                         </form>

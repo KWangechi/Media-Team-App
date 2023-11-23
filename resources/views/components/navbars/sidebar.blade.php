@@ -32,7 +32,7 @@
             @else
             <a class="nav-link text-white {{ $activePage == 'profile' ? 'active bg-gradient-warning' : '' }} " href="{{ route('user.profile', auth()->id()) }}">
                 <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-                    <i style="font-size: 1.2rem;" class="fas fa-user-circle ps-2 pe-2 text-center"></i>
+                    <i class="material-icons opacity-10">account_circle</i>
                 </div>
                 <span class="nav-link-text ms-1">My Profile</span>
             </a>

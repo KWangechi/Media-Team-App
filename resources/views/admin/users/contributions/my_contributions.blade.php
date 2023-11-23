@@ -47,11 +47,6 @@
             <h3 class="mt-5">NO CONTRIBUTIONS YET</h3>
             <p class="mt-4 mx-auto">You have not contributions yet. Click below to add</p>
 
-            <a class="btn bg-gradient-primary mt-3" data-bs-toggle="modal" data-bs-target="#createContributionModal" id="createContributionModalButton">
-                <i class="material-icons">payments</i>
-                Add a New Contribution
-            </a>
-
             <a class="btn bg-gradient-primary mt-3" href="{{ route('admin.users.contributions') }}">
                 <i class="material-icons">payments</i>
                 View All Contributions

@@ -102,9 +102,13 @@
                                             </td>
                                             <td>
                                                 <div class="d-flex px-2 py-1 mx-4">
+                                                    @if ($contribution->user->profile)
                                                     <div>
                                                         <img src="{{ asset('/storage/'.$contribution->user->profile->photo) }}" class="avatar avatar-sm me-3">
                                                     </div>
+                                                    @else
+                                                    <i style="font-size: 3.0rem;" class="material-icons opacity-10 me-2">account_circle</i>
+                                                    @endif
                                                     <div class="d-flex flex-column justify-content-center">
                                                         <h6 class="mb-0 text-xs">{{$contribution->user->name}}</h6>
                                                     </div>

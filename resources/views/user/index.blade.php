@@ -49,7 +49,9 @@
                             <img src="{{ asset('/storage/'.auth()->user()->profile->photo) }}" alt="profile_image" class="w-100 border-radius-lg shadow-sm mt-2" height="80px;">
                         </div>
                         @else
-                        <i style="font-size: 5.0rem;" class="fas fa-user-circle ps-2 pe-2 text-center"></i>
+                        <i style="font-size: 4.5rem;" class="material-icons ps-2 pe-2 text-center">
+                            account_circle
+                        </i>
                         @endif
                     </div>
                     <div class="col-auto my-auto">
@@ -138,6 +140,41 @@
                                 @enderror
                             </div>
                             <button type="submit" class="btn btn-sm bg-gradient-info text-center mx-auto">Save Changes</button>
+                            <!-- Button trigger modal -->
+                            <button type="button" class="btn btn-sm bg-gradient-danger mx-8" data-bs-toggle="modal" data-bs-target="#deleteProfileModal-{{$profile->id}}">
+                                Delete Profile
+                            </button>
+
+                            <div class="modal fade" id="deleteProfileModal-{{$profile->id}}" tabindex="-1" role="dialog" aria-labelledby="modal-notification" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered">
+                                    <div class="modal-content">
+                                        <div class="modal-body p-0">
+                                            <div class="card card-plain">
+                                                <div class="card-header pb-0 text-left">
+                                                    <h5 class="">Delete Profile</h5>
+                                                </div>
+                                                <div class="card-body text-lg">
+                                                    <i style="font-size: 2.5rem;" class="material-icons placeholder-opacity-10">
+                                                        warning</i>
+                                                    <span class="mt-0">
+                                                        Are you sure you want to delete this? Action can't be reversed
+                                                    </span>
+                                                </div>
+                                                <div class="card-footer mx-4">
+                                                    <button type="button" class="btn btn-sm btn-secondary text-white ml-auto" data-bs-dismiss="modal">Close</button>
+                                                    <a href="{{route('user.profile.delete', [auth()->id(), $profile->id])}}" class="btn btn-sm btn-danger">
+                                                        Delete
+                                                    </a>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            </button>
                         </form>
                     </div>
                     @else
@@ -201,9 +238,9 @@
                             </div>
                         </div>
                     </div>
-        @endif
-        </div>
-        </div>
+                    @endif
+                </div>
+            </div>
         </div>
     </main>
 </x-app-layout>

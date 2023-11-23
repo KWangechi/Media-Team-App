@@ -56,7 +56,7 @@
                     </div>
 
                     <div class="text-center ">
-                        <button type="submit" class="btn btn-round btn-md bg-gradient-info w-10 mt-2 mb-2">update</button>
+                        <button type="submit" class="btn btn-round btn-md bg-gradient-warning w-15 mt-2 mb-2">Save Changes</button>
                     </div>
                 </form>
             </div>
@@ -67,14 +67,3 @@
     </main>
 </x-layout>
 
-<script>
-    $(document).ready(function() {
-        $("#createLeaveModalButton").click(function() {
-            $("#createLeaveModal").fadeToggle();
-            // console.log('Display the modal')
-        })
-        $("#closeModalButton").click(function() {
-            $(".modal").toggle()
-        })
-    })
-</script>
