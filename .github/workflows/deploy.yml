@@ -1,42 +1,44 @@
-name: Deploy Application to Github Actions
+name: Deploy Laravel Application to Github Actions
 on: [push]
 
 jobs:
-  tests:
-    name: Run tests
+  build:
+    name: Build Application
     runs-on: ubuntu-latest
     services:
       mysql:
-            image: mysql:latest
-            
-            env:
-                MYSQL_ALLOW_EMPTY_PASSWORD: yes
-                MYSQL_USER: root
-                MYSQL_PASSWORD: ""
-                MYSQL_DATABASE: media_team_app
-            ports:
-                - 3306/tcp
+        image: mysql:latest
 
-            options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
+        env:
+          MYSQL_ALLOW_EMPTY_PASSWORD: yes
+          MYSQL_USER: root
+          MYSQL_PASSWORD: ""
+          MYSQL_DATABASE: media_team_app
+        ports:
+          - 3306/tcp
+
+        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
 
     steps:
-      - name: Checkout code
       - uses: actions/checkout@v3
 
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: '8.2'
+          php-version: "8.2"
           extensions: dom, curl, libxml, mbstring, zip, pcntl, pdo, sqlite, pdo_sqlite, bcmath, soap, intl, gd, exif, iconv
           coverage: none
 
-      - name: Run composer install
+      - name: Install PHP packages
         run: composer install -n --prefer-dist
 
       - name: Prepare Laravel Application
         run: |
           cp .env.ci .env
           php artisan key:generate
+
+      - name: Seed Data in the Database
+        run: php artisan migrate --seed
 
       - name: Run Application
         run: php artisan serve
