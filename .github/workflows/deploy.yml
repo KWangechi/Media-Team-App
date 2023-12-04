@@ -37,6 +37,9 @@ jobs:
           cp .env.example .env
           php artisan key:generate
 
+      - name: Start the MySql Service
+        run: sudo systemctl start mysql
+
       - name: Seed Data in the Database
         run: php artisan migrate --seed
 
