@@ -13,13 +13,13 @@ jobs:
           MYSQL_ROOT_PASSWORD: root
           MYSQL_DATABASE: media_team_app
         ports:
-          - 3306:3306
+          - 8888:3306
 
         options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3 -h 127.0.0.1
 
     steps:
       - uses: actions/checkout@v3
-      - run: sudo mysql -h 127.0.0.1 --port 3306 -u root -proot -e 'CREATE DATABASE IF NOT EXISTS media_team_app;'
+      - run: sudo mysql -h 127.0.0.1 --port 8888 -u root -proot -e 'CREATE DATABASE IF NOT EXISTS media_team_app;'
 
 
       - name: Start the MySql Service
