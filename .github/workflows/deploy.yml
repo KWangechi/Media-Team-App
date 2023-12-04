@@ -11,8 +11,8 @@ jobs:
 
         env:
           MYSQL_ALLOW_EMPTY_PASSWORD: yes
-          MYSQL_USER: mysql
-          MYSQL_PASSWORD: ""
+          MYSQL_ROOT_USER: root
+          MYSQL_ROOT_PASSWORD: ""
           MYSQL_DATABASE: media_team_app
         ports:
           - 3306/tcp
