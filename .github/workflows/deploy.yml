@@ -10,10 +10,8 @@ jobs:
         image: mysql:latest
 
         env:
-          MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
-          MYSQL_DATABASE: ${MYSQL_DATABASE}
-          MYSQL_USER: ${MYSQL_USER}
-          MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+          MYSQL_ROOT_PASSWORD: root
+          MYSQL_DATABASE: media_team_app
         ports:
           - 3306:3306
 
@@ -21,7 +19,7 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
-      - run: sudo mysql -h 127.0.0.1 -P 3306 -u "$MYSQL_USER" -p"$MYSQL_PASSWORD" "$MYSQL_DATABASE"
+      - run: sudo mysql -h 127.0.0.1 --port 3306 -u root -proot -e 'CREATE DATABASE IF NOT EXISTS media_team_app;'
 
 
       - name: Start the MySql Service
