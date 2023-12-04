@@ -45,7 +45,7 @@ jobs:
       - name: Seed Data in the Database
         env:
           DB_CONNECTION: mysql
-          DB_HOST: mysql
+          DB_HOST: 127.0.0.1
           DB_DATABASE: media_team_app
           DB_PORT: 3306
           DB_USER: root
