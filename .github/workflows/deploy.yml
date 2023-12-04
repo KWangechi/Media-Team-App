@@ -41,7 +41,7 @@ jobs:
         run: sudo systemctl start mysql
 
       - name: Create the DB
-        run: sudo mysql -h 127.0.0.1 -u root -p root -e 'CREATE DATABASE IF NOT EXISTS media_team_app;'
+        run: sudo mysql -h 127.0.0.1 --port 8888 -u root -e 'CREATE DATABASE IF NOT EXISTS media_team_app;'
 
       - name: Seed Data in the Database
         run: php artisan migrate --seed
