@@ -15,7 +15,7 @@ jobs:
           MYSQL_ROOT_PASSWORD: root
           MYSQL_DATABASE: media_team_app
         ports:
-          - 3306/tcp
+          - 8888:3306
 
         options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3 -h 127.0.0.1
 
@@ -48,3 +48,4 @@ jobs:
 
       - name: Run Application
         run: php artisan serve
+        # GRANT ALL PRIVILEGES ON *.* TO 'root'@'localhost' IDENTIFIED BY 'password';
