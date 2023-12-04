@@ -21,13 +21,14 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
-      - run: sudo mysql -h 127.0.0.1 -P 3306 -u $MYSQL_USER -p$MYSQL_PASSWORD $MYSQL_DATABASE
+      - run: sudo mysql -h 127.0.0.1 -P 3306 -u "$MYSQL_USER" -p"$MYSQL_PASSWORD" "$MYSQL_DATABASE"
+
 
       - name: Start the MySql Service
         run: sudo systemctl start mysql
 
-      - name: See DB created
-        run: mysql -h 127.0.0.1 --port 3306 -u root -proot -e "SHOW DATABASES;"
+      # - name: See DB created
+      #   run: mysql -h 127.0.0.1 --port 3306 -u root -proot -e "SHOW DATABASES;"
 
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
