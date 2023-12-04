@@ -17,7 +17,7 @@ jobs:
         ports:
           - 3306/tcp
 
-        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
+        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3 -h 127.0.0.1
 
     steps:
       - uses: actions/checkout@v3
@@ -39,6 +39,9 @@ jobs:
 
       - name: Start the MySql Service
         run: sudo systemctl start mysql
+
+      - name: Create the DB
+        run: sudo mysql -h 127.0.0.1 -u root -e 'CREATE DATABASE IF NOT EXISTS media_team_app;'
 
       - name: Seed Data in the Database
         run: php artisan migrate --seed
