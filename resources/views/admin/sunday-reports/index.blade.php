@@ -49,8 +49,8 @@
             <h3 class="mt-5">NO REPORTS YET</h3>
             <p class="mt-4 mx-auto">No reports have been submitted yet. Click the link below to create</p>
 
-            <a class="btn bg-gradient-warning mt-3" data-bs-toggle="modal" data-bs-target="#createReportModal" id="createReportModalButton">
-                <i class="material-icons">drafts</i>
+            <a class="btn bg-gradient-primary mt-3" data-bs-toggle="modal" data-bs-target="#createReportModal" id="createReportModalButton">
+                <i class="material-icons">description</i>
                 Create a New Report
             </a>
         </div>
