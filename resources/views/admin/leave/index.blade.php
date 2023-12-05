@@ -46,7 +46,7 @@
             <h3 class="mt-5">NO LEAVES YET</h3>
             <p class="mt-4 mx-auto">You have no leaves. Click the link below to create</p>
 
-            <a class="btn bg-gradient-primary mt-3" data-bs-toggle="modal" data-bs-target="#createLeaveModal" id="createLeaveModalButton">
+            <a class="btn bg-gradient-primary mt-3 mx-3" data-bs-toggle="modal" data-bs-target="#createLeaveModal" id="createLeaveModalButton">
                 <i class="material-icons">flight</i>
                 Create a New Leave Request
             </a>
@@ -68,53 +68,6 @@
             <i class="material-icons">flight</i>
             View All Leaves
         </a>
-        @endif
-
-        <!-- Create Leave Request Modal -->
-        <div class="modal fade" id="createLeaveModal" tabindex="-1" role="dialog" aria-labelledby="modal-form" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered modal-md">
-                <div class="modal-content">
-                    <div class="modal-body p-0">
-                        <div class="card card-plain">
-                            <div class="card-header pb-0 text-left">
-                                <h5 class="">Create a New Leave Request</h5>
-                            </div>
-                            <div class="card-body">
-                                <form action="{{ route('admin.leave.create', auth()->user()->id) }}" method="POST" id="createLeaveForm">
-                                    @csrf
-
-                                    <label class="form-label font-weight-bold">Reason</label>
-                                    <div class="input-group input-group-outline mt-1 mb-3">
-                                        <select class="form-select-md form-control" name="reason" id="reason">
-                                            <option value="" disabled selected>--Select an Option--</option>
-                                            <option value="Bereavement">Bereavement</option>
-                                            <option value="Sickness">Sickness</option>
-                                            <option value="Personal Reasons">Personal Reasons</option>
-                                            <option value="Temporary Absence">Temporary Absence</option>
-                                            <option value="Travelling">Travelling</option>
-                                        </select>
-                                    </div>
-
-                                    <label class="form-label font-weight-bold">Start Date</label>
-                                    <div class="input-group input-group-outline mt-1 mb-3">
-                                        <input type="date" class="form-control" name="start_date" id="start_date">
-                                    </div>
-
-                                    <label class="form-label font-weight-bold">End Date</label>
-                                    <div class="input-group input-group-outline mt-1 mb-3">
-                                        <input type="date" class="form-control" name="end_date" id="end_date">
-                                    </div>
-                                    <div class="text-center ">
-                                        <button type="submit" class=" btn btn-round btn-md bg-gradient-info w-30 mt-4 mb-0">Save</button>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
 
         <div class="container-fluid">
             <div class="row">
@@ -221,5 +174,52 @@
                 </div>
             </div>
         </div>
+        @endif
+
+        <!-- Create Leave Request Modal -->
+        <div class="modal fade" id="createLeaveModal" tabindex="-1" role="dialog" aria-labelledby="modal-form" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-md">
+                <div class="modal-content">
+                    <div class="modal-body p-0">
+                        <div class="card card-plain">
+                            <div class="card-header pb-0 text-left">
+                                <h5 class="">Create a New Leave Request</h5>
+                            </div>
+                            <div class="card-body">
+                                <form action="{{ route('admin.leave.create', auth()->user()->id) }}" method="POST" id="createLeaveForm">
+                                    @csrf
+
+                                    <label class="form-label font-weight-bold">Reason</label>
+                                    <div class="input-group input-group-outline mt-1 mb-3">
+                                        <select class="form-select-md form-control" name="reason" id="reason">
+                                            <option value="" disabled selected>--Select an Option--</option>
+                                            <option value="Bereavement">Bereavement</option>
+                                            <option value="Sickness">Sickness</option>
+                                            <option value="Personal Reasons">Personal Reasons</option>
+                                            <option value="Temporary Absence">Temporary Absence</option>
+                                            <option value="Travelling">Travelling</option>
+                                        </select>
+                                    </div>
+
+                                    <label class="form-label font-weight-bold">Start Date</label>
+                                    <div class="input-group input-group-outline mt-1 mb-3">
+                                        <input type="date" class="form-control" name="start_date" id="start_date">
+                                    </div>
+
+                                    <label class="form-label font-weight-bold">End Date</label>
+                                    <div class="input-group input-group-outline mt-1 mb-3">
+                                        <input type="date" class="form-control" name="end_date" id="end_date">
+                                    </div>
+                                    <div class="text-center ">
+                                        <button type="submit" class=" btn btn-round btn-md bg-gradient-info w-30 mt-4 mb-0">Save</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </main>
 </x-app-layout>
