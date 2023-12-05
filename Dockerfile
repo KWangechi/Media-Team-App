@@ -17,12 +17,12 @@ RUN docker-php-ext-install pdo_mysql mbstring exif pcntl bcmath gd
 
 #Need to import the mysql service and copy the .env file for the DB config
 
+# Copy everything from our folder into the docker image
+COPY . /my_apps
 
 # Set working directory
 WORKDIR /my_apps
 
-# Copy everything from our folder into the docker image
-COPY . .
 
 # Install system dependencies
 RUN composer install
@@ -35,4 +35,4 @@ EXPOSE 8080
 
 
 # Run the application
-CMD [ "php artisan serve --host=0.0.0.0 --port=8080" ]
+CMD [ "php" "artisan serve"]
