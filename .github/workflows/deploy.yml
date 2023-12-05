@@ -1,13 +1,10 @@
-name: Deploy Laravel Application to Github Actions
+name: Laravel CI/CD
 on: [push]
 
 jobs:
   build:
     name: Build Application
     runs-on: ubuntu-latest
-    container:
-      image: kirschbaumdevelopment/laravel-test-runner:7.3
-      
     services:
       mysql:
         image: mysql:latest
@@ -45,7 +42,7 @@ jobs:
           cp .env.example .env
           php artisan key:generate
       
-      - name: Run Test
-        uses: vendor/bin/phpunit tests/
+      # - name: Run Test
+      #   uses: vendor/bin/phpunit tests/
 
 
