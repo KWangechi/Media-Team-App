@@ -25,7 +25,7 @@
 
 
 ## Seed the databases with dummy data
-`` php artisan migrate:seed ``
+`` php artisan migrate --seed ``
 
 
 ## Start the Laravel Server
