@@ -1,4 +1,4 @@
-<x-layout bodyClass="g-sidenav-show  bg-gray-200 dark-version">
+<x-app-layout bodyClass="g-sidenav-show  bg-gray-200 dark-version">
     <x-navbars.sidebar activePage="users"></x-navbars.sidebar>
 
     <main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg">
@@ -145,7 +145,7 @@
                                                     <div class="col-6 mx-auto">
                                                         <a href="{{ route('admin.users.edit', $user->id) }}" rel="noopener noreferrer">
                                                             <button class="btn btn-link text-secondary mb-0">
-                                                                <i class="fa fa-pen text-xs px-1"></i>
+                                                                <i class="material-icons px-1">edit</i>
                                                                 Edit
                                                             </button>
                                                         </a>
@@ -156,7 +156,7 @@
                                                             @method('DELETE')
 
                                                             <button class="btn btn-link text-secondary mb-0 ">
-                                                                <i class="fa fa-trash px-1" aria-hidden="true"></i>
+                                                                <i class="material-icons px-1" aria-hidden="true">delete</i>
                                                                 Delete
                                                             </button>
                                                         </form>
@@ -259,5 +259,4 @@
         </div>
 
     </main>
-
-    </x-app-layout>
+</x-app-layout>

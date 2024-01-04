@@ -33,8 +33,8 @@ use RealRashid\SweetAlert\Facades\Alert;
 */
 
 Route::get('/', function () {
-    return view('welcome');
-});
+    return view('dashboard');
+})->middleware(['auth']);
 
 Route::get('/dashboard', function () {
     return view('dashboard');
@@ -43,7 +43,7 @@ Route::get('/dashboard', function () {
 Route::middleware(['auth'])->group(function () {
     Route::prefix('admin')->middleware(['isAdmin'])->group(function () {
 
-        //users
+        //users information
         Route::get('/users', [Admin\UserController::class, 'index'])->name('admin.users.index');
         Route::post('/users', [Admin\UserController::class, 'store'])->name('admin.users.create');
         Route::get('users/{id}', [Admin\UserController::class, 'edit'])->name('admin.users.edit');
