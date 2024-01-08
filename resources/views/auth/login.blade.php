@@ -1,13 +1,13 @@
 <x-guest-layout>
     <x-auth-card>
-        <x-slot name="logo">
+        <!-- <x-slot name="logo">
         <div class="shrink-0 flex items-center">
                     <a href="{{ route('dashboard') }}">
                     <img src="{{ asset('storage/images/PCEA-church-logo-a-2.png') }}" class="card-img-top" alt="PCEA LOGO" style="width: 70px; height: 85px;">
 
                     </a>
                 </div>
-        </x-slot>
+        </x-slot> -->
 
         <!-- Session Status -->
         <x-auth-session-status class="mb-4" :status="session('status')" />

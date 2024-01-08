@@ -55,7 +55,7 @@
             <!-- Role -->
             <div class="mt-4">
             <x-label for="role" :value="__('Usertype')" />
-                
+
                 <select name="role_id">
                     <option value="">Select the usertype</option>
                     @foreach($roles as $role)
