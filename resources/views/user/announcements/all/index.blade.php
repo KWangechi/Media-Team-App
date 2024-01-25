@@ -62,9 +62,15 @@
 
                 <div class="card my-3">
                     <div class="row mb-3 mt-5 mx-auto">
+                        @if (auth()->user()->profile)
                         <div class="col-lg-2">
                             <img src="{{ asset('/storage/'.auth()->user()->profile->photo) }}" alt="" class=" rounded-circle shadow-4-strong" width="70px;" height="70px;">
                         </div>
+                        @else
+                        <div class="col-lg-2">
+                            <i style="font-size: 4.5rem;" class="material-icons opacity-10 mx-2 ">account_circle</i>
+                        </div>
+                        @endif
 
                         <div class="col">
                             <div class="row">
