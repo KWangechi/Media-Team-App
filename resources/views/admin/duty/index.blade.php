@@ -63,7 +63,7 @@
 
         <!-- card for displaying the duty roster -->
         @foreach ($duties as $duty)
-        <div class="card border-primary mb-3 mx-auto" style="width: max-content; height: max-content;">
+        <div class="card border-primary mb-5 mx-auto" style="width: max-content; height: max-content;">
             <div class="card-body">
                 <h1 class="card-title mb-4"><b>Week: {{$duty->week}}</b></h1>
                 <hr>
@@ -208,6 +208,7 @@
                 </div>
                 <!-- </div> -->
             </div>
+        </div>
 
             <!-- Edit the duty Roster -->
             @if ($duty)

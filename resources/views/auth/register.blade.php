@@ -1,10 +1,15 @@
 <x-guest-layout>
     <x-auth-card>
-        <x-slot name="logo">
-            <a href="/">
-                <x-application-logo class="w-20 h-20 fill-current text-gray-500" />
-            </a>
+
+                 <x-slot name="logo">
+        <div class="shrink-0 flex items-center mt-4">
+                    <a href="{{ route('dashboard') }}">
+                    <img src="{{ asset('storage/images/PCEA-church-logo-a-2.png') }}" class="card-img-top" alt="PCEA LOGO" style="width: 70px; height: 85px;">
+
+                    </a>
+                </div>
         </x-slot>
+
 
         <!-- Validation Errors -->
         <x-auth-validation-errors class="mb-4" :errors="$errors" />
@@ -43,7 +48,7 @@
             <!-- Department -->
             <div class="mt-4">
             <x-label for="deparment" :value="__('Department')" />
-                <select name="department">
+                <select name="department" class="w-100 rounded-md shadow-sm border-gray-300">
                     <option value="">Select the department</option>
                     <option value="Video">Video</option>
                     <option value="Sound">Sound</option>
@@ -55,8 +60,8 @@
             <!-- Role -->
             <div class="mt-4">
             <x-label for="role" :value="__('Usertype')" />
-                
-                <select name="role_id">
+
+                <select name="role_id" class="w-100 rounded-md shadow-sm border-gray-300">
                     <option value="">Select the usertype</option>
                     @foreach($roles as $role)
                     <option value="{{$role->id}}">{{$role->name}}</option>

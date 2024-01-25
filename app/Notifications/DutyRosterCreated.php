@@ -72,11 +72,10 @@ class DutyRosterCreated extends Notification
     public function toDatabase()
     {
         return [
-            'subject' => 'Duty Roster Creation',
-            'message' => 'This is to notify you that you have been selected to lead the service next Saturday.
-               Please make sure you confirm your availability before Saturday 2:00pm.
-               See you on Sunday!!!',
-            'salutation' => 'Kind regards '.env('APP_NAME')
+            'subject' => $this->message['subject'],
+            'greeting' => $this->message['greeting'],
+            'body' => $this->message['body'],
+            'salutation' => $this->message['salutation']
         ];
     }
 }
